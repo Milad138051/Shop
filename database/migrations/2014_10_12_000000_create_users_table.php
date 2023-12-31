@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('profile_photo_path')->nullable()->comment('avatar');
+            $table->tinyInteger('activation')->default(0)->comment('0 => inactive, 1 => active');
+            $table->timestamp('activation_date')->nullable();
+            $table->tinyInteger('user_type')->default(0)->comment('0 => user, 1 => admin');
             $table->rememberToken();
             $table->timestamps();
         });
