@@ -1,11 +1,9 @@
 <?php
 
 namespace Database\Seeders;
-
-use App\Models\PostCategory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Content\PostCategory;
 
 class PostCategorySeeder extends Seeder
 {
@@ -14,9 +12,7 @@ class PostCategorySeeder extends Seeder
      */
     public function run(): void
     {
-			  
         DB::statement('truncate post_categories');
-
         $names=['دسته 1','دسته 2','دسته 3','دسته 4','دسته 5'];
 
         foreach($names as $name)
@@ -25,6 +21,5 @@ class PostCategorySeeder extends Seeder
                 'name'=>$name,
             ]);
         }
-       
     }
 }

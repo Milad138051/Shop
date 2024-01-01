@@ -27,7 +27,7 @@
   </div>
 
 <div class="card-body">
-    <form action="{{route('admin.post.update',$post)}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('admin.content.post.update',$post)}}" method="post" enctype="multipart/form-data">
       @method('put')  
       @csrf
       <!-- text input -->

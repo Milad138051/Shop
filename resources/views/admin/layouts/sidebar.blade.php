@@ -34,15 +34,21 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('admin.post.index')}}" class="nav-link">
+                  <a href="{{route('admin.content.post.index')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>پست ها</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('admin.postCategory.index')}}" class="nav-link">
+                  <a href="{{route('admin.content.postCategory.index')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>دسته بندی ها</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.content.comment.index')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>نظرات</p>
                   </a>
                 </li>
               </ul>

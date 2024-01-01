@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Content;
 
-use App\Models\PostCategory;
+use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
@@ -13,7 +13,7 @@ class PostCategoryController extends Controller
     public function index()
     {
         $postCategories=PostCategory::orderBy('id','Desc')->get();
-        return view('admin.postCategory.index',compact('postCategories'));
+        return view('admin.content.postCategory.index',compact('postCategories'));
     }
 
     public function show()
@@ -23,7 +23,7 @@ class PostCategoryController extends Controller
 
     public function create()
     {
-        return view('admin.postCategory.create');
+        return view('admin.content.postCategory.create');
     }
 
     public function store(PostCategoryRequest $request,ImageService $imageService)
@@ -36,20 +36,19 @@ class PostCategoryController extends Controller
 
             if($result === false)
             {
-                return redirect()->route('admin.postCategory.index');
-                // ->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+                return redirect()->route('admin.content.postCategory.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
         }
 
         PostCategory::create($inputs);
-        return to_route('admin.postCategory.index');
+        return to_route('admin.content.postCategory.index')->with('swal-success', 'ایتم  جدید شما با موفقیت ثبت شد');;
 
     }
 
     public function edit(PostCategory $postCategory)
     {
-        return view('admin.postCategory.edit',compact('postCategory'));
+        return view('admin.content.postCategory.edit',compact('postCategory'));
     }
 
     public function update(PostCategoryRequest $request,PostCategory $postCategory,ImageService $imageService)
@@ -66,8 +65,7 @@ class PostCategoryController extends Controller
             $result = $imageService->createIndexAndSave($request->file('image'));
             if($result === false)
             {
-                return redirect()->route('admin.postCategory.index');
-                // ->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
+                return redirect()->route('admin.content.postCategory.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
         }
@@ -80,13 +78,13 @@ class PostCategoryController extends Controller
             }
         }
         $postCategory->update($inputs);
-        return to_route('admin.postCategory.index');
+        return to_route('admin.content.postCategory.index')->with('swal-success', 'ایتم شما با موفقیت ویرایش شد');;
     }
 
 
     public function delete(PostCategory $postCategory)
     {
         $postCategory->delete();
-        return to_route('admin.postCategory.index');
+        return to_route('admin.content.postCategory.index')->with('swal-success', 'ایتم شما با موفقیت حذف شد');;
     }
 }

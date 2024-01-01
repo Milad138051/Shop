@@ -27,7 +27,7 @@
   </div>
 
 <div class="card-body">
-    <form action="{{route('admin.post.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('admin.content.post.store')}}" method="post" enctype="multipart/form-data">
         @csrf
       <!-- text input -->
       <div class="form-group">

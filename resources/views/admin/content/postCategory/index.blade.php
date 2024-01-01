@@ -12,7 +12,7 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">دسته ها</h3>
-          <a href="{{route('admin.postCategory.create')}}" class="btn btn-success text-white">ایجاد</a>
+          <a href="{{route('admin.content.postCategory.create')}}" class="btn btn-success text-white">ایجاد</a>
 
 
           <div class="card-tools">
@@ -49,17 +49,18 @@
                 </td>
                 <td>
                     @if($postCategory->status==1)
-                    <span class="badge badge-success btn-sm">فعال</span></td>
+                    <span class="badge badge-success btn-sm">فعال</span>
                     @else
                     <span class="badge bg-danger btn-sm">غیر فعال</span>
                     @endif
+                </td>
                 <td>
-                    <form action="{{route('admin.postCategory.delete',$postCategory)}}" method="post">
+                    <form action="{{route('admin.content.postCategory.delete',$postCategory)}}" method="post">
                         @method('DELETE')
                         @csrf
-                        <button type="submit" class="btn btn-danger text-white">حذف</button>
+                        <button type="submit" class="btn btn-danger text-white delete">حذف</button>
                     </form>
-                    <a href="{{route('admin.postCategory.edit',$postCategory)}}" class="btn btn-primary text-white">ویرایش</a>
+                    <a href="{{route('admin.content.postCategory.edit',$postCategory)}}" class="btn btn-primary text-white">ویرایش</a>
                 </td>
             </tr>                
             @endforeach
@@ -72,5 +73,44 @@
       <!-- /.card -->
     </div>
   </div>
+
+@endsection
+
+
+@section('script')
+
+    <script type="text/javascript">
+
+            function sweetalertStatusSuccess(msg){
+                $(document).ready(function (){
+                    Swal.fire({
+                        title:msg,
+                        text:'عملیات با موفقیت ذخیره شد',
+                        icon: 'success',
+                        confirmButtonText: 'باشه',
+                    });
+                });
+            }
+
+            function sweetalertStatusError(msg){
+                $(document).ready(function (){
+                    Swal.fire({
+                        title:msg,
+                        text:'هنگام ویرایش مشکلی بوجود امده است',
+                        icon: 'error',
+                        confirmButtonText: 'باشه',
+                    });
+                });
+            }
+
+
+
+
+        }
+    </script>
+
+
+@include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
+
 
 @endsection

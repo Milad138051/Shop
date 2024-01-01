@@ -8,6 +8,7 @@
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('admin-assets/sweetalert/sweetalert2.css')}}">
     <link rel="stylesheet" href="{{asset('admin-assets/css/adminlte.min.css')}}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -16,5 +17,6 @@
     <link rel="stylesheet" href="{{asset('admin-assets/css/bootstrap-rtl.min.css')}}">
     <!-- template rtl version -->
     <link rel="stylesheet" href="{{asset('admin-assets/css/custom-style.css')}}">
+
   
   

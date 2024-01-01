@@ -3,6 +3,7 @@
 <script src="{{asset('admin-assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE -->
 <script src="{{asset('admin-assets/js/adminlte.js')}}"></script>
+<script src="{{asset('admin-assets/sweetalert/sweetalert2.min.js')}}"></script>
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
