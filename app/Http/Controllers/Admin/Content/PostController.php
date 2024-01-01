@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Models\Content\Post;
 use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\Content\PostRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
 
@@ -81,7 +81,7 @@ class PostController extends Controller
             }
         }
         $post->update($inputs);
-        return to_route('admin.content.post.index')->with('swal-success', ',ویرایش  شما با موفقیت ثبت شد');;
+        return to_route('admin.content.post.index')->with('swal-success', 'ویرایش  شما با موفقیت ثبت شد');;
     }
 
 

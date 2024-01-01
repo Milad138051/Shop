@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Content\PostController;
+use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
-use App\Http\Controllers\Admin\Content\PostController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
+//auth
+Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
+    Route::get('login-register', 'loginRegisterForm')->name('auth.login-register-form');
+    Route::post('login-register','loginRegister')->name('auth.login-register');
+    Route::get('login-register-confirm/{token}', 'loginRegisterConfirmForm')->name('auth.login-register-confirm-form');
+    Route::post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
+    Route::get('login-register-resend-otp/{token}','loginRegisterResendOtp')->name('auth.login-register-resend-otp');
+    Route::get('logout/','logout')->name('auth.customer.logout');
+});
 
 
 //admin
@@ -55,7 +68,5 @@ Route::prefix('admin')->group(function () {
         });
 
     });
-
-
 
 });
