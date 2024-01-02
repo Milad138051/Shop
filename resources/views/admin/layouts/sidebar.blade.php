@@ -67,6 +67,12 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
+                  <a href="{{route('admin.market.category.index')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>دسته بندی</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>کالاها</p>
