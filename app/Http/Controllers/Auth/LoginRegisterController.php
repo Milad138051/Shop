@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\Message\MessageService;
 use App\Http\Requests\Auth\LoginRegisterRequest;
+use App\Http\Services\Message\Email\EmailService;
 
 class LoginRegisterController extends Controller
 {
@@ -83,8 +85,24 @@ class LoginRegisterController extends Controller
 
         //send email
 	    elseif($type == 1){
+           
   		   Log::info("your code is : $otpCode and is sent to your email");
+
+             $emailService = new EmailService();
+             $details = [
+                 'title' => 'ایمیل فعال سازی',
+                 'body' => "کد فعال سازی شما : $otpCode"
+             ];
+             $emailService->setDetails($details);
+             $emailService->setFrom('noreply@example.com', 'example');
+             $emailService->setSubject('کد احراز هویت');
+             $emailService->setTo($inputs['id']);
+ 
+             $messagesService = new MessageService($emailService);
+
         }
+        
+        $messagesService->send();
 		
 		return redirect()->route('auth.login-register-confirm-form',$token);
     }
@@ -166,11 +184,22 @@ class LoginRegisterController extends Controller
         }
 		
         //send email
-	    elseif($otp->type == 1){
-           
-  		   Log::info("your code is : $otpCode and is sent to your email");
+         elseif($otp->type === 1){
+            $emailService = new EmailService();
+            $details = [
+                'title' => 'ایمیل فعال سازی',
+                'body' => "کد فعال سازی شما : $otpCode"
+            ];
+            $emailService->setDetails($details);
+            $emailService->setFrom('noreply@example.com', 'example');
+            $emailService->setSubject('کد احراز هویت');
+            $emailService->setTo($otp->login_id);
+
+            $messagesService = new MessageService($emailService);
 
         }
+
+        $messagesService->send();
 		
 		return redirect()->route('auth.login-register-confirm-form',$token);
     
