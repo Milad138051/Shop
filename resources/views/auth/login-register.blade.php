@@ -36,7 +36,7 @@
             شماره همراه یا ایمیل خود را وارد کنید:
         </div>
         <div class="mb-2">
-          <input class="w-full drop-shadow-lg outline-none rounded-2xl py-2 text-center" name="id" value="{{ old('id') }}" type="text">
+          <input class="w-full drop-shadow-lg outline-none rounded-2xl py-2 text-center" required name="id" value="{{ old('id') }}" type="text">
           @error('id')
           <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
               <strong>

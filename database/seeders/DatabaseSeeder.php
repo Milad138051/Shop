@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         // $this->call(UserSeeder::class);
-         $this->call(PostCategorySeeder::class);
-         $this->call(PostSeeder::class);
-         $this->call(CommentSeeder::class);
-         $this->call(CategorySeeder::class);
+        //  $this->call(PostCategorySeeder::class);
+        //  $this->call(PostSeeder::class);
+        //  $this->call(CommentSeeder::class);
+        //  $this->call(CategorySeeder::class);
+         $this->call(BrandSeeder::class);
 
          Schema::enableForeignKeyConstraints();
     }

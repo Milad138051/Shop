@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Content\PostController;
+use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Content\CommentController;
@@ -29,10 +30,10 @@ Route::get('/', function () {
 //auth
 Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
     Route::get('login-register', 'loginRegisterForm')->name('auth.login-register-form');
-    Route::post('login-register', 'loginRegister')->name('auth.login-register');
+    Route::middleware('throttle:customer-login-register-limiter')->post('login-register', 'loginRegister')->name('auth.login-register');
     Route::get('login-register-confirm/{token}', 'loginRegisterConfirmForm')->name('auth.login-register-confirm-form');
-    Route::post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
-    Route::get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
+    Route::middleware('throttle:customer-login-register-confirm-limiter')->post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
+    Route::middleware('throttle:customer-login-register-resend-otp-limiter')->get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
     Route::get('logout/', 'logout')->name('auth.customer.logout');
 });
 
@@ -82,14 +83,14 @@ Route::prefix('admin')->group(function () {
             Route::delete('/destroy/{productCategory}','delete')->name('admin.market.category.delete');
         });
         //brand
-        // Route::prefix('brand')->group(function () {
-        //     Route::get('/', [BrandController::class, 'index'])->name('admin.market.brand.index');
-        //     Route::get('/create', [BrandController::class, 'create'])->name('admin.market.brand.create');
-        //     Route::post('/store', [BrandController::class, 'store'])->name('admin.market.brand.store');
-        //     Route::get('/edit/{brand}', [BrandController::class, 'edit'])->name('admin.market.brand.edit');
-        //     Route::put('/update/{brand}', [BrandController::class, 'update'])->name('admin.market.brand.update');
-        //     Route::delete('/destroy/{brand}', [BrandController::class, 'destroy'])->name('admin.market.brand.destroy');
-        // });
+        Route::controller(BrandController::class)->prefix('brand')->group(function () {
+            Route::get('/', 'index')->name('admin.market.brand.index');
+            Route::get('/create','create')->name('admin.market.brand.create');
+            Route::post('/store','store')->name('admin.market.brand.store');
+            Route::get('/edit/{brand}', 'edit')->name('admin.market.brand.edit');
+            Route::put('/update/{brand}', 'update')->name('admin.market.brand.update');
+            Route::delete('/destroy/{brand}','delete')->name('admin.market.brand.delete');
+        });
     });
 
 

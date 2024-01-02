@@ -73,6 +73,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{route('admin.market.brand.index')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>برند ها</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>کالاها</p>
