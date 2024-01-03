@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\ProductController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\Market\CategoryController;
@@ -108,10 +109,10 @@ Route::prefix('admin')->group(function () {
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
             //gallery
-            // Route::get('{product}/gallery', [GalleryController::class, 'index'])->name('admin.market.product.gallery.index');
-            // Route::get('/{product}/gallery/create', [GalleryController::class, 'create'])->name('admin.market.product.gallery.create');
-            // Route::post('{product}/gallery/store', [GalleryController::class, 'store'])->name('admin.market.product.gallery.store');
-            // Route::delete('/gallery/destroy/{gallery}', [GalleryController::class, 'destroy'])->name('admin.market.product.gallery.destroy');
+            Route::get('{product}/gallery', [GalleryController::class, 'index'])->name('admin.market.product.gallery.index');
+            Route::get('/{product}/gallery/create', [GalleryController::class, 'create'])->name('admin.market.product.gallery.create');
+            Route::post('{product}/gallery/store', [GalleryController::class, 'store'])->name('admin.market.product.gallery.store');
+            Route::delete('/gallery/destroy/{gallery}', [GalleryController::class, 'destroy'])->name('admin.market.product.gallery.destroy');
             // //product-color
             // Route::get('{product}/product-color', [ProductColorController::class, 'index'])->name('admin.market.product-color.index');
             // Route::get('{product}/product-color/create', [ProductColorController::class, 'create'])->name('admin.market.product-color.create');

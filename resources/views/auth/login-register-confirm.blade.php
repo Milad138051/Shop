@@ -45,7 +45,7 @@
 
 
         <div class="mb-2">
-          <input class="w-full drop-shadow-lg outline-none rounded-2xl py-2 text-center" name="otp" value="{{ old('otp') }}" type="text">
+          <input class="w-full drop-shadow-lg outline-none rounded-2xl py-2 text-center" name="otp" required value="{{ old('otp') }}" type="text">
           @error('otp')
           <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
               <strong>
