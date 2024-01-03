@@ -4,11 +4,12 @@ namespace App\Models\Content;
 
 use App\Models\Content\PostCategory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $guarded=['id'];
     protected $casts = ['image' => 'array'];
     public function postCategory()

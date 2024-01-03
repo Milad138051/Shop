@@ -29,6 +29,7 @@ class PostCategoryController extends Controller
     public function store(PostCategoryRequest $request,ImageService $imageService)
     {
         $inputs=$request->all();
+        // dd($request->all());
         if($request->hasFile('image'))
         {
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');

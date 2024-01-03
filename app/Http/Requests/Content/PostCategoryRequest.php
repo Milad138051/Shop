@@ -21,11 +21,13 @@ class PostCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd(request()->all());
         if ($this->isMethod('post')) {
             return [
                 'name' => 'required|string|min:2',
                 'image' => 'required|image|mimes:png,jpg,jpeg,gif',
                 'description' => 'required|string|max:500|min:5',
+                'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
                 'status' => 'required|numeric|in:0,1',
             ];
         } else {
@@ -33,6 +35,7 @@ class PostCategoryRequest extends FormRequest
                 'name' => 'required|string|min:2',
                 'image' => 'image|mimes:png,jpg,jpeg,gif',
                 'description' => 'required|string|max:500|min:5',
+                'tags' => 'required|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
                 'status' => 'required|numeric|in:0,1',
             ];
         }

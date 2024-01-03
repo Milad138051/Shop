@@ -45,16 +45,16 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });        
 		
-		RateLimiter::for('customer-login-register-limiter', function (Request $request) {
-            return Limit::perMinute(5)->by($request->ip());
-        });        
+		// RateLimiter::for('customer-login-register-limiter', function (Request $request) {
+        //     return Limit::perMinute(5)->by($request->ip());
+        // });        
 		
-		RateLimiter::for('customer-login-register-confirm-limiter', function (Request $request) {
-            return Limit::perMinute(5)->by(url()->current() . $request->ip());
-        });        
+		// RateLimiter::for('customer-login-register-confirm-limiter', function (Request $request) {
+        //     return Limit::perMinute(5)->by(url()->current() . $request->ip());
+        // });        
 		
-		RateLimiter::for('customer-login-register-resend-otp-limiter', function (Request $request) {
-            return Limit::perMinute(5)->by(url()->current() . $request->ip());
-        });
+		// RateLimiter::for('customer-login-register-resend-otp-limiter', function (Request $request) {
+        //     return Limit::perMinute(5)->by(url()->current() . $request->ip());
+        // });
     }
 }

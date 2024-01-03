@@ -17,7 +17,8 @@ class BrandFactory extends Factory
     public function definition(): array
     {
         return [
-            'status'=>1
+            'status'=>1,
+            'tags'=>'tag1,tag2'
         ];
     }
 }

@@ -23,6 +23,7 @@ class PostFactory extends Factory
             'status'=>1,
             'commentable'=>1,
             'published_at'=>now(),
+            'tags'=>'tag1,tag2'
         ];
     }
 }

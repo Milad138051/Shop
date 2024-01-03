@@ -18,7 +18,8 @@ class CategoryFactory extends Factory
     {
         return [
             'description'=>fake()->text(),
-            'status'=>1        
+            'status'=>1,
+            'tags'=>'tag1,tag2'
         ];
     }
 }

@@ -79,7 +79,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="{{route('admin.market.product.index')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>کالاها</p>
                   </a>

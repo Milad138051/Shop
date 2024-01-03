@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Market\ProductController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\Market\CategoryController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
@@ -30,10 +31,16 @@ Route::get('/', function () {
 //auth
 Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
     Route::get('login-register', 'loginRegisterForm')->name('auth.login-register-form');
-    Route::middleware('throttle:customer-login-register-limiter')->post('login-register', 'loginRegister')->name('auth.login-register');
+    Route::
+        // middleware('throttle:customer-login-register-limiter')->
+        post('login-register', 'loginRegister')->name('auth.login-register');
     Route::get('login-register-confirm/{token}', 'loginRegisterConfirmForm')->name('auth.login-register-confirm-form');
-    Route::middleware('throttle:customer-login-register-confirm-limiter')->post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
-    Route::middleware('throttle:customer-login-register-resend-otp-limiter')->get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
+    Route::
+        // middleware('throttle:customer-login-register-limiter')->
+        post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
+    Route::
+        // middleware('throttle:customer-login-register-limiter')->
+        get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
     Route::get('logout/', 'logout')->name('auth.customer.logout');
 });
 
@@ -76,21 +83,48 @@ Route::prefix('admin')->group(function () {
         //category
         Route::controller(CategoryController::class)->prefix('category')->group(function () {
             Route::get('/', 'index')->name('admin.market.category.index');
-            Route::get('/create','create')->name('admin.market.category.create');
-            Route::post('/store','store')->name('admin.market.category.store');
+            Route::get('/create', 'create')->name('admin.market.category.create');
+            Route::post('/store', 'store')->name('admin.market.category.store');
             Route::get('/edit/{productCategory}', 'edit')->name('admin.market.category.edit');
-            Route::put('/update/{productCategory}','update')->name('admin.market.category.update');
-            Route::delete('/destroy/{productCategory}','delete')->name('admin.market.category.delete');
+            Route::put('/update/{productCategory}', 'update')->name('admin.market.category.update');
+            Route::delete('/destroy/{productCategory}', 'delete')->name('admin.market.category.delete');
         });
         //brand
         Route::controller(BrandController::class)->prefix('brand')->group(function () {
             Route::get('/', 'index')->name('admin.market.brand.index');
-            Route::get('/create','create')->name('admin.market.brand.create');
-            Route::post('/store','store')->name('admin.market.brand.store');
+            Route::get('/create', 'create')->name('admin.market.brand.create');
+            Route::post('/store', 'store')->name('admin.market.brand.store');
             Route::get('/edit/{brand}', 'edit')->name('admin.market.brand.edit');
             Route::put('/update/{brand}', 'update')->name('admin.market.brand.update');
-            Route::delete('/destroy/{brand}','delete')->name('admin.market.brand.delete');
+            Route::delete('/destroy/{brand}', 'delete')->name('admin.market.brand.delete');
         });
+
+        //product
+        Route::prefix('product')->group(function () {
+            Route::get('/', [ProductController::class, 'index'])->name('admin.market.product.index');
+            Route::get('/create', [ProductController::class, 'create'])->name('admin.market.product.create');
+            Route::post('/store', [ProductController::class, 'store'])->name('admin.market.product.store');
+            Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
+            Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
+            Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
+            //gallery
+            // Route::get('{product}/gallery', [GalleryController::class, 'index'])->name('admin.market.product.gallery.index');
+            // Route::get('/{product}/gallery/create', [GalleryController::class, 'create'])->name('admin.market.product.gallery.create');
+            // Route::post('{product}/gallery/store', [GalleryController::class, 'store'])->name('admin.market.product.gallery.store');
+            // Route::delete('/gallery/destroy/{gallery}', [GalleryController::class, 'destroy'])->name('admin.market.product.gallery.destroy');
+            // //product-color
+            // Route::get('{product}/product-color', [ProductColorController::class, 'index'])->name('admin.market.product-color.index');
+            // Route::get('{product}/product-color/create', [ProductColorController::class, 'create'])->name('admin.market.product-color.create');
+            // Route::post('{product}/product-color/store', [ProductColorController::class, 'store'])->name('admin.market.product-color.store');
+            // Route::delete('product-color/destroy/{productcolor}', [ProductColorController::class, 'destroy'])->name('admin.market.product-color.destroy');
+            // //guarantee
+            // Route::get('/guarantee/{product}', [GuaranteeController::class, 'index'])->name('admin.market.guarantee.index');
+            // Route::get('/guarantee/create/{product}', [GuaranteeController::class, 'create'])->name('admin.market.guarantee.create');
+            // Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
+            // Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+        });
+
+
     });
 
 

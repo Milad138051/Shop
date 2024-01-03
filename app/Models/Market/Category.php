@@ -2,8 +2,9 @@
 
 namespace App\Models\Market;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Market\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
@@ -21,8 +22,8 @@ class Category extends Model
         return $this->hasMany($this, 'parent_id')->with('children');
     }
 	
-	// public function products()
-	// {
-	// 	return $this->hasMany(Product::class,'category_id');
-	// }
+	public function products()
+	{
+		return $this->hasMany(Product::class,'category_id');
+	}
 }
