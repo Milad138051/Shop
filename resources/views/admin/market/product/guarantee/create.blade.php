@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد رنگ کالا</title>
+    <title>ایجاد گارانتی کالا</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 
 @endsection
@@ -14,7 +14,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title">ایجاد رنگ کالا</h3>
+                    <h3 class="card-title">ایجاد گارانتی کالا</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -28,12 +28,13 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.market.product-color.store',$product) }}" method="post">
+                    <form action="{{ route('admin.market.guarantee.store',$product) }}" method="post">
                         @csrf
+
                         <div class="form-group">
-                            <label for="">نام رنگ</label>
-                            <input type="text" name="color_name" value="{{ old('color_name') }}" class="form-control form-control-sm">
-                            @error('color_name')
+                            <label for="name">نام گارانتی</label>
+                            <input type="text" name="name" value="{{ old('name') }}" class="form-control form-control-sm">
+                            @error('name')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
                                     {{ $message }}
@@ -41,19 +42,6 @@
                             </span>
                         @enderror
                         </div>
-
-                        <div class="form-group">
-                            <label for="color">رنگ</label>
-                            <input type="color" name="color" value="{{ old('color') }}" class="form-control form-control-sm form-control-color">
-                            @error('color')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                            @enderror
-                        </div>
-
 
                         <div class="form-group">
                             <label for="">افزایش قیمت</label>

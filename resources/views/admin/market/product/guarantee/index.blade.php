@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>محصولات</title>
+    <title>گارانتی کالا</title>
 @endsection
 
 
@@ -10,8 +10,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">محصولات</h3>
-                    <a href="{{ route('admin.market.product.create') }}" class="btn btn-success text-white">ایجاد</a>
+                    <h3 class="card-title">گارانتی کالا ({{ $product->name }})</h3>
+                    <a href="{{ route('admin.market.guarantee.create', $product->id) }}"
+                        class="btn btn-success text-white">ایجاد</a>
 
 
                     <div class="card-tools">
@@ -32,50 +33,36 @@
                             <tr>
                                 <th>#</th>
                                 <th>نام کالا</th>
-                                <th> تصویر کالا</th>
-                                {{-- <th> اسلاگ</th> --}}
-                                <th> قیمت</th>
-                                <th>دسته </th>
+                                <th> گارانتی کالا</th>
+                                <th> افزایش قیمت</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
-                                <tr>
+                            @if (isset($product->guarantees))
+                            @foreach ($product->guarantees as $guarantee)
+                            <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $product->name }}</td>
                                     <td>
-                                        <img src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
-                                            width="100" height="115">
+                                        {{ $guarantee->name }}
                                     </td>
-                                    {{-- <td>{{ $product->slug }}</td> --}}
-                                    <td>{{ $product->price }} تومان</td>
-                                    <td>{{ $product->category->name }}</td>
-
-
-                                    <td class="width-8-rem text-left">
-
-                                        <a href="{{route('admin.market.product.gallery.index',$product)}}" class="dropdown-item text-right"><i class="fa fa-images"></i>
-                                            گالری</a>
-                                        <a href="{{route('admin.market.product-color.index',$product)}}"  class="dropdown-item text-right"><i class="fa fa-list-ul"></i>رنگ
-                                            کالا</a>
-                                        <a href="{{route('admin.market.guarantee.index',$product)}}" class="dropdown-item text-right"><i class="fa fa-shield-alt"></i>
-                                            گارانتی</a>
-                                        <a href="{{ route('admin.market.product.edit', $product->id) }}"
-                                            class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش</a>
-                                        <form action="{{ route('admin.market.product.destroy', $product->id) }}"
-                                            method="POST">
+                                     <td>
+                                        {{ $guarantee->price_increase }}
+                                    </td>
+        
+                                    <td class="width-16-rem text-left">
+                                        <form class="d-inline" action="{{ route('admin.market.guarantee.destroy', ['product' => $product->id , 'guarantee' => $guarantee->id] ) }}" method="post">
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item text-right delete"><i
-                                                    class="fa fa-window-close"></i> حذف</button>
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
                                         </form>
-
-                                    </td>
+        
+                                </td>
                                 </tr>
-                            @endforeach
-
-
+                                @endforeach
+                            @else
+                            @endif
                         </tbody>
                     </table>
                 </div>
