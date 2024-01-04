@@ -57,7 +57,7 @@
 
                                         <a href="{{route('admin.market.product.gallery.index',$product)}}" class="dropdown-item text-right"><i class="fa fa-images"></i>
                                             گالری</a>
-                                        <a href="#" class="dropdown-item text-right"><i class="fa fa-list-ul"></i>رنگ
+                                        <a href="{{route('admin.market.product-color.index',$product)}}"  class="dropdown-item text-right"><i class="fa fa-list-ul"></i>رنگ
                                             کالا</a>
                                         <a href="#" class="dropdown-item text-right"><i class="fa fa-shield-alt"></i>
                                             گارانتی</a>
