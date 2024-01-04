@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>محصولات</title>
+    <title>مقدار فرم کالا</title>
 @endsection
 
 
@@ -10,8 +10,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">محصولات</h3>
-                    <a href="{{ route('admin.market.product.create') }}" class="btn btn-success text-white">ایجاد</a>
+                    <h3 class="card-title">مقدار فرم کالا ({{$categoryAttribute->name}})</h3>
+                    <a href="{{ route('admin.market.property.value.create', $categoryAttribute->id) }}" class="btn btn-success
+                        text-white">ایجاد</a>
+                        <a href="{{ route('admin.market.property.index') }}" class="btn btn-info">بازگشت</a>
 
 
                     <div class="card-tools">
@@ -31,53 +33,38 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>نام کالا</th>
-                                <th> تصویر کالا</th>
-                                {{-- <th> اسلاگ</th> --}}
-                                <th> قیمت</th>
-                                <th>دسته </th>
+                                <th>نام فرم</th>
+                                <th>واحد اندازه گیری فرم</th>
+                                <th>نام محصول</th>
+                                <th>مقدار</th>
+                                <th>افزایش قیمت</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+
+                            @foreach ($categoryAttribute->values as $value)
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $product->name }}</td>
-                                    <td>
-                                        <img src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
-                                            width="100" height="115">
-                                    </td>
-                                    {{-- <td>{{ $product->slug }}</td> --}}
-                                    <td>{{ $product->price }} تومان</td>
-                                    <td>{{ $product->category->name }}</td>
-
-
-                                    <td class="width-8-rem text-left">
-
-                                        <a href="{{ route('admin.market.product.gallery.index', $product) }}"
-                                            class="dropdown-item text-right"><i class="fa fa-images"></i>
-                                            گالری</a>
-                                        <a href="{{ route('admin.market.product-color.index', $product) }}"
-                                            class="dropdown-item text-right"><i class="fa fa-list-ul"></i>رنگ
-                                            کالا</a>
-                                        <a href="{{ route('admin.market.guarantee.index', $product) }}"
-                                            class="dropdown-item text-right"><i class="fa fa-shield-alt"></i>
-                                            گارانتی</a>
-                                        <a href="{{ route('admin.market.product.edit', $product->id) }}"
-                                            class="dropdown-item text-right"><i class="fa fa-edit"></i> ویرایش</a>
-                                        <form action="{{ route('admin.market.product.destroy', $product->id) }}"
-                                            method="POST">
+                                    <td>{{ $categoryAttribute->name }}</td>
+                                    <td>{{ $categoryAttribute->unit }}</td>
+                                    <td>{{ $value->product->name }}</td>
+                                    <td>{{ json_decode($value->value)->value }}</td>
+                                    <td>{{ json_decode($value->value)->price_increase }} تومان</td>
+                                    <td class="width-22-rem text-left">
+                                        <a href="{{ route('admin.market.property.value.edit', ['categoryAttribute' => $categoryAttribute->id, 'categoryValue' => $value->id]) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.market.property.value.destroy', ['categoryAttribute' => $categoryAttribute->id, 'categoryValue' => $value->id]) }}"
+                                            method="post">
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item text-right delete"><i
-                                                    class="fa fa-window-close"></i> حذف</button>
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                    class="fa fa-trash-alt"></i> حذف</button>
                                         </form>
-
                                     </td>
                                 </tr>
                             @endforeach
-
 
                         </tbody>
                     </table>

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>گالری محصول</title>
+    <title>فرم کالا</title>
 @endsection
 
 
@@ -10,10 +10,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">گالری تصاویر ({{ $product->name }})</h3>
-                    <a href="{{ route('admin.market.product.gallery.create', $product) }}"
-                        class="btn btn-success text-white">ایجاد</a>
-                    <a href="{{ route('admin.market.product.index') }}" class="btn btn-info">بازگشت</a>
+                    <h3 class="card-title">فرم کالا</h3>
+                    <a href="{{ route('admin.market.property.create') }}" class="btn btn-success text-white">ایجاد</a>
 
 
                     <div class="card-tools">
@@ -33,34 +31,35 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>تصویر</th>
+                                <th>نام فرم</th>
+                                <th>فرم والد</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($product->images))
-                                @foreach ($product->images as $item)
-                                    <tr>
-                                        <th>{{ $loop->iteration }}</th>
-                                        <td>
-                                            <img src="{{ asset($item->image['indexArray'][$item->image['currentImage']]) }}"
-                                                alt="" width="100" height="50">
-                                        </td>
+                            @foreach ($category_attributes as $category_attribute)
+                                <tr>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $category_attribute->name }}</td>
+                                    <td>{{ $category_attribute->category->name }}</td>
+                                    <td class="width-22-rem text-left">
+                                        <a href="{{ route('admin.market.property.value.index', $category_attribute) }}"
+                                            class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> ویژگی ها</a>
+                                        <a href="{{ route('admin.market.property.edit', $category_attribute) }}"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                        <form class="d-inline"
+                                            action="{{ route('admin.market.property.destroy', $category_attribute->id) }}"
+                                            method="post">
+                                            @csrf
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                    class="fa fa-trash-alt"></i> حذف</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
 
 
-                                        <td width=100px>
-                                            <form action="{{ route('admin.market.product.gallery.destroy', $item->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                        class="fa fa-trash-alt"></i> حذف</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                            @endif
                         </tbody>
                     </table>
                 </div>

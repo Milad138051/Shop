@@ -14,7 +14,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title">ایجاد گالری کالا</h3>
+                    <h3 class="card-title">ایجاد گالری کالا ({{$product->name}})</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -28,6 +28,12 @@
                 </div>
 
                 <div class="card-body">
+
+                    <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
+                        <a href="{{ route('admin.market.product.gallery.index',$product) }}" class="btn btn-info btn-sm">بازگشت</a>
+                    </section>
+
+
                     <form action="{{ route('admin.market.product.gallery.store',$product) }}" method="post" enctype="multipart/form-data"
                         id="form">
                         @csrf

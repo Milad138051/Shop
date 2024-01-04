@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class CategoryAttribute extends Model
 {
     use HasFactory,SoftDeletes;
-  protected $fillable = ['name', 'type', 'unit', 'category_id'];
+  protected $guarded = ['id'];
 
 	public function category()
 	{

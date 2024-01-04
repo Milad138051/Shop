@@ -13,6 +13,8 @@
                     <h3 class="card-title">گارانتی کالا ({{ $product->name }})</h3>
                     <a href="{{ route('admin.market.guarantee.create', $product->id) }}"
                         class="btn btn-success text-white">ایجاد</a>
+                    <a href="{{ route('admin.market.product.index') }}" class="btn btn-info">بازگشت</a>
+
 
 
                     <div class="card-tools">
@@ -40,26 +42,29 @@
                         </thead>
                         <tbody>
                             @if (isset($product->guarantees))
-                            @foreach ($product->guarantees as $guarantee)
-                            <tr>
-                                    <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $product->name }}</td>
-                                    <td>
-                                        {{ $guarantee->name }}
-                                    </td>
-                                     <td>
-                                        {{ $guarantee->price_increase }}
-                                    </td>
-        
-                                    <td class="width-16-rem text-left">
-                                        <form class="d-inline" action="{{ route('admin.market.guarantee.destroy', ['product' => $product->id , 'guarantee' => $guarantee->id] ) }}" method="post">
-                                            @csrf
-                                            {{ method_field('delete') }}
-                                            <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                                        </form>
-        
-                                </td>
-                                </tr>
+                                @foreach ($product->guarantees as $guarantee)
+                                    <tr>
+                                        <th>{{ $loop->iteration }}</th>
+                                        <td>{{ $product->name }}</td>
+                                        <td>
+                                            {{ $guarantee->name }}
+                                        </td>
+                                        <td>
+                                            {{ $guarantee->price_increase }}
+                                        </td>
+
+                                        <td class="width-16-rem text-left">
+                                            <form class="d-inline"
+                                                action="{{ route('admin.market.guarantee.destroy', ['product' => $product->id, 'guarantee' => $guarantee->id]) }}"
+                                                method="post">
+                                                @csrf
+                                                {{ method_field('delete') }}
+                                                <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                                        class="fa fa-trash-alt"></i> حذف</button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
                                 @endforeach
                             @else
                             @endif

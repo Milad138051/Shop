@@ -84,6 +84,12 @@
                     <p>کالاها</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.market.property.index')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>فرم کالا</p>
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -93,7 +99,7 @@
             <li class="nav-header">بخش کاربران</li>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-tree"></i>
+                <i class="nav-icon fa fa-edit"></i>
                 <p>
                   سطوح دسترسی
                   <i class="fa fa-angle-left right"></i>

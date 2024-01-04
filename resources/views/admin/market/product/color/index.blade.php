@@ -13,6 +13,8 @@
                     <h3 class="card-title">رنگ کالا ({{ $product->name }})</h3>
                     <a href="{{ route('admin.market.product-color.create', $product->id) }}"
                         class="btn btn-success text-white">ایجاد</a>
+                            <a href="{{ route('admin.market.product.index') }}" class="btn btn-info">بازگشت</a>
+                            
 
 
                     <div class="card-tools">

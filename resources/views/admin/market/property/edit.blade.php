@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد رنگ کالا</title>
+    <title>ویرایش فرم کالا</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -13,7 +13,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title">ایجاد رنگ کالا ({{$product->name}})</h3>
+                    <h3 class="card-title">ویرایش فرم کالا</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -29,30 +29,19 @@
                 <div class="card-body">
 
                     <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                        <a href="{{ route('admin.market.product-color.index', $product) }}"
-                            class="btn btn-info btn-sm">بازگشت</a>
-                    </section>
+                        <a href="{{ route('admin.market.property.index') }}" class="btn btn-info">بازگشت</a>
+                    </section>                    
 
-                    <form action="{{ route('admin.market.product-color.store', $product) }}" method="post">
+                    <form action="{{ route('admin.market.property.update', $categoryAttribute) }}" method="post"
+                        enctype="multipart/form-data" id="form">
                         @csrf
-                        <div class="form-group">
-                            <label for="">نام رنگ</label>
-                            <input type="text" name="color_name" value="{{ old('color_name') }}"
-                                class="form-control form-control-sm">
-                            @error('color_name')
-                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                    <strong>
-                                        {{ $message }}
-                                    </strong>
-                                </span>
-                            @enderror
-                        </div>
+                        @method('put')
 
                         <div class="form-group">
-                            <label for="color">رنگ</label>
-                            <input type="color" name="color" value="{{ old('color') }}"
-                                class="form-control form-control-sm form-control-color">
-                            @error('color')
+                            <label for="">نام فرم</label>
+                            <input name="name" type="text" class="form-control form-control-sm"
+                                value="{{ old('name', $categoryAttribute->name) }}">
+                            @error('name')
                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                     <strong>
                                         {{ $message }}
@@ -62,11 +51,32 @@
                         </div>
 
 
+
                         <div class="form-group">
-                            <label for="">افزایش قیمت</label>
-                            <input type="text" name="price_increase" value="{{ old('price_increase') }}"
-                                class="form-control form-control-sm">
-                            @error('price_increase')
+                            <label for="">واحد اندازه گیری</label>
+                            <input name="unit" type="text" class="form-control form-control-sm"
+                                value="{{ old('unit', $categoryAttribute->unit) }}">
+                            @error('name')
+                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">دسته والد</label>
+                            <select name="category_id" id="" class="form-control form-control-sm">
+                                <option value="">دسته را انتخاب کنید</option>
+                                @foreach ($productCategories as $productCategory)
+                                    <option value="{{ $productCategory->id }}"
+                                        @if (old('category_id', $categoryAttribute->category_id) == $productCategory->id) selected @endif>
+                                        {{ $productCategory->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                     <strong>
                                         {{ $message }}

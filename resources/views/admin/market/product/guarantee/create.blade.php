@@ -4,7 +4,6 @@
 @section('head-tag')
     <title>ایجاد گارانتی کالا</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
-
 @endsection
 
 
@@ -14,7 +13,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title">ایجاد گارانتی کالا</h3>
+                    <h3 class="card-title">ایجاد گارانتی کالا ({{$product->name}})</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -28,31 +27,38 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.market.guarantee.store',$product) }}" method="post">
+
+                    <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
+                        <a href="{{ route('admin.market.guarantee.index', $product) }}" class="btn btn-info btn-sm">بازگشت</a>
+                    </section>
+
+                    <form action="{{ route('admin.market.guarantee.store', $product) }}" method="post">
                         @csrf
 
                         <div class="form-group">
                             <label for="name">نام گارانتی</label>
-                            <input type="text" name="name" value="{{ old('name') }}" class="form-control form-control-sm">
+                            <input type="text" name="name" value="{{ old('name') }}"
+                                class="form-control form-control-sm">
                             @error('name')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
+                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">افزایش قیمت</label>
-                            <input type="text" name="price_increase" value="{{ old('price_increase') }}" class="form-control form-control-sm">
+                            <input type="text" name="price_increase" value="{{ old('price_increase') }}"
+                                class="form-control form-control-sm">
                             @error('price_increase')
-                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
-                                <strong>
-                                    {{ $message }}
-                                </strong>
-                            </span>
-                        @enderror
+                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-success text-white">ثبت</button>
@@ -64,4 +70,3 @@
         </div>
     </div>
 @endsection
-

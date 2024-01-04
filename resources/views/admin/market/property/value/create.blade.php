@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد رنگ کالا</title>
+    <title>مقدار فرم کالا</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -13,7 +13,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title">ایجاد رنگ کالا ({{$product->name}})</h3>
+                    <h3 class="card-title">مقدار فرم کالا ({{ $categoryAttribute->name }})</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -29,17 +29,22 @@
                 <div class="card-body">
 
                     <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                        <a href="{{ route('admin.market.product-color.index', $product) }}"
-                            class="btn btn-info btn-sm">بازگشت</a>
+                        <a href="{{ route('admin.market.property.value.index',$categoryAttribute) }}" class="btn btn-info">بازگشت</a>
                     </section>
-
-                    <form action="{{ route('admin.market.product-color.store', $product) }}" method="post">
+                    
+                    <form action="{{ route('admin.market.property.value.store', $categoryAttribute->id) }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="">نام رنگ</label>
-                            <input type="text" name="color_name" value="{{ old('color_name') }}"
-                                class="form-control form-control-sm">
-                            @error('color_name')
+                            <label for="">انتخاب محصول</label>
+                            <select name="product_id" id="" class="form-control form-control-sm">
+                                <option value=""> محصول را انتخاب کنید</option>
+                                @foreach ($categoryAttribute->category->products as $product)
+                                    <option value="{{ $product->id }}" @if (old('product_id') == $product->id) selected @endif>
+                                        {{ $product->name }}</option>
+                                @endforeach
+                            </select>
+
+                            @error('product_id')
                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                     <strong>
                                         {{ $message }}
@@ -49,10 +54,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="color">رنگ</label>
-                            <input type="color" name="color" value="{{ old('color') }}"
-                                class="form-control form-control-sm form-control-color">
-                            @error('color')
+                            <label for="">مقدار</label>
+                            <input type="text" name="value" value="{{ old('value') }}"
+                                class="form-control form-control-sm">
+                            @error('value')
                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                     <strong>
                                         {{ $message }}
@@ -74,6 +79,7 @@
                                 </span>
                             @enderror
                         </div>
+
 
                         <button type="submit" class="btn btn-success text-white">ثبت</button>
 

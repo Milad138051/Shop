@@ -9,9 +9,11 @@ use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\ProductController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\Market\CategoryController;
+use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
+use App\Http\Controllers\Admin\Market\PropertyValueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,6 +127,24 @@ Route::prefix('admin')->group(function () {
             Route::get('/guarantee/create/{product}', [GuaranteeController::class, 'create'])->name('admin.market.guarantee.create');
             Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
             Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+        });
+
+        //property
+        Route::prefix('property')->group(function () {
+            Route::get('/', [PropertyController::class, 'index'])->name('admin.market.property.index');
+            Route::get('/create', [PropertyController::class, 'create'])->name('admin.market.property.create');
+            Route::post('/store', [PropertyController::class, 'store'])->name('admin.market.property.store');
+            Route::get('/edit/{categoryAttribute}', [PropertyController::class, 'edit'])->name('admin.market.property.edit');
+            Route::put('/update/{categoryAttribute}', [PropertyController::class, 'update'])->name('admin.market.property.update');
+            Route::delete('/destroy/{categoryAttribute}', [PropertyController::class, 'destroy'])->name('admin.market.property.destroy');
+            
+            //value
+            Route::get('{categoryAttribute}/value', [PropertyValueController::class, 'index'])->name('admin.market.property.value.index');
+            Route::get('{categoryAttribute}/value/create', [PropertyValueController::class, 'create'])->name('admin.market.property.value.create');
+            Route::post('{categoryAttribute}/value/store', [PropertyValueController::class, 'store'])->name('admin.market.property.value.store');
+            Route::get('value/{categoryAttribute}/edit/{categoryValue}', [PropertyValueController::class, 'edit'])->name('admin.market.property.value.edit');
+            Route::put('value/{categoryAttribute}/update/{categoryValue}', [PropertyValueController::class, 'update'])->name('admin.market.property.value.update');
+            Route::delete('value/{categoryAttribute}/destroy/{categoryValue}', [PropertyValueController::class, 'destroy'])->name('admin.market.property.value.destroy');
         });
 
 

@@ -4,7 +4,6 @@
 @section('head-tag')
     <title>ایجاد محصول</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
-
 @endsection
 
 
@@ -28,6 +27,13 @@
                 </div>
 
                 <div class="card-body">
+
+
+                    <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
+                        <a href="{{ route('admin.market.product.index') }}" class="btn btn-info btn-sm">بازگشت</a>
+                    </section>
+
+
                     <form action="{{ route('admin.market.product.store') }}" method="post" enctype="multipart/form-data"
                         id="form">
                         @csrf
@@ -266,7 +272,6 @@
 
 
 @section('script')
-
     <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-date.min.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
@@ -275,63 +280,57 @@
     </script>
 
     <script>
-            $(document).ready(function () {
-                $('#published_at_view').persianDatepicker({
-                    format: 'YYYY/MM/DD',
-                    altField: '#published_at'
-                })
-            });
+        $(document).ready(function() {
+            $('#published_at_view').persianDatepicker({
+                format: 'YYYY/MM/DD',
+                altField: '#published_at'
+            })
+        });
     </script>
 
-<script>
-    $(document).ready(function () {
-        var tags_input = $('#tags');
-        var select_tags = $('#select_tags');
-        var default_tags = tags_input.val();
-        var default_data = null;
+    <script>
+        $(document).ready(function() {
+            var tags_input = $('#tags');
+            var select_tags = $('#select_tags');
+            var default_tags = tags_input.val();
+            var default_data = null;
 
-        if(tags_input.val() !== null && tags_input.val().length > 0)
-        {
-            default_data = default_tags.split(',');
-        }
-
-        select_tags.select2({
-            placeholder : 'لطفا تگ های خود را وارد نمایید',
-            tags: true,
-            data: default_data
-        });
-        select_tags.children('option').attr('selected', true).trigger('change');
-
-
-        $('#form').submit(function ( event ){
-            if(select_tags.val() !== null && select_tags.val().length > 0){
-                var selectedSource = select_tags.val().join(',');
-                tags_input.val(selectedSource)
+            if (tags_input.val() !== null && tags_input.val().length > 0) {
+                default_data = default_tags.split(',');
             }
+
+            select_tags.select2({
+                placeholder: 'لطفا تگ های خود را وارد نمایید',
+                tags: true,
+                data: default_data
+            });
+            select_tags.children('option').attr('selected', true).trigger('change');
+
+
+            $('#form').submit(function(event) {
+                if (select_tags.val() !== null && select_tags.val().length > 0) {
+                    var selectedSource = select_tags.val().join(',');
+                    tags_input.val(selectedSource)
+                }
+            })
         })
-    })
-</script>
+    </script>
 
-<script>
+    <script>
+        $('#meta_copy').on('click', function() {
 
-     $('#meta_copy').on('click',function(){
-		 
-		 var ele=$(this).parent().prev().clone(true);
-		 $(this).before(ele);
-	 })
-
-
-</script>
+            var ele = $(this).parent().prev().clone(true);
+            $(this).before(ele);
+        })
+    </script>
 
 
-<script>
-    var select_relatedCategories = $('#select_relatedCategories');
-    select_relatedCategories.select2({
-        placeholder: 'لطفا دسته ها را وارد نمایید',
-        multiple: true,
-        tags : true
-    })
-</script>
-
-
+    <script>
+        var select_relatedCategories = $('#select_relatedCategories');
+        select_relatedCategories.select2({
+            placeholder: 'لطفا دسته ها را وارد نمایید',
+            multiple: true,
+            tags: true
+        })
+    </script>
 @endsection
