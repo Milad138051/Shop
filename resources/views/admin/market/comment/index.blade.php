@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">نظرات پست ها</h3>
+                    <h3 class="card-title">نظرات محصولات</h3>
                     <a href="#" class="btn btn-success text-white disabled">ایجاد</a>
 
 
@@ -34,8 +34,8 @@
                                 <th>comment</th>
                                 <th>answer to</th>
                                 <th>user_id</th>
-                                <th>post_id</th>
-                                <th>post_title</th>
+                                <th>product_id</th>
+                                <th>product_name</th>
                                 <th>type</th>
                                 <th>status</th>
                                 <th>tools</th>
@@ -51,7 +51,7 @@
                                     </td>
                                     <td>{{ $comment->author_id }}</td>
                                     <td>{{ $comment->commentable->id }}</td>
-                                    <td>{{ $comment->commentable->title }}</td>
+                                    <td>{{ $comment->commentable->name }}</td>
                                     <td>{{$comment->parent_id ? 'جواب من' : 'سوال کاربر'}}</td>
                                     <td>
                                         @if ($comment->approved == 1)
@@ -66,9 +66,9 @@
                       @csrf
                       <button type="submit" class="btn btn-danger text-white">حذف</button>
                   </form> --}}
-                                        <a href="{{ route('admin.content.comment.show', $comment) }}"
+                                        <a href="{{ route('admin.market.comment.show', $comment) }}"
                                             class="btn btn-primary text-white">نمایش</a>
-                                        <a href="{{ route('admin.content.comment.approved', $comment) }}"
+                                        <a href="{{ route('admin.market.comment.approved', $comment) }}"
                                             class="btn btn-warning text-white">تغییر وضعیت</a>
                                     </td>
                                 </tr>

@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
+use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -137,7 +139,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/edit/{categoryAttribute}', [PropertyController::class, 'edit'])->name('admin.market.property.edit');
             Route::put('/update/{categoryAttribute}', [PropertyController::class, 'update'])->name('admin.market.property.update');
             Route::delete('/destroy/{categoryAttribute}', [PropertyController::class, 'destroy'])->name('admin.market.property.destroy');
-            
+
             //value
             Route::get('{categoryAttribute}/value', [PropertyValueController::class, 'index'])->name('admin.market.property.value.index');
             Route::get('{categoryAttribute}/value/create', [PropertyValueController::class, 'create'])->name('admin.market.property.value.create');
@@ -145,6 +147,16 @@ Route::prefix('admin')->group(function () {
             Route::get('value/{categoryAttribute}/edit/{categoryValue}', [PropertyValueController::class, 'edit'])->name('admin.market.property.value.edit');
             Route::put('value/{categoryAttribute}/update/{categoryValue}', [PropertyValueController::class, 'update'])->name('admin.market.property.value.update');
             Route::delete('value/{categoryAttribute}/destroy/{categoryValue}', [PropertyValueController::class, 'destroy'])->name('admin.market.property.value.destroy');
+        });
+
+        //comment
+        Route::controller(ProductCommentController::class)->prefix('product-comment')->group(function () {
+            Route::get('/', 'index')->name('admin.market.comment.index');
+            Route::get('/show/{comment}', 'show')->name('admin.market.comment.show');
+            // Route::get('/status/{comment}', 'status')->name('admin.comment.status');
+            Route::delete('/destroy/{comment}', 'delete')->name('admin.market.comment.delete');
+            Route::get('/approved/{comment}', 'approved')->name('admin.market.comment.approved');
+            Route::post('/answer/{comment}', 'answer')->name('admin.market.comment.answer');
         });
 
 

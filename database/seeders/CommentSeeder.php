@@ -21,7 +21,7 @@ class CommentSeeder extends Seeder
 
         foreach($posts as $post)
         {
-            Comment::factory(2)->create([
+            Comment::factory(1)->create([
                 'commentable_id'=>$post->id,
             ]);
         }

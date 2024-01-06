@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Content;
+namespace App\Http\Controllers\Admin\Market;
 
 use App\Models\Content\Comment;
 use App\Http\Controllers\Controller;
@@ -12,8 +12,15 @@ class CommentController extends Controller
 
     public function index()
     {
-        $comments = Comment::orderBy('id', 'desc')->where('commentable_type', 'App\Models\Content\Post')->simplePaginate(15);
-        return view('admin.content.comment.index', compact('comments'));
+    //    $commentsUnseen=Comment::where('commentable_type','App\Models\Market\Product')->where('seen',0)->get();
+	// 	foreach($commentsUnseen as $item){
+			
+	// 		$item->seen=1;
+	// 		$res=$item->save();
+	// 	}
+	    $comments=Comment::orderBy('id','DESC')->where('commentable_type','App\Models\Market\Product')->simplePaginate(15);
+		
+        return view('admin.market.comment.index',compact('comments'));
 
     }
 
@@ -39,7 +46,7 @@ class CommentController extends Controller
     {
         $comment->seen = 1;
         $comment->save();
-        return view('admin.content.comment.show', compact('comment'));
+        return view('admin.market.comment.show', compact('comment'));
     }
 
     public function edit($id)
@@ -67,9 +74,9 @@ class CommentController extends Controller
         $comment->approved = $comment->approved == 0 ? 1 : 0;
         $result = $comment->save();
         if ($result) {
-            return redirect()->route('admin.content.comment.index')->with('swal-success', ' وضعیت نظر با موفقیت تغییر کرد');
+            return redirect()->route('admin.market.comment.index')->with('swal-success', ' وضعیت نظر با موفقیت تغییر کرد');
         } else {
-            return redirect()->route('admin.content.comment.index')->with('swal-error', ' خطایی رخ داد');
+            return redirect()->route('admin.market.comment.index')->with('swal-error', ' خطایی رخ داد');
         }
     }
 
@@ -88,11 +95,11 @@ class CommentController extends Controller
             $inputs['status'] = 1;
 
             Comment::create($inputs);
-            return redirect()->route('admin.content.comment.index')->with('swal-success', 'پاسخ با موفقیت ثبت شد');
+            return redirect()->route('admin.market.comment.index')->with('swal-success', 'پاسخ با موفقیت ثبت شد');
 
         } else {
 
-            return redirect()->route('admin.content.comment.index')->with('swal-error', 'خطایی رخ داد');
+            return redirect()->route('admin.market.comment.index')->with('swal-error', 'خطایی رخ داد');
 
         }
 

@@ -90,6 +90,12 @@
                     <p>فرم کالا</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.market.comment.index')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>نظرات</p>
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
