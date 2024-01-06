@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Market\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
-use App\Http\Requests\Market\CategoryRequest;
+use App\Http\Requests\Admin\Market\CategoryRequest;
 
 class CategoryController extends Controller
 {

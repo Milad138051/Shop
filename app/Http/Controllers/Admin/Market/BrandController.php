@@ -6,7 +6,7 @@ use App\Models\Market\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
-use App\Http\Requests\Market\BrandRequest;
+use App\Http\Requests\Admin\Market\BrandRequest;
 
 class BrandController extends Controller
 {
@@ -56,6 +56,7 @@ class BrandController extends Controller
       public function update(BrandRequest $request, Brand $brand, ImageService $imageService)
     {
         $inputs = $request->all();
+        // dd($inputs);
 
         if($request->hasFile('logo'))
         {

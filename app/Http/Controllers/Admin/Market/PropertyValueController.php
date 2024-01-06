@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Market\CategoryValue;
 use App\Models\Market\CategoryAttribute;
-use App\Http\Requests\Market\CategoryValueRequest;
+use App\Http\Requests\Admin\Market\CategoryValueRequest;
 
 class PropertyValueController extends Controller
 {

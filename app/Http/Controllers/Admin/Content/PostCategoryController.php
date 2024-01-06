@@ -6,7 +6,7 @@ use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
-use App\Http\Requests\Content\PostCategoryRequest;
+use App\Http\Requests\Admin\Content\PostCategoryRequest;
 
 class PostCategoryController extends Controller
 {

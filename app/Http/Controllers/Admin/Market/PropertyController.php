@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Market\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Market\CategoryAttribute;
-use App\Http\Requests\Market\CategoryAttributeRequest;
+use App\Http\Requests\Admin\Market\CategoryAttributeRequest;
 
 class PropertyController extends Controller
 {

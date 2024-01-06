@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Content;
 
 use App\Models\Content\Comment;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Content\CommentRequest;
+use App\Http\Requests\Admin\Content\CommentRequest;
 
 
 class CommentController extends Controller

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>گارانتی کالا</title>
+    <title>کد تخفیف</title>
 @endsection
 
 
@@ -10,11 +10,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">گارانتی کالا ({{ $product->name }})</h3>
-                    <a href="{{ route('admin.market.guarantee.create', $product->id) }}"
-                        class="btn btn-success text-white">ایجاد</a>
-                    <a href="{{ route('admin.market.product.index') }}" class="btn btn-info">بازگشت</a>
-
+                    <h3 class="card-title">کد تخفیف</h3>
+                    <a href="{{ route('admin.market.discount.copan.create') }}" class="btn btn-success text-white">ایجاد</a>
 
 
                     <div class="card-tools">
@@ -34,40 +31,43 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>نام کالا</th>
-                                <th> گارانتی کالا</th>
-                                <th> افزایش قیمت</th>
+                                <th>کد تخفیف</th>
+                                <th>میزان تخفیف</th>
+                                <th>نوع تخفیف</th>
+                                <th>سقف تخفیف</th>
+                                <th>نوع کوپن</th>
+                                <th>تاریخ شروع</th>
+                                <th>تاریخ پایان</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($product->guarantees))
-                                @foreach ($product->guarantees as $guarantee)
-                                    <tr>
-                                        <th>{{ $loop->iteration }}</th>
-                                        <td>{{ $product->name }}</td>
-                                        <td>
-                                            {{ $guarantee->name }}
-                                        </td>
-                                        <td>
-                                            {{ $guarantee->price_increase }}
-                                        </td>
+                            @foreach ($copans as $copan)
 
-                                        <td class="width-16-rem text-left">
-                                            <form class="d-inline"
-                                                action="{{ route('admin.market.guarantee.destroy', ['product' => $product->id, 'guarantee' => $guarantee->id]) }}"
-                                                method="post">
-                                                @csrf
-                                                {{ method_field('delete') }}
-                                                <button class="btn btn-danger btn-sm delete" type="submit"><i
-                                                        class="fa fa-trash-alt"></i> حذف</button>
-                                            </form>
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $copan->code }}</td>
+                                <td>{{ $copan->amount }}</td>
+                                <td>{{ $copan->amount_type == 0 ? 'درصدی' : 'عددی' }}</td>
+                                <td>{{ $copan->discount_ceiling ?? '-' }} تومان </td>
+                                <td>{{ $copan->type == 0 ? 'عمومی' : 'خصوصی' }}</td>
+                                <td>{{ jalaliDate($copan->start_date) }}</td>
+                                <td>{{ jalaliDate($copan->end_date) }}</td>
+                                <td class="width-16-rem text-left">
+                                    <a href="{{route('admin.market.discount.copan.edit',$copan->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                    
+                                    <form class="d-inline" action="{{ route('admin.market.discount.copan.delete', $copan->id) }}" method="post">
+                                            @csrf
+                                            {{ method_field('delete') }}
+                                            <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
+                                    </form>
+                                    
+                                </td>
+                            </tr>
+    
+                            @endforeach
 
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                            @endif
+
                         </tbody>
                     </table>
                 </div>
@@ -102,7 +102,6 @@
                 });
             });
         }
-
     </script>
 
 

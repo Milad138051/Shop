@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Models\Content\Post;
 use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
-use App\Http\Requests\Content\PostRequest;
+use App\Http\Requests\Admin\Content\PostRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
 

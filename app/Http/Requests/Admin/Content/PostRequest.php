@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Content;
+namespace App\Http\Requests\Admin\Content;
 
 use App\Http\Services\Image\ImageService;
 use Illuminate\Foundation\Http\FormRequest;

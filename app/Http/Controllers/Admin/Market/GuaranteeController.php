@@ -19,12 +19,12 @@ class GuaranteeController extends Controller
         return view('admin.market.product.guarantee.create', compact('product'));
     }
 
-  
+
     public function store(Request $request, Product $product)
     {
         $validated = $request->validate([
-                'name'              =>  'required',
-                'price_increase'    =>  'required|numeric'
+            'name' => 'required',
+            'price_increase' => 'required|numeric'
         ]);
         $inputs = $request->all();
         $inputs['product_id'] = $product->id;
@@ -37,4 +37,5 @@ class GuaranteeController extends Controller
     {
         $guarantee->delete();
         return back();
-    }}
+    }
+}

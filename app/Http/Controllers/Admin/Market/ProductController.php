@@ -10,7 +10,7 @@ use App\Models\Market\ProductMeta;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Image\ImageService;
-use App\Http\Requests\Market\ProductRequest;
+use App\Http\Requests\Admin\Market\ProductRequest;
 
 class ProductController extends Controller
 {
