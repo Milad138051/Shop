@@ -1,3 +1,4 @@
+use App\Models\Market\Payment;
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('admin.home') }}" class="brand-link">
@@ -128,6 +129,38 @@
                                     <a href="{{route('admin.market.discount.commonDiscount')}}" class="nav-link">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>تخفیف عمومی</p>
+                                    </a>
+                                </li>
+                            </ul>
+                    </ul>
+
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-circle-o text-success"></i>
+                                <p>
+                                    پرداخت ها
+                                    <i class="fa fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('admin.market.payment.index')}}" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>تمام پرداخت ها</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('admin.market.payment.online')}}" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>پرداخت انلاین</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('admin.market.payment.cash')}}" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>پرداخت در محل</p>
                                     </a>
                                 </li>
                             </ul>

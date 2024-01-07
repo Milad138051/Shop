@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Market\GalleryController;
+use App\Http\Controllers\Admin\Market\PaymentController;
 use App\Http\Controllers\Admin\Market\ProductController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\Market\CategoryController;
@@ -85,7 +86,6 @@ Route::prefix('admin')->group(function () {
             Route::get('/approved/{comment}', 'approved')->name('admin.content.comment.approved');
             Route::post('/answer/{comment}', 'answer')->name('admin.content.comment.answer');
         });
-
     });
 
     Route::prefix('market')->group(function () {
@@ -177,18 +177,24 @@ Route::prefix('admin')->group(function () {
         });
         //delivery
         Route::controller(DeliveryController::class)->prefix('delivery')->group(function () {
-            Route::get('/','index')->name('admin.market.delivery.index');
+            Route::get('/', 'index')->name('admin.market.delivery.index');
             Route::get('/create', 'create')->name('admin.market.delivery.create');
             Route::post('/store', 'store')->name('admin.market.delivery.store');
-            Route::get('/edit/{delivery}','edit')->name('admin.market.delivery.edit');
-            Route::put('/update/{delivery}','update')->name('admin.market.delivery.update');
+            Route::get('/edit/{delivery}', 'edit')->name('admin.market.delivery.edit');
+            Route::put('/update/{delivery}', 'update')->name('admin.market.delivery.update');
             Route::delete('/destroy/{delivery}', 'destroy')->name('admin.market.delivery.destroy');
-            Route::get('/status/{delivery}','status')->name('admin.market.delivery.status');
+            Route::get('/status/{delivery}', 'status')->name('admin.market.delivery.status');
         });
-
-
+        //payment
+        Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+            Route::get('/','index')->name('admin.market.payment.index');
+            Route::get('/online', 'online')->name('admin.market.payment.online');
+            Route::get('/cash', 'cash')->name('admin.market.payment.cash');
+            Route::get('/paid/{payment}','paid')->name('admin.market.payment.paid');
+            Route::get('/notPaid/{payment}','notPaid')->name('admin.market.payment.notPaid');
+            Route::get('/canceled/{payment}','canceled')->name('admin.market.payment.canceled');
+            Route::get('/returned/{payment}','returned')->name('admin.market.payment.returned');
+            Route::get('/show/{payment}', 'show')->name('admin.market.payment.show');
+        });
     });
-
-
-
 });
