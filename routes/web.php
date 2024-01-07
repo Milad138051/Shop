@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\ProductController;
 use App\Http\Controllers\Admin\Content\CommentController;
 use App\Http\Controllers\Admin\Market\CategoryController;
+use App\Http\Controllers\Admin\Market\DeliveryController;
 use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
@@ -106,7 +107,6 @@ Route::prefix('admin')->group(function () {
             Route::put('/update/{brand}', 'update')->name('admin.market.brand.update');
             Route::delete('/destroy/{brand}', 'delete')->name('admin.market.brand.delete');
         });
-
         //product
         Route::prefix('product')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.market.product.index');
@@ -131,7 +131,6 @@ Route::prefix('admin')->group(function () {
             Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
             Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
         });
-
         //property
         Route::prefix('property')->group(function () {
             Route::get('/', [PropertyController::class, 'index'])->name('admin.market.property.index');
@@ -149,7 +148,6 @@ Route::prefix('admin')->group(function () {
             Route::put('value/{categoryAttribute}/update/{categoryValue}', [PropertyValueController::class, 'update'])->name('admin.market.property.value.update');
             Route::delete('value/{categoryAttribute}/destroy/{categoryValue}', [PropertyValueController::class, 'destroy'])->name('admin.market.property.value.destroy');
         });
-
         //comment
         Route::controller(ProductCommentController::class)->prefix('product-comment')->group(function () {
             Route::get('/', 'index')->name('admin.market.comment.index');
@@ -159,7 +157,6 @@ Route::prefix('admin')->group(function () {
             Route::get('/approved/{comment}', 'approved')->name('admin.market.comment.approved');
             Route::post('/answer/{comment}', 'answer')->name('admin.market.comment.answer');
         });
-
         //discount
         Route::prefix('discount')->group(function () {
             //copan
@@ -178,9 +175,20 @@ Route::prefix('admin')->group(function () {
             Route::put('/common-discount/update/{commonDiscount}', [DiscountController::class, 'commonDiscountUpdate'])->name('admin.market.discount.commonDiscount.update');
             Route::delete('/common-discount/delete/{commonDiscount}', [DiscountController::class, 'commonDiscountDestroy'])->name('admin.market.discount.commonDiscount.delete');
         });
+        //delivery
+        Route::controller(DeliveryController::class)->prefix('delivery')->group(function () {
+            Route::get('/','index')->name('admin.market.delivery.index');
+            Route::get('/create', 'create')->name('admin.market.delivery.create');
+            Route::post('/store', 'store')->name('admin.market.delivery.store');
+            Route::get('/edit/{delivery}','edit')->name('admin.market.delivery.edit');
+            Route::put('/update/{delivery}','update')->name('admin.market.delivery.update');
+            Route::delete('/destroy/{delivery}', 'destroy')->name('admin.market.delivery.destroy');
+            Route::get('/status/{delivery}','status')->name('admin.market.delivery.status');
+        });
 
 
     });
+
 
 
 });

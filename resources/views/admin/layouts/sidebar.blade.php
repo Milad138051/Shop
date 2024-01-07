@@ -98,6 +98,12 @@
                                     <p>نظرات</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.market.delivery.index') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>روش ارسال</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
