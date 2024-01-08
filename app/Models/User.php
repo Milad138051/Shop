@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Market\Order;
+use App\Models\Market\Payment;
+use App\Models\Market\Product;
+use App\Models\Market\OrderItem;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -15,37 +19,106 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var string[]
      */
     protected $fillable = [
         'name',
+		'first_name',
+		'last_name',
+		'mobile',
         'email',
         'password',
+		'profile_photo_path',
+		'status',
+		'activation',
+		'user_type',
+		'mobile_verified_at',
+		'email_verified_at'
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'profile_photo_url',
     ];
 
 
-	public function getFullNameAttribute(){
+	// public function getFullNameAttribute(){
 
-		return $this->first_name.' '.$this->last_name;
+	// 	return $this->first_name.' '.$this->last_name;
+	// }
+	
+	// public function ticketAdmin()
+	// // {
+	// // 	return $this->hasOne(TicketAdmin::class);
+	// // }
+
+	// // public function tickets()
+	// // {
+	// // 	return $this->hasMany(Ticket::class);
+	// // }
+
+	public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+	public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+	public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+	public function products()
+	{
+		return $this->belongsToMany(Product::class);
 	}
+	
+	public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, Order::class);
+    }
+   
+   public function isUserPurchedProduct($product_id)
+    {
+        $productIds = collect();
+        foreach ($this->orderItems()->where('product_id', $product_id)->get() as $item) {
+            $productIds->push($item->product_id);
+        }
+        $productIds = $productIds->unique();
+        return $productIds;
+    }
+
+    // public function compare()
+    // {
+    //     return $this->hasOne(Compare::class);
+    // }
 }

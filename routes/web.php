@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
+use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Market\GalleryController;
@@ -195,6 +196,21 @@ Route::prefix('admin')->group(function () {
             Route::get('/canceled/{payment}','canceled')->name('admin.market.payment.canceled');
             Route::get('/returned/{payment}','returned')->name('admin.market.payment.returned');
             Route::get('/show/{payment}', 'show')->name('admin.market.payment.show');
+        });
+        //orders
+        Route::controller(OrderController::class)->prefix('order')->group(function () {
+            Route::get('/','all')->name('admin.market.order.all');
+            Route::get('/new-order','newOrders')->name('admin.market.order.newOrders');
+            Route::get('/sending','sending')->name('admin.market.order.sending');
+            Route::get('/unpaid', 'unpaid')->name('admin.market.order.unpaid');
+            Route::get('/canceled','canceled')->name('admin.market.order.canceled');
+            Route::get('/returned', 'returned')->name('admin.market.order.returned');
+            Route::get('/show-factor/{order}','showFactor')->name('admin.market.order.show-factor');
+            Route::get('/show-factor/{order}/detail','detail')->name('admin.market.order.show-factor/detail');
+            Route::get('/change-send-status/{order}','changeSendStatus')->name('admin.market.order.changeSendStatus');
+            Route::get('/change-order-status/{order}', 'changeOrderStatus')->name('admin.market.order.changeOrderStatus');
+            Route::delete('/destroy/{order}','destroy')->name('admin.market.order.delete');
+            //Route::get('/cancel-order/{order}', 'cancelOrder')->name('admin.market.order.cancelOrder');
         });
     });
 });
