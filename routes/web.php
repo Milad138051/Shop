@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Content\PostController;
@@ -36,9 +37,7 @@ use App\Http\Controllers\Admin\Market\CommentController as ProductCommentControl
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class,'index'])->name('front.home');
 
 
 
