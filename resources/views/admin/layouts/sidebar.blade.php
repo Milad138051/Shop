@@ -229,13 +229,13 @@ use App\Models\Market\Payment;
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{route('admin.user.role.index')}}" class="nav-link">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>نقش ها</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{route('admin.user.permission.index')}}" class="nav-link">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>دسترسی ها</p>
                                     </a>
@@ -243,13 +243,13 @@ use App\Models\Market\Payment;
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link">
+                            <a href="{{route('admin.user.admin-user.index')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>کاربران ادمین</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link">
+                            <a href="{{route('admin.user.customer.index')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>مشتریان</p>
                             </a>

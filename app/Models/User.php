@@ -7,6 +7,8 @@ use App\Models\Market\Order;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Market\OrderItem;
+use App\Traits\Permissions\HasPermissionTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,13 +16,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use SoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use HasPermissionTrait;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+
     protected $fillable = [
         'name',
 		'first_name',
@@ -67,10 +69,10 @@ class User extends Authenticatable
     ];
 
 
-	// public function getFullNameAttribute(){
+	public function getFullNameAttribute(){
 
-	// 	return $this->first_name.' '.$this->last_name;
-	// }
+		return $this->first_name.' '.$this->last_name;
+	}
 	
 	// public function ticketAdmin()
 	// // {
