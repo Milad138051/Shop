@@ -105,6 +105,12 @@ use App\Models\Market\Payment;
                                     <p>روش ارسال</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.market.banner.index') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>بنرها</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

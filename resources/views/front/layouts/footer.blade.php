@@ -3,25 +3,25 @@
     <div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-y-5 gap-x-10 justify-items-center mb-10">
         <div class="flex justify-center items-center flex-col rounded-3xl w-32 h-24">
-          <img class="w-20" src="./assets/image/services/cash-on-delivery.svg" alt="">
+          <img class="w-20" src="{{asset('front-assets/image/services/cash-on-delivery.svg')}}" alt="">
           <span class="text-sm opacity-80">
           پرداخت درب منزل
           </span>
         </div>
         <div class="flex justify-center items-center flex-col rounded-3xl w-32 h-24">
-          <img class="w-20" src="./assets/image/services/days-return.svg" alt="">
+          <img class="w-20" src="{{asset('front-assets/image/services/days-return.svg')}}" alt="">
           <span class="text-sm opacity-80">
             ضمانت بازگشت کالا
           </span>
         </div>
         <div class="flex justify-center items-center flex-col rounded-3xl w-32 h-24">
-          <img class="w-20" src="./assets/image/services/express-delivery.svg" alt="">
+          <img class="w-20" src="{{asset('front-assets/image/services/express-delivery.svg')}}" alt="">
           <span class="text-sm opacity-80">
             تحویل سریع
           </span>
         </div>
         <div class="flex justify-center items-center flex-col rounded-3xl w-32 h-24">
-          <img class="w-20" src="./assets/image/services/original-products.svg" alt="">
+          <img class="w-20" src="{{asset('front-assets/image/services/original-products.svg')}}" alt="">
           <span class="text-sm opacity-80">
             ضمانت اصل بودن
           </span>
@@ -32,7 +32,7 @@
     <div>
       <a href="./index.html" class="inline-block mb-4 mx-4 ">
         <img
-          src="./assets/image/logo.png"
+          src="{{asset('front-assets/image/logo.png')}}"
           alt="logo"
           class="w-48"
         />
@@ -137,10 +137,10 @@
             </div>
             <div class="flex items-center justify-center gap-x-5">
               <a href="#">
-                <img class="w-28 h-auto" src="./assets/image/logoSecrets/symbol-02.png" alt="">
+                <img class="w-28 h-auto" src="{{asset('front-assets/image/logoSecrets/symbol-02.png')}}" alt="">
               </a>
               <a href="#">
-                <img class="w-20 h-auto" src="./assets/image/logoSecrets/zarinPal.png" alt="">
+                <img class="w-20 h-auto" src="{{asset('front-assets/image/logoSecrets/zarinPal.png')}}" alt="">
               </a>
             </div>
           </div>

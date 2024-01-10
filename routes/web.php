@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\User\CustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Content\BannerController;
 use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\PaymentController;
 use App\Http\Controllers\Admin\Market\ProductController;
@@ -37,7 +38,7 @@ use App\Http\Controllers\Admin\Market\CommentController as ProductCommentControl
 |
 */
 
-Route::get('/',[HomeController::class,'index'])->name('front.home');
+Route::get('/', [HomeController::class, 'index'])->name('front.home');
 
 
 
@@ -191,29 +192,39 @@ Route::prefix('admin')->group(function () {
         });
         //payment
         Route::controller(PaymentController::class)->prefix('payment')->group(function () {
-            Route::get('/','index')->name('admin.market.payment.index');
+            Route::get('/', 'index')->name('admin.market.payment.index');
             Route::get('/online', 'online')->name('admin.market.payment.online');
             Route::get('/cash', 'cash')->name('admin.market.payment.cash');
-            Route::get('/paid/{payment}','paid')->name('admin.market.payment.paid');
-            Route::get('/notPaid/{payment}','notPaid')->name('admin.market.payment.notPaid');
-            Route::get('/canceled/{payment}','canceled')->name('admin.market.payment.canceled');
-            Route::get('/returned/{payment}','returned')->name('admin.market.payment.returned');
+            Route::get('/paid/{payment}', 'paid')->name('admin.market.payment.paid');
+            Route::get('/notPaid/{payment}', 'notPaid')->name('admin.market.payment.notPaid');
+            Route::get('/canceled/{payment}', 'canceled')->name('admin.market.payment.canceled');
+            Route::get('/returned/{payment}', 'returned')->name('admin.market.payment.returned');
             Route::get('/show/{payment}', 'show')->name('admin.market.payment.show');
         });
         //orders
         Route::controller(OrderController::class)->prefix('order')->group(function () {
-            Route::get('/','all')->name('admin.market.order.all');
-            Route::get('/new-order','newOrders')->name('admin.market.order.newOrders');
-            Route::get('/sending','sending')->name('admin.market.order.sending');
+            Route::get('/', 'all')->name('admin.market.order.all');
+            Route::get('/new-order', 'newOrders')->name('admin.market.order.newOrders');
+            Route::get('/sending', 'sending')->name('admin.market.order.sending');
             Route::get('/unpaid', 'unpaid')->name('admin.market.order.unpaid');
-            Route::get('/canceled','canceled')->name('admin.market.order.canceled');
+            Route::get('/canceled', 'canceled')->name('admin.market.order.canceled');
             Route::get('/returned', 'returned')->name('admin.market.order.returned');
-            Route::get('/show-factor/{order}','showFactor')->name('admin.market.order.show-factor');
-            Route::get('/show-factor/{order}/detail','detail')->name('admin.market.order.show-factor/detail');
-            Route::get('/change-send-status/{order}','changeSendStatus')->name('admin.market.order.changeSendStatus');
+            Route::get('/show-factor/{order}', 'showFactor')->name('admin.market.order.show-factor');
+            Route::get('/show-factor/{order}/detail', 'detail')->name('admin.market.order.show-factor/detail');
+            Route::get('/change-send-status/{order}', 'changeSendStatus')->name('admin.market.order.changeSendStatus');
             Route::get('/change-order-status/{order}', 'changeOrderStatus')->name('admin.market.order.changeOrderStatus');
-            Route::delete('/destroy/{order}','destroy')->name('admin.market.order.delete');
+            Route::delete('/destroy/{order}', 'destroy')->name('admin.market.order.delete');
             //Route::get('/cancel-order/{order}', 'cancelOrder')->name('admin.market.order.cancelOrder');
+        });
+        //banner
+        Route::controller(BannerController::class)->prefix('banner')->group(function () {
+            Route::get('/','index')->name('admin.market.banner.index');
+            Route::get('/create', 'create')->name('admin.market.banner.create');
+            Route::post('/store', 'store')->name('admin.market.banner.store');
+            Route::get('/edit/{banner}','edit')->name('admin.market.banner.edit');
+            Route::put('/update/{banner}', 'update')->name('admin.market.banner.update');
+            Route::get('/status/{banner}', 'status')->name('admin.market.banner.status');
+            Route::delete('/destroy/{banner}', 'destroy')->name('admin.market.banner.destroy');
         });
     });
 
@@ -266,6 +277,7 @@ Route::prefix('admin')->group(function () {
             Route::put('/update/{permission}', [PermissionController::class, 'update'])->name('admin.user.permission.update');
             Route::delete('/destroy/{permission}', [PermissionController::class, 'destroy'])->name('admin.user.permission.destroy');
         });
+
     });
 
 

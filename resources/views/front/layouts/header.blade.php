@@ -2,7 +2,7 @@
       <nav
         class="relative px-5 py-2 flex flex-wrap justify-between items-start pt-5 bg-white">
         <a class="order-2" href="./index.html">
-          <img class="w-36" src="./assets/image/logo.png" alt="" />
+          <img class="w-36" src="{{asset('front-assets/image/logo.png')}}" alt="" />
         </a>
         <div class="order-3 w-full mt-3 lg:mt-0 lg:w-5/12 lg:mr-[10%]">
           <div class="relative">
@@ -14,7 +14,7 @@
               onfocus="showModalSearch()"/>
             <div
               class="absolute inset-y-0 left-0 flex items-center pl-4">
-              <img class="w-5 h-5 text-gray-500" src="./assets/image/search.png" alt="" />
+              <img class="w-5 h-5 text-gray-500" src="{{asset('front-assets/image/search.png')}}" alt="" />
             </div>
             <div class="absolute w-full bg-gray-50 shadow-2xl h-auto mt-2 z-50 rounded-2xl hidden" id="showModalSearch">
               <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 p-3">
@@ -127,14 +127,14 @@
             <a
               href="./login.html"
               class="flex items-center h-10 leading-10 px-3 mx-1 transition rounded-xl hover:bg-red-50">
-              <img class="ml-1 w-6" src="./assets/image/user.png" alt="" />
+              <img class="ml-1 w-6" src="{{asset('front-assets/image/user.png')}}" alt="" />
               <span
                 class="text-sm opacity-95"
                 >
                 ورود | ثبت نام
               </span>
               <span>
-                <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
               </span>
             </a>
             <div
@@ -163,7 +163,7 @@
                         class="flex justify-center items-center opacity-90"
                         ><img
                           class="w-8 ml-2"
-                          src="./assets/image/userNotImage.png"
+                          src="{{asset('front-assets/image/userNotImage.png')}}"
                           alt="" />امیررضا کریمی</span
                       >
                     </a>
@@ -179,7 +179,7 @@
                       <span class="flex justify-center items-center text-sm opacity-90"
                         ><img
                           class="w-5 ml-1"
-                          src="./assets/image/package.png"
+                          src="{{asset('front-assets/image/package.png')}}"
                           alt="" />سفارش ها</span
                       >
                     </a>
@@ -195,7 +195,7 @@
                       <span class="flex justify-center items-center text-sm opacity-90"
                         ><img
                           class="w-5 ml-1"
-                          src="./assets/image/heart.png"
+                          src="{{asset('front-assets/image/heart.png')}}"
                           alt="" />علاقه مندی ها</span
                       >
                     </a>
@@ -209,7 +209,7 @@
                       href="#"
                       class="px-4 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center text-sm opacity-90"
-                        ><img class="w-5 ml-1" src="./assets/image/exit.png" alt="" />خروج
+                        ><img class="w-5 ml-1" src="{{asset('front-assets/image/exit.png')}}" alt="" />خروج
                         از حساب کاربری</span
                       >
                     </a>
@@ -229,14 +229,14 @@
               class="flex items-center h-10 leading-10 px-3 cursor-pointer no-underline hover:no-underline duration-100 mx-1 transition rounded-xl hover:bg-red-100">
               <img
                 class="inline ml-1 w-5"
-                src="./assets/image/shopping-cart.png"
+                src="{{asset('front-assets/image/shopping-cart.png')}}"
                 alt="" />
               <span
                 class="text-sm text-neutral-800 hover:text-neutral-700 opacity-95">
                 سبد خرید
               </span>
               <span>
-                <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
               </span>
             </a>
             <div
@@ -371,7 +371,7 @@
                   @mouseleave="showChildren=false">
                   <span>پوشاک</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -429,7 +429,7 @@
                   @mouseleave="showChildren=false">
                   <span>کالای دیجیتال</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -495,7 +495,7 @@
                   @mouseleave="showChildren=false">
                   <span>لوازم خانگی</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -561,7 +561,7 @@
                 <a href="./category-index.html" class="flex items-center h-10 leading-10 px-3 cursor-pointer text-sm no-underline hover:no-underline duration-100 mx-1 transition text-gray-700 hover:text-red-500" @click.prevent="showChildren=!showChildren"@mouseenter="showChildren=true"@mouseleave="showChildren=false">
                   <span>زیبایی</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -619,7 +619,7 @@
                   @mouseleave="showChildren=false">
                   <span>لوازم برقی</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -701,7 +701,7 @@
                   @mouseleave="showChildren=false">
                   <span>سوپر مارکت</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -799,7 +799,7 @@
                   @mouseleave="showChildren=false">
                   <span>کودک و نوزاد</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('feont-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -865,7 +865,7 @@
                 @mouseleave="showChildren=false">
                 <span>صفحات</span>
                 <span>
-                  <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                  <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                 </span>
               </a>
               <div
@@ -1010,7 +1010,7 @@
           class="fixed top-0 right-0 bottom-0 flex flex-col w-5/6 max-w-sm py-5 px-6 bg-white border-r overflow-y-auto">
           <div class="flex justify-center items-center mb-4">
             <a class="order-1" href="./index.html">
-              <img class="w-32" src="./assets/image/logo.png" alt="" />
+              <img class="w-32" src="{{asset('front-assets/image/logo.png')}}" alt="" />
             </a>
           </div>
           <div>
@@ -1023,7 +1023,7 @@
                       <a href="./cart.html">
                         <img
                           class="inline ml-1 w-5"
-                          src="./assets/image/shopping-cart.png"
+                          src="{{asset('front-assets/image/shopping-cart.png')}}"
                           alt="" />سبد خرید</a
                       >
                     </div>
@@ -1032,7 +1032,7 @@
                       <a href="./login-register.html"
                         ><img
                           class="inline ml-1 w-5"
-                          src="./assets/image/user.png"
+                          src="{{asset('front-assets/image/user.png')}}"
                           alt="" />ورود | ثبت نام</a
                       >
                     </div>
@@ -1049,7 +1049,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>پوشاک</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1113,7 +1113,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>کالای دیجیتال</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1188,7 +1188,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>لوازم خانگی</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1274,7 +1274,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>زیبایی</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1338,7 +1338,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>لوازم برقی</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1435,7 +1435,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>سوپر مارکت</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1554,7 +1554,7 @@
                   @click.prevent="showChildren=!showChildren">
                   <span>کودک و نوزاد</span>
                   <span>
-                    <img class="w-4 mr-1" src="./assets/image/chevron-down-login.png" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
