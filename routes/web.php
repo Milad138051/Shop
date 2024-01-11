@@ -56,7 +56,7 @@ Route::controller(LoginRegisterController::class)->prefix('auth')->group(functio
     Route::
         // middleware('throttle:customer-login-register-limiter')->
         get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
-    Route::get('logout/', 'logout')->name('auth.customer.logout');
+    Route::get('logout/', 'logout')->name('auth.logout');
 });
 
 

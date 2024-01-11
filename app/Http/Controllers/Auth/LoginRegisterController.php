@@ -49,7 +49,7 @@ class LoginRegisterController extends Controller
             }
         }else{
             $errorText = 'شناسه ورودی شما نه شماره موبایل است نه ایمیل';
-            return redirect()->route('auth.customer.login-register-form')->withErrors(['id' => $errorText]);
+            return redirect()->route('auth.login-register-form')->withErrors(['id' => $errorText]);
         }
 
         if(empty($user)){
@@ -112,7 +112,7 @@ class LoginRegisterController extends Controller
        // dd($token);
 		$otp=Otp::where('token',$token)->first();
 		if(empty($otp)){
-			return redirect()->route('auth.customer.login-register-form')->with('swal-error', 'کد وارد شده صحیح نمیباشد, لطفا دوباره امتحان کنید');            // ->withErrors(['id'=>'آدرس وارد شده معتبر نمیباشد']);
+			return redirect()->route('auth.login-register-form')->with('swal-error', 'کد وارد شده صحیح نمیباشد, لطفا دوباره امتحان کنید');            // ->withErrors(['id'=>'آدرس وارد شده معتبر نمیباشد']);
 		}
 		return view('auth.login-register-confirm',compact('token','otp'));
 	}	
@@ -144,7 +144,7 @@ class LoginRegisterController extends Controller
 		}
 		
 		Auth::login($user);
-	    return redirect()->route('admin.home')->with('swal-success', 'موفق');
+	    return redirect()->route('front.home')->with('swal-success', 'موفق');
 	}
 	
 	
@@ -208,7 +208,7 @@ class LoginRegisterController extends Controller
 	public function logout()
 	{
 		Auth::logout();
-		return redirect()->route('admin.home');
+		return redirect()->route('front.home');
 	}
 	
 	

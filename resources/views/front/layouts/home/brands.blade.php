@@ -7,39 +7,13 @@
     <div class="containerPSlider swiper">
       <div class="slide-container-brand px-2">
         <div class="card-wrapper swiper-wrapper py-4 items-center">
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/1.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/2.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/3.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/4.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/5.jpg" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/6.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/7.jpg" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/8.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/9.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/1.png" alt="" />
-          </a>
-          <a href="./#" class="card swiper-slide">
-            <img class="max-w-[110px]" src="./assets/image/brands/1.png" alt="" />
-          </a>
+      
+      @foreach ($brands as $brand)
+      <a href="./#" class="card swiper-slide">
+        <img class="max-w-[110px]" src="{{ asset($brand->logo['indexArray']['medium']) }}" alt="" />
+      </a>
+
+      @endforeach    
         </div>
       </div>
       <div class="swiper-button-next swiper-navBtn"></div>

@@ -21,7 +21,7 @@ class BannerRequest extends FormRequest
       return [
         'title' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
         'url' => 'required|max:500|min:5|regex:/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-z-A-Z-0-9]\.[a-zA-Z]{2,}$/u',
-        'image' => 'required|image|mimes:png,jpg,jpeg,gif|max:10000',
+        'image' => 'required|image|mimes:png,jpg,jpeg,gif,webp|max:10000',
         'position' => 'required|numeric',
         'status' => 'required|numeric|in:0,1',
 
@@ -30,7 +30,7 @@ class BannerRequest extends FormRequest
       return [
         'title' => 'required|max:120|min:2|regex:/^[ا-یa-zA-Z0-9\-۰-۹ء-ي., ]+$/u',
         'url' => 'required|max:500|min:5|regex:/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-z-A-Z-0-9]\.[a-zA-Z]{2,}$/u',
-        'image' => 'image|mimes:png,jpg,jpeg,gif|max:10000',
+        'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:10000',
         'position' => 'required|numeric',
         'status' => 'required|numeric|in:0,1',
 

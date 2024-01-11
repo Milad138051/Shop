@@ -24,38 +24,8 @@
                     کیف لپ تاپ مدل ضدآب
                   </div>
                 </a>
-                <a href="" class="flex items-center bg-white p-2 rounded-xl">
-                  <img src="./assets/image/product/bag.png" alt="" class="w-14 rounded-lg ml-2">
-                  <div class="text-xs opacity-70">
-                    کیف لپ تاپ مدل ضدآب
-                  </div>
-                </a>
-                <a href="" class="flex items-center bg-white p-2 rounded-xl">
-                  <img src="./assets/image/product/bag.png" alt="" class="w-14 rounded-lg ml-2">
-                  <div class="text-xs opacity-70">
-                    کیف لپ تاپ مدل ضدآب
-                  </div>
-                </a>
               </div>
               <div class="flex flex-wrap gap-2 px-3 mb-3">
-                <a href="" class="bg-white rounded-xl px-2 py-1 flex items-center text-sm">
-                  کیف زنانه
-                <div class="opacity-70">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#333333" viewBox="0 0 256 256">
-                    <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z">
-                    </path>
-                  </svg>
-                </div>
-                </a>
-                <a href="" class="bg-white rounded-xl px-2 py-1 flex items-center text-sm">
-                  کیف سبک
-                <div class="opacity-70">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#333333" viewBox="0 0 256 256">
-                    <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z">
-                    </path>
-                  </svg>
-                </div>
-                </a>
                 <a href="" class="bg-white rounded-xl px-2 py-1 flex items-center text-sm">
                   کیف زیبا
                 <div class="opacity-70">
@@ -87,38 +57,15 @@
                   </div>
                   آیفون
                 </a>
-                <a href="" class="bg-white rounded-xl px-2 py-1 flex items-center text-sm">
-                  <div class="opacity-70 ml-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#333333" viewBox="0 0 256 256">
-                      <path d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z">
-                      </path>
-                    </svg>
-                  </div>
-                  تلویزیون
-                </a>
-                <a href="" class="bg-white rounded-xl px-2 py-1 flex items-center text-sm">
-                  <div class="opacity-70 ml-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#333333" viewBox="0 0 256 256">
-                      <path d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z">
-                      </path>
-                    </svg>
-                  </div>
-                  شیائومی
-                </a>
-                <a href="" class="bg-white rounded-xl px-2 py-1 flex items-center text-sm">
-                  <div class="opacity-70 ml-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#333333" viewBox="0 0 256 256">
-                      <path d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z">
-                      </path>
-                    </svg>
-                  </div>
-                  کفش اسپورت
-                </a>
               </div>
             </div>
           </div>
         </div>
+
         <div class="order-4 hidden lg:flex">
+          
+          {{-- user profile --}}
+          @auth
           <span
             class="block relative"
             x-data="{showChildren:false}"
@@ -131,7 +78,7 @@
               <span
                 class="text-sm opacity-95"
                 >
-                ورود | ثبت نام
+                {{auth()->user()->name ?? auth()->user()->first_name.' '.atuh()->user()->last_name}}
               </span>
               <span>
                 <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
@@ -164,7 +111,7 @@
                         ><img
                           class="w-8 ml-2"
                           src="{{asset('front-assets/image/userNotImage.png')}}"
-                          alt="" />امیررضا کریمی</span
+                          alt="" />پروفایل</span
                       >
                     </a>
                   </li>
@@ -190,7 +137,7 @@
                     @mouseleave="showChildren=false"
                     @mouseenter="showChildren=true">
                     <a
-                      href="./profile-favorites.html"
+                      href="#"
                       class="px-4 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center text-sm opacity-90"
                         ><img
@@ -206,7 +153,7 @@
                     @mouseleave="showChildren=false"
                     @mouseenter="showChildren=true">
                     <a
-                      href="#"
+                      href="{{route('auth.logout')}}"
                       class="px-4 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center text-sm opacity-90"
                         ><img class="w-5 ml-1" src="{{asset('front-assets/image/exit.png')}}" alt="" />خروج
@@ -217,7 +164,28 @@
                 </ul>
               </div>
             </div>
-          </span>
+          </span>     
+          @endauth
+          
+          
+          {{-- login-register button --}}
+          @guest
+          <span
+          class="block relative">
+          <a
+            href="{{route('auth.login-register-form')}}"
+            class="flex items-center h-10 leading-10 px-3 mx-1 transition rounded-xl hover:bg-red-50">
+            <img class="ml-1 w-6" src="{{asset('front-assets/image/user.png')}}" alt="" />
+            <span
+              class="text-sm opacity-95"
+              >
+              ورود | ثبت نام
+            </span>
+          </a>
+        </span>  
+          @endguest
+
+          {{-- cart button --}}
           <span
             class="block relative"
             x-data="{showChildren:false}"
@@ -336,6 +304,7 @@
             </div>
           </span>
         </div>
+     
         <div class="order-1 lg:hidden">
           <button class="navbar-burger flex items-center text-red-300 p-3">
             <svg
@@ -345,8 +314,12 @@
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
           </button>
+     
         </div>
+     
       </nav>
+
+
       <!-- DOWN -->
       <div class="w-full">
         <div class="py-2 px-5 bg-white shadow-stone-50 shadow-md hidden lg:block">
