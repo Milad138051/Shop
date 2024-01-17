@@ -21,10 +21,12 @@ use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\Admin\User\PermissionController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
+use App\Http\Controllers\Front\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
+use App\Http\Controllers\Front\Market\ProductController as CustomerProductController;
 
 
 /*
@@ -37,11 +39,6 @@ use App\Http\Controllers\Admin\Market\CommentController as ProductCommentControl
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', [HomeController::class, 'index'])->name('front.home');
-
-
-
 
 //auth
 Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
@@ -59,8 +56,45 @@ Route::controller(LoginRegisterController::class)->prefix('auth')->group(functio
     Route::get('logout/', 'logout')->name('auth.logout');
 });
 
+//front
+Route::get('/', [HomeController::class, 'index'])->name('front.home');
+Route::controller(CustomerProductController::class)->prefix('market')->group(function () {
+    Route::get('/product/{product}','product')->name('front.market.product');
+    Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');   
+    Route::post('/add-review/{product}', 'addReview')->name('front.market.add-review');   
+    Route::post('/add-comment/{product}', 'addComment')->name('front.market.add-comment');   
+	Route::post('/add-comment-replay/{product}/{comment}','addReplay')->name('front.market.add-replay');
+    Route::get('/add-to-favorite/{product}', 'addToFavorite')->name('front.market.add-to-favorite');
+    // Route::get('/add-to-compare/{product}','addToCompare')->name('front.market.add-to-compare');
+    // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate');
+});
 
-//admin
+Route::namespace('SalesProcess')->group(function () {
+    //cart
+    Route::get('/cart', [CartController::class, 'cart'])->name('customer.Sales-process.cart');
+    Route::post('/cart', [CartController::class, 'updateCart'])->name('customer.Sales-process.update-cart');
+    Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('customer.sales-process.add-to-cart');
+    Route::get('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('customer.Sales-process.remove-from-cart');
+
+    //profile completion
+    // Route::get('/profile-completion', [ProfileCompletionController::class, 'profileCompletion'])->name('customer.sales-process.profile-completion');
+    // Route::post('/profile-completion', [ProfileCompletionController::class, 'store'])->name('customer.sales-process.profile-completion-store');
+    // Route::middleware('profile.completion')->group(function () {
+    //     //address and delivery
+    //     Route::get('/address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('customer.sales-process.address-and-delivery');
+    //     Route::post('/add-address', [AddressController::class, 'addAddress'])->name('customer.sales-process.add-address');
+    //     Route::put('/update-address/{address}', [AddressController::class, 'updateAddress'])->name('customer.sales-process.update-address');
+    //     Route::get('/get-cities/{province}', [AddressController::class, 'getCities'])->name('customer.sales-process.get-cities');
+    //     Route::get('/choose-address-and-delivery', [AddressController::class, 'chooseAddressAndDelivery'])->name('customer.sales-process.choose-address-and-delivery');
+    //     //payment
+    //     Route::get('/payment', [PaymentCustomerController::class, 'payment'])->name('customer.sales-process.payment');
+    //     Route::post('/copan-discount', [PaymentCustomerController::class, 'copanDiscount'])->name('customer.sales-process.copanDiscount');
+    //     Route::post('/copan-submit', [PaymentCustomerController::class, 'paymentSubmit'])->name('customer.sales-process.paymentSubmit');
+    // });
+});
+
+
+//admin-panel
 Route::prefix('admin')->group(function () {
     Route::get('', [AdminDashboardController::class, 'index'])->name('admin.home');
     Route::prefix('content')->group(function () {
@@ -179,6 +213,14 @@ Route::prefix('admin')->group(function () {
             Route::get('/common-discount/edit/{commonDiscount}', [DiscountController::class, 'commonDiscountEdit'])->name('admin.market.discount.commonDiscount.edit');
             Route::put('/common-discount/update/{commonDiscount}', [DiscountController::class, 'commonDiscountUpdate'])->name('admin.market.discount.commonDiscount.update');
             Route::delete('/common-discount/delete/{commonDiscount}', [DiscountController::class, 'commonDiscountDestroy'])->name('admin.market.discount.commonDiscount.delete');
+
+            // amazing sale
+            Route::get('/amazing-sale', [DiscountController::class, 'amazingSale'])->name('admin.market.discount.amazingSale');
+            Route::get('/amazing-sale/create', [DiscountController::class, 'amazingSaleCreate'])->name('admin.market.discount.amazingSale.create');
+            Route::post('/amazing-sale/store', [DiscountController::class, 'amazingSaleStore'])->name('admin.market.discount.amazingSale.store');
+            Route::get('/amazing-sale/edit/{amazingSale}', [DiscountController::class, 'amazingSaleEdit'])->name('admin.market.discount.amazingSale.edit');
+            Route::put('/amazing-sale/update/{amazingSale}', [DiscountController::class, 'amazingSaleUpdate'])->name('admin.market.discount.amazingSale.update');
+            Route::delete('/amazing-sale/delete/{amazingSale}', [DiscountController::class, 'amazingSaleDestroy'])->name('admin.market.discount.amazingSale.delete');
         });
         //delivery
         Route::controller(DeliveryController::class)->prefix('delivery')->group(function () {

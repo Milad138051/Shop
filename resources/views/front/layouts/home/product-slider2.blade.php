@@ -10,7 +10,7 @@
         <div class="card-wrapper swiper-wrapper py-4">
 
           @foreach ($products as $product)
-          <a href="./single-product.html" class="card swiper-slide my-2 p-2 md:p-3 ">
+          <a href="{{route('front.market.product',$product)}}" class="card swiper-slide my-2 p-2 md:p-3" style="border:none!important">
             <div class="image-box mb-6 ">
               <div>
                 <img class="hover:scale-105 transition rounded-3xl w-full mx-auto" src="{{ asset($product->image['indexArray']['medium']) }}" alt="" />

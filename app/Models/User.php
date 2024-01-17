@@ -7,10 +7,11 @@ use App\Models\Market\Order;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Market\OrderItem;
-use App\Traits\Permissions\HasPermissionTrait;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\market\ProductReview;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\Permissions\HasPermissionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -123,4 +124,9 @@ class User extends Authenticatable
     // {
     //     return $this->hasOne(Compare::class);
     // }
+
+    public function reviews()
+	{
+		return $this->hasMany(ProductReview::class);
+	}
 }

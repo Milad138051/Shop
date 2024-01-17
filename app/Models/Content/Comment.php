@@ -35,7 +35,7 @@ class Comment extends Model
 
     public function activeAnswers()
     {
-		return $this->answers()->where('approved', 1)->where('status',1)->get();
+		return $this->answers()->where('approved', 1)->get();
     }
 
    

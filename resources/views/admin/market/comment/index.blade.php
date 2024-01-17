@@ -46,13 +46,18 @@
                             @foreach ($comments as $comment)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ Str::limit($comment->body, 15) }}</td>
-                                    <td>{{ $comment->parent_id ? Str::limit($comment->parent->body, 10) : 'والدی ندارد' }}
+                                    <td>{{Str::limit($comment->body, 10)}}</td>
+                                    <td>
+                                    @if ($comment->parent_id ==null)
+                                    والدی ندارد
+                                    @else
+                                    {{Str::limit($comment->parent->body, 10)}}
+                                    @endif
                                     </td>
                                     <td>{{ $comment->author_id }}</td>
                                     <td>{{ $comment->commentable->id }}</td>
                                     <td>{{ $comment->commentable->name }}</td>
-                                    <td>{{$comment->parent_id ? 'جواب من' : 'سوال کاربر'}}</td>
+                                    <td>{{$comment->parent_id ? 'جواب من' : 'کامنت کاربر'}}</td>
                                     <td>
                                         @if ($comment->approved == 1)
                                             <span class="badge badge-success btn-sm">تایید شده</span>

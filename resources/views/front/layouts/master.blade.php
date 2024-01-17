@@ -8,15 +8,25 @@
 
 <body class="bg-gray-50">
     <!-- NAVBAR -->
-    <div>
-        @include('front.layouts.header')
-    </div>
-
-
+    @include('front.layouts.header')
+    @include('admin.alerts.alert-section.success')
+    @include('admin.alerts.alert-section.error')
     @yield('content')
-        <!-- FOOTER -->
-        @include('front.layouts.footer')
-    </body>
-    @include('front.layouts.script')
+    <!-- FOOTER -->
+    @include('front.layouts.footer')
+</body>
+@include('front.layouts.script')
+@yield('script')
 
-    </html>
+
+
+{{-- <section class="toast-wrapper flex-row-reverse">
+    @include('admin.alerts.toast.success')
+    @include('admin.alerts.toast.error')
+</section> --}}
+@include('admin.alerts.sweetalert.success')
+@include('admin.alerts.sweetalert.error')
+
+
+
+</html>

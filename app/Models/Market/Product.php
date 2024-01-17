@@ -2,6 +2,7 @@
 
 namespace App\Models\Market;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Market\Category;
 use Illuminate\Database\Eloquent\Model;
@@ -59,15 +60,15 @@ class Product extends Model
 		return $this->hasMany(Guarantee::class);
 	}
 	 
-	//  public function amazingSales()
-	// {
-	// 	 return $this->hasMany(AmazingSale::class);
-	// }
+	 public function amazingSales()
+	{
+		 return $this->hasMany(AmazingSale::class);
+	}
 	
-	// public function activeAmazingSale()
-	// {
-	// 	return $this->amazingSales->where('start_date','<',Carbon::now())->where('end_date','>',Carbon::now())->where('status',1)->first();
-	// }
+	public function activeAmazingSale()
+	{
+		return $this->amazingSales->where('start_date','<',Carbon::now())->where('end_date','>',Carbon::now())->where('status',1)->first();
+	}
 	
 	public function activeComments()
     {
@@ -85,4 +86,10 @@ class Product extends Model
 	// 	return $this->belongsToMany(Compare::class);
 	// }
 
+	public function reviews()
+	{
+		return $this->hasMany(ProductReview::class);
 	}
+
+	
+}

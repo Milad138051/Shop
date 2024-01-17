@@ -22,4 +22,9 @@ class CategoryAttribute extends Model
 	 {
 		 return $this->hasMany(CategoryValue::class);
 	 }
+
+	 public function reviews()
+	 {
+		 return $this->hasMany(ProductReview::class);
+	 }
 }

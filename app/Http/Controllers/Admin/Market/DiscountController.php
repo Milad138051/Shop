@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin\Market;
 use App\Models\User;
 use App\Models\Market\Copan;
 use Illuminate\Http\Request;
+use App\Models\Market\Product;
+use App\Models\Market\AmazingSale;
 use App\Http\Controllers\Controller;
 use App\Models\Market\CommonDiscount;
 use App\Http\Requests\Admin\Market\CopanRequest;
+use App\Http\Requests\Admin\Market\AmazingSaleRequest;
 use App\Http\Requests\Admin\Market\CommonDiscountRequest;
 
 class DiscountController extends Controller
@@ -45,7 +48,7 @@ class DiscountController extends Controller
         $users = User::orderBy('created_at', 'desc')->get();
         return view('admin.market.discount.copan.copan-edit', compact('copan', 'users'));
     }
-    public function copanUpdate(CopanRequest $request,Copan $copan)
+    public function copanUpdate(CopanRequest $request, Copan $copan)
     {
         $inputs = $request->all();
         // dd($inputs);
@@ -66,7 +69,7 @@ class DiscountController extends Controller
         $result = $copan->delete();
         return redirect()->route('admin.market.discount.copan')->with('swal-success', 'ایتم با موفقیت حذف شد');
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function commonDiscount()
     {
         $commonDiscounts = CommonDiscount::orderBy('created_at', 'desc')->get();
@@ -108,6 +111,54 @@ class DiscountController extends Controller
     {
         $result = $commonDiscount->delete();
         return redirect()->route('admin.market.discount.commonDiscount')->with('swal-success', 'ایتم با موفقیت حذف شد');
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public function amazingSale()
+    {
+        $amazingSales = AmazingSale::orderBy('created_at', 'desc')->get();
+        return view('admin.market.discount.amazing-sale.amazing-sale', compact('amazingSales'));
+    }
+    public function amazingSaleCreate()
+    {
+        $products = Product::orderBy('name', 'asc')->get();
+        return view('admin.market.discount.amazing-sale.amazing-sale-create', compact('products'));
+    }
+    public function amazingSaleStore(AmazingSaleRequest $request)
+    {
+        $inputs = $request->all();
+        //date fixed
+        $realTimestampStart = substr($request->start_date, 0, 10);
+        $inputs['start_date'] = date("Y-m-d H:i:s", (int) $realTimestampStart);
+        $realTimestampEnd = substr($request->end_date, 0, 10);
+        $inputs['end_date'] = date("Y-m-d H:i:s", (int) $realTimestampEnd);
+
+        $amazingSale = AmazingSale::create($inputs);
+        return redirect()->route('admin.market.discount.amazingSale')->with('swal-success', 'ایتم جدید شما با موفقیت ثبت شد');
+    }
+    public function amazingSaleEdit(AmazingSale $amazingSale)
+    {
+        $products = Product::orderBy('name', 'asc')->get();
+        return view('admin.market.discount.amazing-sale.amazing-sale-edit', compact('amazingSale', 'products'));
+    }
+    public function amazingSaleUpdate(amazingSaleRequest $request, AmazingSale $amazingSale)
+    {
+        $inputs = $request->all();
+        //date fixed
+        $realTimestampStart = substr($request->start_date, 0, 10);
+        $inputs['start_date'] = date("Y-m-d H:i:s", (int) $realTimestampStart);
+        $realTimestampEnd = substr($request->end_date, 0, 10);
+        $inputs['end_date'] = date("Y-m-d H:i:s", (int) $realTimestampEnd);
+
+        $amazingSale->update($inputs);
+        return redirect()->route('admin.market.discount.amazingSale')->with('swal-success', 'ایتم با موفقیت ویرایش شد');
+    }
+    public function amazingSaleDestroy(AmazingSale $amazingSale)
+    {
+        $result = $amazingSale->delete();
+        return redirect()->route('admin.market.discount.amazingSale')->with('swal-success', 'ایتم با موفقیت حذف شد');
     }
 
 

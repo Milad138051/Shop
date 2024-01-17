@@ -1,4 +1,6 @@
-      <!-- TOP -->
+<div>
+
+     <!-- TOP -->
       <nav
         class="relative px-5 py-2 flex flex-wrap justify-between items-start pt-5 bg-white">
         <a class="order-2" href="./index.html">
@@ -772,7 +774,7 @@
                   @mouseleave="showChildren=false">
                   <span>کودک و نوزاد</span>
                   <span>
-                    <img class="w-4 mr-1" src="{{asset('feont-assets/image/chevron-down-login.png')}}" alt="" />
+                    <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
                 </a>
                 <div
@@ -1599,3 +1601,4 @@
       <!-- OPACITY SCREEN FOR SEARCH INPUT FOCUS -->
       <div class="absolute w-full h-screen bg-gray-200 opacity-40 z-40 hidden" id="opacitiScreen" onclick="closeScreen()">
       </div>
+    </div>

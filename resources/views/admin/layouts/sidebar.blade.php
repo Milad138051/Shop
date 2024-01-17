@@ -137,6 +137,12 @@ use App\Models\Market\Payment;
                                         <p>تخفیف عمومی</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{route('admin.market.discount.amazingSale')}}" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>فروش شگفت انگیز</p>
+                                    </a>
+                                </li>
                             </ul>
                     </ul>
 

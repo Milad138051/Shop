@@ -9,10 +9,9 @@
         <div class="card-wrapper swiper-wrapper py-4 items-center">
       
       @foreach ($brands as $brand)
-      <a href="./#" class="card swiper-slide">
-        <img class="max-w-[110px]" src="{{ asset($brand->logo['indexArray']['medium']) }}" alt="" />
+      <a href="./#" class="card swiper-slide" style="border:none!important">
+        <img class="max-w-[100px]" src="{{ asset($brand->logo['indexArray']['large']) }}" alt="" />
       </a>
-
       @endforeach    
         </div>
       </div>

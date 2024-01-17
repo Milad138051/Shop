@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-    <title>ایجاد تخفیف عمومی</title>
+    <title>ویرایش تخفیف عمومی</title>
     <link rel="stylesheet" href="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.css') }}">
 @endsection
 
@@ -13,7 +13,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title">ایجاد تخفیف عمومی</h3>
+                    <h3 class="card-title">ویرایش تخفیف عمومی</h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
