@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Market\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -20,13 +21,23 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
         Schema::defaultStringLength(191);
 
         Auth::loginUsingId(1);
-        // Auth::logout();
+        //  Auth::logout();
+        // session()->flush();
         // Model::shouldBeStrict();
+        // dd(auth()->user());
+
+
+        view()->composer('front.layouts.header',function($view){
+            if(Auth::check()){
+                $cartItems=CartItem::where('user_id',Auth::user()->id)->get();
+                $view->with('cartItems',$cartItems);
+            }
+		});
 
     }
 }

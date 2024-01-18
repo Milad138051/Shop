@@ -81,7 +81,7 @@
                             {{ $product->name }}
                         </div>
 
-                        <form action="{{route('customer.sales-process.add-to-cart',$product)}}" method="POST">
+                        <form action="{{route('front.sales-process.add-to-cart',$product)}}" method="POST">
                             @csrf
                         <div class="md:flex sm:pr-7">
                             <div class="md:w-2/3">
@@ -197,6 +197,9 @@
                                                 تعداد:
                                             </div>
                                             @endif
+                                            <div>
+                                                قیمت نهایی:
+                                            </div>
                                         </div>
                                         <div class="text-left opacity-70 text-sm flex flex-col gap-y-6">
                                             <div>
@@ -214,7 +217,7 @@
                                             @endif
                                             <div class="flex text-red-500">
                                                 <div id="product_price" data-product-original-price="{{ $product->price }}">
-                                                    {{ $product->price }}
+                                                    {{priceFormat ($product->price) }}
                                                 </div>
                                                 <div>
                                                     تومان
@@ -225,13 +228,19 @@
                                                 class="flex text-sm sm:text-sm items-center justify-center lg:justify-start">
                                                 <div class="flex items-center justify-center select-none">
                                                     <div class="quantity flex items-center">
-                                                        <input name="number"
-                                                            class="w-12 h-7 mx-2 text-center border focus:outline-none rounded-lg"
-                                                            type="number" min="1" step="1" value="1">
+                                                        <input name="number" id="number"
+                                                            class="w-12 h-7 mx-2 text-center border focus:outline-none rounded-lg cart-number"
+                                                            type="number" min="1" step="1" value="1" readonly="readonly">
                                                     </div>
                                                 </div>
                                             </div>
                                             @endif
+                                            <div class="flex text-red-500">
+                                                <div class="flex text-red-500" id="final-price"></div>
+                                                تومان 
+                                            </div>
+                                            
+                                            
                                         </div>
                                     </div>
                                     <span class="flex justify-center items-center opacity-90">
@@ -470,7 +479,7 @@
                 </div>
 
                 {{-- related products --}}
-                @if($relatedProducts!==null)
+                @if($relatedProducts->count() > 0)
                 <!-- SLIDER -->
                 <div class="bg-white rounded-2xl pt-10">
                     <!-- TOP SLIDER -->
@@ -531,6 +540,7 @@
             $('.cart-number').click(function() {
                 bill();
             })
+
         })
 
         function bill() {
@@ -566,7 +576,7 @@
             var product_price = product_original_price + selected_color_price + selected_guarantee_price;
             var final_price = number * (product_price - product_discount_price);
 
-            console.log(number, product_price, final_price);
+            // console.log(number, product_price, final_price);
             $('#product-price').html(toFarsiNumber(product_price));
             $('#final-price').html(toFarsiNumber(final_price));
         }
@@ -628,23 +638,6 @@
         })
     </script>
 
-    <script>
-        //start product introduction, features and comment
-        $(document).ready(function() {
-            var s = $("#introduction-features-comments");
-            var pos = s.position();
-            $(window).scroll(function() {
-                var windowpos = $(window).scrollTop();
-
-                if (windowpos >= pos.top) {
-                    s.addClass("stick");
-                } else {
-                    s.removeClass("stick");
-                }
-            });
-        });
-        //end product introduction, features and comment
-    </script>
 
     <!--DROPDOWNS FOR NAVBAR-->
     <script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>

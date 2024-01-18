@@ -203,7 +203,7 @@
                 alt="" />
               <span
                 class="text-sm text-neutral-800 hover:text-neutral-700 opacity-95">
-                سبد خرید
+                سبد خرید 
               </span>
               <span>
                 <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
@@ -223,84 +223,118 @@
               @mouseleave="showChildren=false">
               <div class="bg-white rounded-2xl w-full relative z-10 py-2 px-2">
                 <ul class="list-reset flex flex-col gap-y-2">
-                  <li
-                    class="relative">
-                    <a
-                      href="./single-product.html"
+                  
+                  @guest
+                  @if (session('shoppingCart'))
+                  @foreach (session('shoppingCart') as $key=> $product)
+                 <li
+                 class="relative">
+                    <a href="{{route('front.market.product',$product['product_id'])}}"
                       class="px-2 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center opacity-90">
                         <div class="flex">
-                          <img
-                          class="w-14 ml-2 rounded-lg"
-                          src="./assets/image/product/bag.png"
-                          alt="" />
+                          <img class="w-14 ml-2 rounded-lg" src="{{ asset($product['image']) }}" alt="" />
                           <div class="flex flex-col flex-wrap gap-y-1 justify-center">
                             <div class="opacity-80 w-full text-sm">
-                              کوله پشتی مدل ایستاده
+                              {{$product['product_name']}}
                             </div>
                             <div class="flex opacity-75 text-xs">
                               <div>
                                 قیمت:
                               </div>
                               <div>
-                                700,000
+                               {{$product['price']}}
                               </div>
                               <div>
                                 تومان
                               </div>
                             </div>
                           </div>
-                          <span class="text-red-400 hover:text-red-500 bg-red-100 hover:bg-red-200 px-2 text-xl font-bold h-7 rounded-full cursor-pointer absolute left-2 top-5">
-                            ×
-                          </span>
+                          <form action="{{route('front.sales-process.remove-from-cart-session',[$product['product_id'],$product['color_id'],$product['guarantee_id'] ])}}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="text-red-400 hover:text-red-500 bg-red-100 hover:bg-red-200 px-2 text-xl font-bold h-7 rounded-full cursor-pointer absolute left-2 top-5">
+                              ×
+                            </button>
+                          </form>
+
                         </div>
                       </span>
                     </a>
-                  </li>
+                  </li>                      
+                  @endforeach
+                  @else
+                  <li class="relative">ایتمی وجود ندارد</li>
+                  @endif
+                  @endguest
+                
+                  @auth
+                  @if ($cartItems->count() > 0)                    
+                  @foreach ($cartItems as $cartItem)                    
                   <li
-                    class="relative">
+                  class="relative">
                     <a
-                      href="./single-product.html"
+                      href="{{route('front.market.product',$cartItem->product)}}"
                       class="px-2 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center opacity-90">
                         <div class="flex">
                           <img
                           class="w-14 ml-2 rounded-lg"
-                          src="./assets/image/product/bag.png"
+                          src="{{asset($cartItem->product->image['indexArray']['medium'])}}"
                           alt="" />
                           <div class="flex flex-col flex-wrap gap-y-1 justify-center">
                             <div class="opacity-80 w-full text-sm">
-                              کوله پشتی مدل ایستاده
+                              {{$cartItem->product->name}}
                             </div>
                             <div class="flex opacity-75 text-xs">
                               <div>
                                 قیمت:
                               </div>
                               <div>
-                                700,000
+                                {{$cartItem->product->price}}
                               </div>
                               <div>
                                 تومان
                               </div>
                             </div>
                           </div>
-                          <span class="text-red-400 hover:text-red-500 bg-red-100 hover:bg-red-200 px-2 text-xl font-bold h-7 rounded-full cursor-pointer absolute left-2 top-5">
-                            ×
-                          </span>
+                          <form action="{{route('front.sales-process.remove-from-cart',$cartItem)}}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="text-red-400 hover:text-red-500 bg-red-100 hover:bg-red-200 px-2 text-xl font-bold h-7 rounded-full cursor-pointer absolute left-2 top-5">
+                              ×
+                            </button>
+                          </form>                          
                         </div>
                       </span>
                     </a>
                   </li>
+                  @endforeach
+                  @else
+                  <li class="relative">ایتمی وجود ندارد</li>
+                  @endif
+                  @endauth
+
+
+                  @php
+                    if(!isset($cartItems)) {
+                      $cartItems=collect();
+                    }
+                  @endphp
+
+                  @if (session('shoppingCart') or $cartItems->count() > 0)
                   <li
                     class="relative">
                     <a
-                      href="./checkout.html"
+                      href="{{route('front.sales-process.cart')}}"
                       class="px-2 py-2 flex w-full items-start justify-center">
                       <span class="flex justify-center items-center opacity-90">
                         <button class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-xs">تسویه حساب</button>
                       </span>
                     </a>
-                  </li>
+                  </li>                    
+                  @endif
+
                 </ul>
               </div>
             </div>

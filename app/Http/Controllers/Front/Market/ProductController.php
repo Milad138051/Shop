@@ -14,6 +14,8 @@ class ProductController extends Controller
 {
     public function product(Product $product)
 	{
+
+		// dd(session('shoppingCart'));
 		// $relatedProducts=Product::with('category')->whereHas('category',function($q) use ($product){
 		// 	$q->where('id',$product->category->id);
 		// })->get()->except($product->id);
@@ -23,10 +25,7 @@ class ProductController extends Controller
 			$relatedProducts=Product::whereIn('category_id',$relatedCategoriesIdsDecoded)->get();
 		}else{
 			$relatedProducts=null;
-		}
-
-		// dd($relatedProducts);
-		
+		}		
 		return view('front.market.product.product',compact('product','relatedProducts'));
 	}
 
@@ -37,6 +36,7 @@ class ProductController extends Controller
 
 	public function addReview(ReviewRequest $request)
 	{
+		if(Auth::check()){
 		$datas = array_combine($request->category_attribute_ids, $request->attributeScores);
 		$notAllowed=ProductReview::where('product_id',$request->product_id)->where('user_id',auth()->user()->id)->first();
 		if($notAllowed==null)
@@ -58,9 +58,16 @@ class ProductController extends Controller
 			// with('toast-error','شما قبلا برای این محصول, بررسی ثبت کرده اید');
 		}
 	}
+	else{
+		return back()->with('alert-section-error','برای ثبت بررسی , ابتدا وارد حساب خود شوید');
+	}
+	
+}
 	
 	public function addComment(Product $product,Request $request)
 	{
+	if(Auth::check()){
+
 		$request->validate([
 		'body'=>'required|max:2000',
 		]);
@@ -72,22 +79,32 @@ class ProductController extends Controller
         Comment::create($inputs);
 		return redirect()->route('front.market.product',$product->id)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
 	}
+	else{
+		return back()->with('alert-section-error','برای ثبت دیدگاه , ابتدا وارد حساب خود شوید');
+	}
+}
 	
 	public function addReplay(Product $product,Comment $comment,Request $request)
 	{
-		$request->validate([
-		'body'=>'required|max:2000',
-		]);
+		if(Auth::check()){
+
+			$request->validate([
+				'body'=>'required|max:2000',
+			]);
+			
+			$inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
+			$inputs['author_id'] = Auth::user()->id;
+			$inputs['parent_id'] = $comment->id;
+			//$inputs['approved'] = 1;
+			//$inputs['status'] = 1;
+			$inputs['commentable_id'] = $product->id;
+			$inputs['commentable_type'] = Product::class;
+			Comment::create($inputs);
+			return redirect()->route('front.market.product',$product->id)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
+		}else{
+			return back()->with('alert-section-error','برای ثبت دیدگاه , ابتدا وارد حساب خود شوید');
+		}
 		
-        $inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
-        $inputs['author_id'] = Auth::user()->id;
-        $inputs['parent_id'] = $comment->id;
-        //$inputs['approved'] = 1;
-        //$inputs['status'] = 1;
-        $inputs['commentable_id'] = $product->id;
-        $inputs['commentable_type'] = Product::class;
-        Comment::create($inputs);
-		return redirect()->route('front.market.product',$product->id)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
 	}
 	
 	public function addToFavorite(Product $product)

@@ -59,22 +59,21 @@ Route::controller(LoginRegisterController::class)->prefix('auth')->group(functio
 //front
 Route::get('/', [HomeController::class, 'index'])->name('front.home');
 Route::controller(CustomerProductController::class)->prefix('market')->group(function () {
-    Route::get('/product/{product}','product')->name('front.market.product');
-    Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');   
-    Route::post('/add-review/{product}', 'addReview')->name('front.market.add-review');   
-    Route::post('/add-comment/{product}', 'addComment')->name('front.market.add-comment');   
-	Route::post('/add-comment-replay/{product}/{comment}','addReplay')->name('front.market.add-replay');
+    Route::get('/product/{product}', 'product')->name('front.market.product');
+    Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');
+    Route::post('/add-review/{product}', 'addReview')->name('front.market.add-review');
+    Route::post('/add-comment/{product}', 'addComment')->name('front.market.add-comment');
+    Route::post('/add-comment-replay/{product}/{comment}', 'addReplay')->name('front.market.add-replay');
     Route::get('/add-to-favorite/{product}', 'addToFavorite')->name('front.market.add-to-favorite');
     // Route::get('/add-to-compare/{product}','addToCompare')->name('front.market.add-to-compare');
     // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate');
-});
 
-Route::namespace('SalesProcess')->group(function () {
     //cart
-    Route::get('/cart', [CartController::class, 'cart'])->name('customer.Sales-process.cart');
-    Route::post('/cart', [CartController::class, 'updateCart'])->name('customer.Sales-process.update-cart');
-    Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('customer.sales-process.add-to-cart');
-    Route::get('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('customer.Sales-process.remove-from-cart');
+    Route::get('/cart', [CartController::class, 'cart'])->name('front.sales-process.cart');
+    Route::post('/cart', [CartController::class, 'updateCart'])->name('front.sales-process.update-cart');
+    Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('front.sales-process.add-to-cart');
+    Route::get('/remove-from-cart/{cartItem}', [CartController::class, 'removeFromCart'])->name('front.sales-process.remove-from-cart');
+    Route::get('/remove-from-cart-session/{productid}/{colorid}/{guaranteeid}', [CartController::class, 'removeFromCartSession'])->name('front.sales-process.remove-from-cart-session');
 
     //profile completion
     // Route::get('/profile-completion', [ProfileCompletionController::class, 'profileCompletion'])->name('customer.sales-process.profile-completion');
@@ -92,6 +91,7 @@ Route::namespace('SalesProcess')->group(function () {
     //     Route::post('/copan-submit', [PaymentCustomerController::class, 'paymentSubmit'])->name('customer.sales-process.paymentSubmit');
     // });
 });
+
 
 
 //admin-panel
@@ -260,10 +260,10 @@ Route::prefix('admin')->group(function () {
         });
         //banner
         Route::controller(BannerController::class)->prefix('banner')->group(function () {
-            Route::get('/','index')->name('admin.market.banner.index');
+            Route::get('/', 'index')->name('admin.market.banner.index');
             Route::get('/create', 'create')->name('admin.market.banner.create');
             Route::post('/store', 'store')->name('admin.market.banner.store');
-            Route::get('/edit/{banner}','edit')->name('admin.market.banner.edit');
+            Route::get('/edit/{banner}', 'edit')->name('admin.market.banner.edit');
             Route::put('/update/{banner}', 'update')->name('admin.market.banner.update');
             Route::get('/status/{banner}', 'status')->name('admin.market.banner.status');
             Route::delete('/destroy/{banner}', 'destroy')->name('admin.market.banner.destroy');

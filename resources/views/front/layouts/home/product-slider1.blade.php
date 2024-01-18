@@ -18,7 +18,7 @@
           <div class="space-y-3 text-center">
             <span class="text-sm opacity-80 mb-2 h-8 md:h-10">
               <div>
-                {{$product->title}}
+                {{$product->name}}
               </div>
             </span>
             <div class="flex justify-center text-xs opacity-75">
