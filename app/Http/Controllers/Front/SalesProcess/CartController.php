@@ -13,8 +13,9 @@ class CartController extends Controller
     public function cart()
     {
         if (Auth::check()) {
-            // $cartItems=CartItem::where('user_id',Auth::user()->id)->get();
-            // //relatedCategories
+            $cartItems=CartItem::where('user_id',Auth::user()->id)->get();
+
+            //relatedCategories
             // $relatedCategoriesIds=[];
             // foreach($cartItems as $cartItem){
             // 	$relatedCategoriesIdsDecoded=json_decode($cartItem->product->related_categories);
@@ -25,18 +26,15 @@ class CartController extends Controller
             // 	$relatedProducts=null;
             // }
 
-            return view('customer.sales-process.cart', compact('cartItems'));
+            if($cartItems->count() > 0){
+                return view('front.sales-process.cart', compact('cartItems'));
+            }else{
+                return view('front.sales-process.empty-cart', compact('cartItems'));
+            }
+            
         } else {
-            //relatedCategories
-            // $relatedCategoriesIds=[];
-            // foreach($cartItems as $cartItem){
-            // 	$relatedCategoriesIdsDecoded=json_decode($cartItem->product->related_categories);
-            // };
-            // if($relatedCategoriesIdsDecoded!==null){
-            // 	$relatedProducts=Product::whereIn('category_id',$relatedCategoriesIdsDecoded)->get();
-            // }else{
-            // 	$relatedProducts=null;
-            return view('front.sales-process.cart');
+
+            return back()->with('alert-section-warning','برای ادامه کار , لطفا وارد حساب خود شوید');
         }
     }
 
@@ -61,6 +59,7 @@ class CartController extends Controller
 
     public function addToCart(Product $product, Request $request)
     {
+       
         if (Auth::check()) {
             $request->validate([
                 'color' => 'nullable|exists:product_colors,id',

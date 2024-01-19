@@ -5,16 +5,24 @@ namespace App\Http\Controllers\Front\Market;
 use Illuminate\Http\Request;
 use App\Models\Market\Product;
 use App\Models\Content\Comment;
+use App\Models\Market\CartItem;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Front\Market\ReviewRequest;
 use App\Models\market\ProductReview;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Front\Market\ReviewRequest;
 
 class ProductController extends Controller
 {
     public function product(Product $product)
 	{
 
+		// $cartItems=CartItem::where('user_id',auth()->user()->id)->get();
+		// foreach($cartItems as $i)
+		// {
+		// 	dd($i);
+
+		// }
+		// dd($product->activeAmazingSale());
 		// dd(session('shoppingCart'));
 		// $relatedProducts=Product::with('category')->whereHas('category',function($q) use ($product){
 		// 	$q->where('id',$product->category->id);

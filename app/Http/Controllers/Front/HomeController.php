@@ -25,4 +25,10 @@ class HomeController extends Controller
         return view('front.home',compact('sliderShowImages','fourBanners','twoBanners','bannerNearSliderShowImages','bannerAfterSliderShowImages','products','brands','blogs'));
     }
 
+    public function aboutUs()
+    {
+        return view('front.about-me');
+
+    }
+
 }

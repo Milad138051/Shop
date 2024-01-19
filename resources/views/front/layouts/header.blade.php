@@ -195,7 +195,7 @@
             @mouseenter="showChildren=true"
             @mouseleave="showChildren=false">
             <a
-              href="./cart.html"
+              href="{{route('front.sales-process.cart')}}"
               class="flex items-center h-10 leading-10 px-3 cursor-pointer no-underline hover:no-underline duration-100 mx-1 transition rounded-xl hover:bg-red-100">
               <img
                 class="inline ml-1 w-5"
@@ -314,7 +314,6 @@
                   <li class="relative">ایتمی وجود ندارد</li>
                   @endif
                   @endauth
-
 
                   @php
                     if(!isset($cartItems)) {

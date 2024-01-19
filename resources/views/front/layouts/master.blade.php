@@ -11,6 +11,7 @@
     @include('front.layouts.header')
     @include('admin.alerts.alert-section.success')
     @include('admin.alerts.alert-section.error')
+    @include('admin.alerts.alert-section.warning')
     @yield('content')
     <!-- FOOTER -->
     @include('front.layouts.footer')

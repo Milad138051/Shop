@@ -58,6 +58,7 @@ Route::controller(LoginRegisterController::class)->prefix('auth')->group(functio
 
 //front
 Route::get('/', [HomeController::class, 'index'])->name('front.home');
+Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('front.about-us');
 Route::controller(CustomerProductController::class)->prefix('market')->group(function () {
     Route::get('/product/{product}', 'product')->name('front.market.product');
     Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');

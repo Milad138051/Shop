@@ -55,7 +55,7 @@
             <ul class="grid gap-y-2">
               <li>
                 <a
-                  href="./index.html"
+                  href="{{route('front.home')}}"
                   class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
                 >
                 خانه
@@ -63,7 +63,7 @@
               </li>
               <li>
                 <a
-                  href="./aboute-me.html"
+                  href="{{route('front.about-us')}}"
                   class="mb-12 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
                 >
                   درباره ما
