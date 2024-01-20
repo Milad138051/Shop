@@ -4,6 +4,7 @@ namespace App\Models\Market;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Market\CartItem;
 use App\Models\Market\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -49,7 +50,6 @@ class Product extends Model
 		return $this->hasMany(Gallery::class);
 	}
 	 
-	
 	public function CategoryValues()
 	{
 		 return $this->hasMany(CategoryValue::class);
@@ -75,7 +75,6 @@ class Product extends Model
         return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
     }
 	
-	
 	public function user()
 	{
 		return $this->belongsToMany(User::class);
@@ -90,6 +89,5 @@ class Product extends Model
 	{
 		return $this->hasMany(ProductReview::class);
 	}
-
 	
 }

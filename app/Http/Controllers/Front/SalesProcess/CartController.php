@@ -29,7 +29,7 @@ class CartController extends Controller
             if($cartItems->count() > 0){
                 return view('front.sales-process.cart', compact('cartItems'));
             }else{
-                return view('front.sales-process.empty-cart', compact('cartItems'));
+                return view('front.sales-process.empty-cart');
             }
             
         } else {
@@ -37,9 +37,6 @@ class CartController extends Controller
             return back()->with('alert-section-warning','برای ادامه کار , لطفا وارد حساب خود شوید');
         }
     }
-
-
-
 
     // public function updateCart(Request $request)
     // {
@@ -112,12 +109,8 @@ class CartController extends Controller
                 $shoppingCart[$product->id.'-with-guarantee-'.$request->guarantee.'-and-with-color-'.$request->color] = [
                     "color_id" => $request->color,
                     "guarantee_id" => $request->guarantee,
-                    // "user_id" => auth()->user()->id,
-                    "product_id" => $product->id,
-                    "product_name" => $product->name,
-                    "price" => $product->price,
                     "number" => $request->number,
-                    "image" => $product->image['indexArray']['medium'],
+                    "productObject" =>$product,
                 ];
                 session(['shoppingCart' => $shoppingCart]);
                 return back()->with('alert-section-success', 'محصول مورد نظر با موفقیت به سبد خرید اضافه شد');
@@ -138,7 +131,7 @@ class CartController extends Controller
         $items=session()->get('shoppingCart',[]);
         foreach($items as $key => $i)
         {
-            if($i['product_id']==$productId and $i['color_id']==$colorId and $i['guarantee_id']==$guaranteeId)
+            if($i['productObject']['id']==$productId and $i['color_id']==$colorId and $i['guarantee_id']==$guaranteeId)
             {
                 // dd('are');
                 unset($items[$key]);

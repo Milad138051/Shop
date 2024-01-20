@@ -106,7 +106,7 @@
                     @mouseleave="showChildren=false"
                     @mouseenter="showChildren=true">
                     <a
-                      href="./profile.html"
+                      href="{{route('front.profile.profile')}}"
                       class="px-2 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span
                         class="flex justify-center items-center opacity-90"
@@ -229,28 +229,28 @@
                   @foreach (session('shoppingCart') as $key=> $product)
                  <li
                  class="relative">
-                    <a href="{{route('front.market.product',$product['product_id'])}}"
+                    <a href="{{route('front.market.product',$product['productObject']['id'])}}"
                       class="px-2 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center opacity-90">
                         <div class="flex">
-                          <img class="w-14 ml-2 rounded-lg" src="{{ asset($product['image']) }}" alt="" />
+                          <img class="w-14 ml-2 rounded-lg" src="{{ asset($product['productObject']['image']['indexArray']['medium']) }}" alt="" />
                           <div class="flex flex-col flex-wrap gap-y-1 justify-center">
                             <div class="opacity-80 w-full text-sm">
-                              {{$product['product_name']}}
+                              {{$product['productObject']['name']}}
                             </div>
                             <div class="flex opacity-75 text-xs">
                               <div>
                                 قیمت:
                               </div>
                               <div>
-                               {{$product['price']}}
+                               {{$product['productObject']['price']}}
                               </div>
                               <div>
                                 تومان
                               </div>
                             </div>
                           </div>
-                          <form action="{{route('front.sales-process.remove-from-cart-session',[$product['product_id'],$product['color_id'],$product['guarantee_id'] ])}}">
+                          <form action="{{route('front.sales-process.remove-from-cart-session',[$product['productObject']['id'],$product['color_id'],$product['guarantee_id'] ])}}">
                             @csrf
                             @method('delete')
                             <button type="submit" class="text-red-400 hover:text-red-500 bg-red-100 hover:bg-red-200 px-2 text-xl font-bold h-7 rounded-full cursor-pointer absolute left-2 top-5">
@@ -966,7 +966,7 @@
                     <li
                       class="relative">
                       <a
-                        href="./profile.html"
+                        href="#"
                         class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer">
                         <span class="flex-1">پروفایل</span>
                       </a>

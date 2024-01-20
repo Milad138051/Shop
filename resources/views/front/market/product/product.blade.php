@@ -198,7 +198,7 @@
                                             </div>
                                             @endif
                                             <div>
-                                                قیمت نهایی:
+                                                قیمت نهایی  (شامل هزینه گارانتی و رنگ کالا) : 
                                             </div>
                                         </div>
                                         <div class="text-left opacity-70 text-sm flex flex-col gap-y-6">

@@ -16,14 +16,19 @@ class ProductController extends Controller
     public function product(Product $product)
 	{
 
+		        // session()->flush();
+
+		// dd(session('shoppingCart') );
 		// $cartItems=CartItem::where('user_id',auth()->user()->id)->get();
 		// foreach($cartItems as $i)
 		// {
 		// 	dd($i);
 
+		// foreach(session('shoppingCart') as $shoppingItem)
+		// {
+		// 	dd($shoppingItem['productObject']->cartItem->cartItemProductPrice());
+
 		// }
-		// dd($product->activeAmazingSale());
-		// dd(session('shoppingCart'));
 		// $relatedProducts=Product::with('category')->whereHas('category',function($q) use ($product){
 		// 	$q->where('id',$product->category->id);
 		// })->get()->except($product->id);

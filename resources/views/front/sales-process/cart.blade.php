@@ -57,8 +57,6 @@
                         </tr>
                     </thead>
                     <tbody class="grid grid-cols-1 sm:grid-cols-2 md:contents gap-5">
-
-
                         @auth
                             @foreach ($cartItems as $cartItem)
                                 @php
