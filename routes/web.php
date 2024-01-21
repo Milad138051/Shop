@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\Profile\AddressController;
 use App\Http\Controllers\Front\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
@@ -27,7 +28,9 @@ use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
-use App\Http\Controllers\Front\Market\ProductController as CustomerProductController;
+use App\Http\Controllers\Front\Market\ProductController as FrontProductController;
+use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
+use App\Http\Controllers\Front\Profile\OrderController as FrontOrderController;
 
 
 /*
@@ -64,7 +67,8 @@ Route::controller(LoginRegisterController::class)->prefix('auth')->group(functio
 Route::get('/', [HomeController::class, 'index'])->name('front.home');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('front.about-us');
 Route::get('/welcome', [HomeController::class, 'welcome'])->name('front.welcome');
-Route::controller(CustomerProductController::class)->prefix('market')->group(function () {
+//product
+Route::controller(FrontProductController::class)->prefix('market')->group(function () {
     Route::get('/product/{product}', 'product')->name('front.market.product');
     Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');
     Route::post('/add-review/{product}', 'addReview')->name('front.market.add-review');
@@ -74,6 +78,7 @@ Route::controller(CustomerProductController::class)->prefix('market')->group(fun
     // Route::get('/add-to-compare/{product}','addToCompare')->name('front.market.add-to-compare');
     // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
 });
+//cart
 Route::controller(CartController::class)->prefix('cart')->group(function () {
     //cart
     Route::get('/','cart')->name('front.sales-process.cart');
@@ -82,16 +87,29 @@ Route::controller(CartController::class)->prefix('cart')->group(function () {
     Route::get('/remove-from-cart/{cartItem}','removeFromCart')->name('front.sales-process.remove-from-cart');
     Route::get('/remove-from-cart-session/{productid}/{colorid}/{guaranteeid}','removeFromCartSession')->name('front.sales-process.remove-from-cart-session');
 });
-
-Route::controller(ProfileController::class)->prefix('profile')->group(function () {
-    Route::get('/','profile')->name('front.profile.profile');
-    Route::get('/update', 'updateView')->name('front.profile.update-view');
-    Route::put('/update', 'update')->name('front.profile.update');
-    Route::get('/addresses', 'adresses')->name('front.profile.addresses');
+//profile
+Route::prefix('profile')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+    Route::get('/',[ProfileController::class,'profile'])->name('front.profile.profile');
+    Route::get('/update',[ProfileController::class, 'updateView'])->name('front.profile.update-view');
+    Route::put('/update',[ProfileController::class, 'update'])->name('front.profile.update');
+    });
+    Route::controller(AddressController::class)->group(function () {
+    Route::get('/addresses', 'index')->name('front.profile.addresses');
     Route::post('/add-address', 'addAddress')->name('front.profile.add-address');
     Route::put('/update-address/{address}', 'updateAdresses')->name('front.profile.addresses.update');
     Route::get('/addresses/delete/{address}','deleteAddress')->name('front.profile.addresses.delete');
-
+    });
+    Route::controller(FrontCommentController::class)->group(function () {
+        Route::get('/comments', 'index')->name('front.profile.comments');
+        Route::delete('/comments/{comment}', 'delete')->name('front.profile.comments.delete');
+    
+    });
+    Route::controller(FrontOrderController::class)->group(function(){
+        Route::get('/orders','index')->name('front.profile.orders');
+        Route::get('/orders/{order}', 'showOrder')->name('front.profile.showOrder');
+    
+    });
 
 
 });

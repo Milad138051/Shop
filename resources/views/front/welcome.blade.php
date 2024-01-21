@@ -25,7 +25,7 @@
       با تکمیل حساب کاربری به کلیه امکانات دسترسی داشته باشید
     </div>
     <div class="text-center mt-5 mb-3">
-      <a class="bg-red-500 hover:bg-red-600 transition text-white opacity-80 rounded-2xl w-full py-2 mb-5" type="submit">
+      <a href="{{route('front.profile.update-view')}}" class="bg-red-500 hover:bg-red-600 transition text-white opacity-80 rounded-2xl w-full py-2 mb-5">
         تکمیل حساب کاربری
       </a>
       <div class="flex justify-center items-center">

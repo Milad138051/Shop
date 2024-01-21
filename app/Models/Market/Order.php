@@ -111,7 +111,7 @@ class Order extends Model
     public function getOrderStatusValueAttribute()
     {
         switch ($this->order_status){
-            case 1:
+                case 1:
                 $result = 'در انتظار تایید';
                 break;
                   case 2:

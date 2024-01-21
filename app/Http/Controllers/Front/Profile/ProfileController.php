@@ -38,40 +38,4 @@ class ProfileController extends Controller
 		return redirect()->back()->with('alert-section-success', 'اطلاعات حساب شما با موفقیت  ثبت شد');
 	}
 
-
-	///////////////////////////////////////////////////
-	//addresses
-	public function adresses()
-	{
-		$addresses=Address::where('user_id',auth()->user()->id)->get();
-		return view('front.profile.addresses',compact('addresses'));
-	}
-
-	public function addAddress(AddressRequest $request)
-	{
-		$inputs=$request->all();
-		$inputs['user_id']=auth()->user()->id;
-		$inputs['postal_code']=convertArabicToEnglish($request->postal_code);
-		$inputs['postal_code']=convertPersianToEnglish($inputs['postal_code']);
-		Address::create($inputs);
-		return back()->with('alert-section-success','ادرس شما با موفقیت ثبت شد');
-	}
-
-	public function updateAdresses(AddressRequest $request,Address $address)
-	{
-		$inputs=$request->all();
-		//dd($address,$inputs);
-		$inputs['user_id']=auth()->user()->id;
-		$inputs['postal_code']=convertArabicToEnglish($request->postal_code);
-		$inputs['postal_code']=convertPersianToEnglish($inputs['postal_code']);
-		$address->update($inputs);
-		return back()->with('alert-sestion-success','ادرس شما با موفقیت ثبت شد');
-	}
-
-	public function deleteAddress(Address $address)
-	{
-		$address->delete();
-		return back()->with('alert-section-success', 'آیتم با موفقیت حذف شد');
-	}
-	///////////////////////////////////////////////////
 }
