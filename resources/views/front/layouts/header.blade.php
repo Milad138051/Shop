@@ -74,7 +74,7 @@
             @mouseenter="showChildren=true"
             @mouseleave="showChildren=false">
             <a
-              href="./login.html"
+              href="{{route('front.profile.update')}}"
               class="flex items-center h-10 leading-10 px-3 mx-1 transition rounded-xl hover:bg-red-50">
               <img class="ml-1 w-6" src="{{asset('front-assets/image/user.png')}}" alt="" />
               <span
@@ -123,7 +123,7 @@
                     @mouseleave="showChildren=false"
                     @mouseenter="showChildren=true">
                     <a
-                      href="./profile-order.html"
+                      href="{{route('front.profile.orders')}}"
                       class="px-4 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center text-sm opacity-90"
                         ><img
@@ -139,7 +139,7 @@
                     @mouseleave="showChildren=false"
                     @mouseenter="showChildren=true">
                     <a
-                      href="#"
+                      href="{{route('front.profile.favorites')}}"
                       class="px-4 py-2 flex w-full items-start hover:bg-red-50 rounded-xl">
                       <span class="flex justify-center items-center text-sm opacity-90"
                         ><img
@@ -201,10 +201,17 @@
                 class="inline ml-1 w-5"
                 src="{{asset('front-assets/image/shopping-cart.png')}}"
                 alt="" />
+                <span style="top: 80%;" class="position-absolute start-0 translate-middle badge rounded-pill bg-danger">@if ($cartItems->count() > 0)
+                  {{$cartItems->count()}}
+                  @else
+                  0
+                  @endif
+                </span>
               <span
                 class="text-sm text-neutral-800 hover:text-neutral-700 opacity-95">
                 سبد خرید 
               </span>
+ 
               <span>
                 <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
               </span>

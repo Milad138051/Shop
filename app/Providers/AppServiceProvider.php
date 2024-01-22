@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Market\CartItem;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -25,12 +26,17 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        Auth::loginUsingId(2);
+        Auth::loginUsingId(1);
         //  Auth::logout();
         // session()->flush();
         // Model::shouldBeStrict();
         // dd(auth()->user());
 
+        Paginator::defaultView('front.layouts.my-paginator');
+        // Paginator::defaultView('bootstrap-5');
+
+
+        
 
         view()->composer('front.layouts.header',function($view){
             if(Auth::check()){

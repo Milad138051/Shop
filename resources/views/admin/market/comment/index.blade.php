@@ -57,7 +57,7 @@
                                     <td>{{ $comment->author_id }}</td>
                                     <td>{{ $comment->commentable->id }}</td>
                                     <td>{{ $comment->commentable->name }}</td>
-                                    <td>{{$comment->parent_id ? 'جواب من' : 'کامنت کاربر'}}</td>
+                                    <td>{{$comment->parent_id ? 'جواب ' : 'کامنت کاربر'}}</td>
                                     <td>
                                         @if ($comment->approved == 1)
                                             <span class="badge badge-success btn-sm">تایید شده</span>

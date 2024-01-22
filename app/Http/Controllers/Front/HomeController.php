@@ -21,20 +21,22 @@ class HomeController extends Controller
         $products=Product::orderBy('id','desc')->get();
         $brands=Brand::orderBy('id','desc')->where('status',1)->get();
         $blogs=Post::latest()->where('status',1)->take(4)->get();
-        // dd($sliderShowImages);
         return view('front.home',compact('sliderShowImages','fourBanners','twoBanners','bannerNearSliderShowImages','bannerAfterSliderShowImages','products','brands','blogs'));
     }
 
     public function aboutUs()
     {
         return view('front.about-me');
-
     }
 
     public function welcome()
     {
         return view('front.welcome');
+    }
 
+    public function contactUs()
+    {
+        return view('front.contact-us');
     }
 
 }

@@ -408,6 +408,7 @@
                                 @endphp
                                 <div class="bg-gray-50 rounded-xl px-3 sm:px-5 py-3 my-2" style="border: 1px solid #d7d7d7">
                                   
+                                    
                                     <div class="d-flex flex-row-reverse">
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal-{{$activeComment->id}}" data-bs-whatever="@mdo">

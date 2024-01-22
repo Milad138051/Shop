@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <tbody class="grid grid-cols-1 sm:grid-cols-2 md:contents gap-5">
-                @foreach ($comments as $comment)
+                @forelse ($comments as $comment)
                 <tr class="bg-white hover:bg-gray-50 grid grid-cols-1 justify-items-center md:table-row border-x sm:border-x-0 sm:border-b">
                     <td class="px-2 py-4">
                       <img src="./assets/image/productSlider/2.jpg" class="w-48 md:w-28 max-w-full max-h-full rounded-lg" alt="">
@@ -73,8 +73,14 @@
                             <button type="submit" class=" text-red-600">حذف</button>
                         </form>
                     </td>
-                  </tr>                    
-                @endforeach
+                  </tr>    
+                  @empty
+                  <div class="md:w-8/12 lg:w-9/12 flex flex-col gap-y-5">
+                    <div class="border rounded-3xl shadow-lg flex flex-col p-5 gap-y-5">
+                        ایتمی یافت نشد
+                    </div>
+                </div>  
+                @endforelse
             </tbody>
           </table>
         </div>

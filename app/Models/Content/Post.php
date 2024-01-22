@@ -2,6 +2,7 @@
 
 namespace App\Models\Content;
 
+use App\Models\User;
 use App\Models\Content\PostCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,4 +22,14 @@ class Post extends Model
 	{
 		return $this->morphMany('App\Models\Content\Comment','commentable');
 	}
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'author_id');
+    }
+
+    public function activeComments()
+    {
+        return $this->comments()->where('approved', 1)->whereNull('parent_id')->get();
+    }
 }

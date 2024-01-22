@@ -16,6 +16,7 @@ class ProductController extends Controller
 {
     public function product(Product $product)
 	{
+		// dd(auth()->user()->compare->products);
 		// $relatedProducts=Product::with('category')->whereHas('category',function($q) use ($product){
 		// 	$q->where('id',$product->category->id);
 		// })->get()->except($product->id);

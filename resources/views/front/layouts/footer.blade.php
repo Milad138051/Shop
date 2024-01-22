@@ -87,10 +87,18 @@
               </li>
               <li>
                 <a
-                  href="./blog.html"
+                  href="{{route('front.blogs.index')}}"
                   class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
                 >
                   بلاگ
+                </a>
+              </li>
+              <li>
+                <a
+                  href="{{route('front.contact-us')}}"
+                  class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
+                >
+                  ارتباط با ما
                 </a>
               </li>
             </ul>

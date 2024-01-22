@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Front\Blog\BlogController;
 use App\Http\Controllers\Front\Profile\AddressController;
+use App\Http\Controllers\Front\Profile\CompareController;
+use App\Http\Controllers\Front\Profile\FavoriteController;
 use App\Http\Controllers\Front\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
@@ -67,6 +70,7 @@ Route::controller(LoginRegisterController::class)->prefix('auth')->group(functio
 Route::get('/', [HomeController::class, 'index'])->name('front.home');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('front.about-us');
 Route::get('/welcome', [HomeController::class, 'welcome'])->name('front.welcome');
+Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('front.contact-us');
 //product
 Route::controller(FrontProductController::class)->prefix('market')->group(function () {
     Route::get('/product/{product}', 'product')->name('front.market.product');
@@ -110,24 +114,25 @@ Route::prefix('profile')->group(function () {
         Route::get('/orders/{order}', 'showOrder')->name('front.profile.showOrder');
     
     });
+    Route::controller(FavoriteController::class)->group(function(){
+        Route::get('/my-favorites','index')->name('front.profile.favorites');
+        Route::get('/my-favorites/delete/{product}','delete')->name('front.profile.favorites.delete');
+    });
+    Route::controller(CompareController::class)->group(function(){
+        Route::get('/my-compare-list','index')->name('front.profile.compares');
+        Route::get('/compare-item/delete/{product}','delete')->name('front.profile.compares.delete');
+    });
 
 
 });
-    //profile completion
-    // Route::get('/profile-completion', [ProfileCompletionController::class, 'profileCompletion'])->name('customer.sales-process.profile-completion');
-    // Route::post('/profile-completion', [ProfileCompletionController::class, 'store'])->name('customer.sales-process.profile-completion-store');
-    // Route::middleware('profile.completion')->group(function () {
-    //     //address and delivery
-    //     Route::get('/address-and-delivery', [AddressController::class, 'addressAndDelivery'])->name('customer.sales-process.address-and-delivery');
-    //     Route::post('/add-address', [AddressController::class, 'addAddress'])->name('customer.sales-process.add-address');
-    //     Route::put('/update-address/{address}', [AddressController::class, 'updateAddress'])->name('customer.sales-process.update-address');
-    //     Route::get('/get-cities/{province}', [AddressController::class, 'getCities'])->name('customer.sales-process.get-cities');
-    //     Route::get('/choose-address-and-delivery', [AddressController::class, 'chooseAddressAndDelivery'])->name('customer.sales-process.choose-address-and-delivery');
-    //     //payment
-    //     Route::get('/payment', [PaymentCustomerController::class, 'payment'])->name('customer.sales-process.payment');
-    //     Route::post('/copan-discount', [PaymentCustomerController::class, 'copanDiscount'])->name('customer.sales-process.copanDiscount');
-    //     Route::post('/copan-submit', [PaymentCustomerController::class, 'paymentSubmit'])->name('customer.sales-process.paymentSubmit');
-    // });
+//blogs
+Route::controller(BlogController::class)->prefix('blogs')->group(function () {
+    Route::get('/','index')->name('front.blogs.index');
+    Route::get('/{post}','showBlog')->name('front.blogs.show-blog');
+    Route::post('/add-comment/{post}', 'addComment')->name('front.blogs.add-comment');
+    Route::post('/add-comment-replay/{post}/{comment}', 'addReplay')->name('front.blogs.add-replay');
+});
+
 
 
 
