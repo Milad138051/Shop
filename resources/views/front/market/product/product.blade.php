@@ -35,19 +35,51 @@
             <div class="p-3 w-11/12 mx-auto rounded-2xl">
                 <div class="lg:flex">
                     <div class="w-full lg:w-1/3">
+                        @auth
                         <div>
                             <span class="flex items-center pr-20 pb-2">
-                                <img onclick="showAlertAddTocomparison()" class="w-6 ml-2 cursor-pointer"
-                                    src="{{ asset('front-assets/image/comparison.png') }}" alt="" title="مقایسه">
-                                <svg onclick="showAlertAddToFavorit()"
+                               
+                                {{-- addtocompare --}}
+                                @if ($product->compares->contains(function($compare,$key){
+									return $compare->id===auth()->user()->compare->id;
+								}))
+                                <button type="button" class="product-add-to-compare" data-url="{{ route('front.market.add-to-compare', $product) }}">
+                                    <img onclick="showAlertAddTocomparison()" class="w-6 ml-2 cursor-pointer"
+                                    src="{{ asset('front-assets/image/comparison.png') }}" alt="" title="حذف از لیست مقایسه">
+                                </button>
+                                @else
+                                <button type="button" class="product-add-to-compare" data-url="{{ route('front.market.add-to-compare', $product) }}">
+                                    <img onclick="showAlertAddTocomparison()" class="w-6 ml-2 cursor-pointer"
+                                    src="{{ asset('front-assets/image/comparison.png') }}" alt="" title="اضافه به لیست مقایسه">
+                                </button>
+                                @endif
+                                
+                               
+                                    {{-- //addtofavorite --}}
+                                    @if ($product->user->contains(auth()->user()->id))
+                                    <button type="button" class="product-add-to-favorite"  data-url="{{ route('front.market.add-to-favorite', $product) }}" title="حذف از علاقه مندی">
+                                    <svg
                                     class="h-7 w-7 text-red-500 hover:text-red-600 fill-current transition cursor-pointer inline"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path
                                         d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z">
                                     </path>
-                                </svg>
+                                    </button>
+                                    @else
+                                    <button type="button" class="product-add-to-favorite" data-url="{{ route('front.market.add-to-favorite', $product) }}" title="اضافه به علاقه مندی">
+                                        <svg
+                                        class="h-7 w-7 text-red-500 hover:text-red-600 full-current transition cursor-pointer inline"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path
+                                        d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z">
+                                    </path>
+                                   </button>
+                                    @endif
+
+
                             </span>
                         </div>
+                        @endauth
                         <div>
                             @php
                                 $imageGalley = $product->images()->get();
@@ -592,22 +624,22 @@
 
 
     <script>
-        $('.product-add-to-favorite button').click(function() {
+        $('.product-add-to-favorite').click(function() {
             var url = $(this).attr('data-url');
             var element = $(this);
             $.ajax({
                 url: url,
                 success: function(result) {
                     if (result.status == 1) {
-                        $(element).children().first().addClass('text-danger');
+                        $(element).children().first().removeClass('fill-current');
+                        $(element).children().first().addClass('full-current');
                         $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
                     } else if (result.status == 2) {
-                        $(element).children().first().removeClass('text-danger')
+                        $(element).children().first().removeClass('full-current')
+                        $(element).children().first().addClass('fill-current')
                         $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
-                    } else if (result.status == 3) {
-                        $('.toast').toast('show');
                     }
                 }
             })
@@ -616,7 +648,7 @@
 
 
     <script>
-        $('.product-add-to-compare button').click(function() {
+        $('.product-add-to-compare').click(function() {
             var url = $(this).attr('data-url');
             var element = $(this);
             $.ajax({
@@ -630,8 +662,6 @@
                         $(element).children().first().removeClass('text-danger')
                         $(element).attr('data-original-title', 'اضافه به لیست مقایسه');
                         $(element).attr('data-bs-original-title', 'اضافه به لیست مقایسه');
-                    } else if (result.status == 3) {
-                        $('.toast').toast('show');
                     }
                 }
             })

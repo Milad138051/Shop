@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Market\Order;
+use App\Models\Market\Compare;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Market\OrderItem;
@@ -120,10 +121,10 @@ class User extends Authenticatable
         return $productIds;
     }
 
-    // public function compare()
-    // {
-    //     return $this->hasOne(Compare::class);
-    // }
+    public function compare()
+    {
+        return $this->hasOne(Compare::class);
+    }
 
     public function reviews()
 	{

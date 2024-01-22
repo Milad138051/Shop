@@ -75,7 +75,7 @@ Route::controller(FrontProductController::class)->prefix('market')->group(functi
     Route::post('/add-comment/{product}', 'addComment')->name('front.market.add-comment');
     Route::post('/add-comment-replay/{product}/{comment}', 'addReplay')->name('front.market.add-replay');
     Route::get('/add-to-favorite/{product}', 'addToFavorite')->name('front.market.add-to-favorite');
-    // Route::get('/add-to-compare/{product}','addToCompare')->name('front.market.add-to-compare');
+    Route::get('/add-to-compare/{product}','addToCompare')->name('front.market.add-to-compare');
     // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
 });
 //cart

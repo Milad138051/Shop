@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front\Market;
 
 use Illuminate\Http\Request;
+use App\Models\Market\Compare;
 use App\Models\Market\Product;
 use App\Models\Content\Comment;
 use App\Models\Market\CartItem;
@@ -15,20 +16,6 @@ class ProductController extends Controller
 {
     public function product(Product $product)
 	{
-
-		        // session()->flush();
-
-		// dd(session('shoppingCart') );
-		// $cartItems=CartItem::where('user_id',auth()->user()->id)->get();
-		// foreach($cartItems as $i)
-		// {
-		// 	dd($i);
-
-		// foreach(session('shoppingCart') as $shoppingItem)
-		// {
-		// 	dd($shoppingItem['productObject']->cartItem->cartItemProductPrice());
-
-		// }
 		// $relatedProducts=Product::with('category')->whereHas('category',function($q) use ($product){
 		// 	$q->where('id',$product->category->id);
 		// })->get()->except($product->id);
@@ -76,8 +63,7 @@ class ProductController extends Controller
 	}
 	
 }
-	
-	public function addComment(Product $product,Request $request)
+		public function addComment(Product $product,Request $request)
 	{
 	if(Auth::check()){
 
@@ -131,46 +117,43 @@ class ProductController extends Controller
         else{
             return response()->json(['status' => 2]);
         }
-       }else{
-        return response()->json(['status' => 3]);
-	 }
+       }
 	}
 	
-	// public function addRate(Product $product,Request $request)
-	// {
-	// 	if(Auth::check())
-	// 	{
-    // 		    $productIds=auth()->user()->isUserPurchedProduct($product->id);
-	// 		    $productIds=$productIds->unique();				
-	// 		}else{
-	// 			return back()->with('alert-section-error','خطا');
-	// 		}
+	public function addRate(Product $product,Request $request)
+	{
+		if(Auth::check())
+		{
+    		    $productIds=auth()->user()->isUserPurchedProduct($product->id);
+			    $productIds=$productIds->unique();				
+			}else{
+				return back()->with('alert-section-error','خطا');
+			}
 
-	// 	auth()->user()->rate($product,$request->rating);
-	// 	return back()->with('success','امتیاز شما با موفقیت ذخیره شد');
-	// }
+		auth()->user()->rate($product,$request->rating);
+		return back()->with('success','امتیاز شما با موفقیت ذخیره شد');
+	}
 	
 	
-	// public function addToCompare(Product $product)
-	// {
-	//    if (Auth::check())
-    //    {   $user=auth()->user();
-	// 	   if($user->compare()->count() > 0)
-	// 	   {
-	// 		   $userCompareList=$user->compare;
-	// 	   }else{
-	// 		   $userCompareList=Compare::create(['user_id'=>$user->id]);
-	// 	   }
-    //        $product->compares()->toggle([$userCompareList->id]);
-    //        if($product->compares->contains($userCompareList->id)){
-    //         return response()->json(['status' => 1]);
-    //        }
-    //        else{
-    //         return response()->json(['status' => 2]);
-    //        }
-    //    }else{
-    //        return response()->json(['status' => 3]);
-	//         }
-	// }
+	public function addToCompare(Product $product)
+	{
+	   if (Auth::check())
+       { 
+		  $user=auth()->user();
+		   if($user->compare()->count() > 0)
+		   {
+			   $userCompareList=$user->compare;
+		   }else{
+			   $userCompareList=Compare::create(['user_id'=>$user->id]);
+		   }
+           $product->compares()->toggle([$userCompareList->id]);
+           if($product->compares->contains($userCompareList->id)){
+            return response()->json(['status' => 1]);
+           }
+           else{
+            return response()->json(['status' => 2]);
+           }
+       }
+	}
 	
 	}
