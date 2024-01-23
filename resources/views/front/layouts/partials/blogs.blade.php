@@ -7,7 +7,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-10 gap-5">
 
       @foreach ($blogs as $blog)
-      <a href="{{route('front.blogs.show-blog',$post)}} class="shadow-lg rounded-3xl p-4 hover:text-red-600 transition">
+      <a href="{{route('front.blogs.show-blog',$blog)}} class="shadow-lg rounded-3xl p-4 hover:text-red-600 transition">
         <div>
           <img class="rounded-xl hover:scale-105 transition" src="{{ asset($blog->image['indexArray']['medium']) }}" alt="">
         </div>

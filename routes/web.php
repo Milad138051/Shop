@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\Profile\AddressController;
 use App\Http\Controllers\Front\Profile\CompareController;
 use App\Http\Controllers\Front\Profile\FavoriteController;
 use App\Http\Controllers\Front\Profile\ProfileController;
+use App\Http\Controllers\Front\SalesProcess\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\Admin\Market\CommentController as ProductCommentControl
 use App\Http\Controllers\Front\Market\ProductController as FrontProductController;
 use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
 use App\Http\Controllers\Front\Profile\OrderController as FrontOrderController;
+use App\Http\Controllers\Front\SalesProcess\PaymentController as FrontPaymentController;
 
 
 /*
@@ -47,9 +49,6 @@ use App\Http\Controllers\Front\Profile\OrderController as FrontOrderController;
 |
 */
 
-// Route::get('ccc',function(){
-//     return view('front.sales-process.checkout');
-// });
 //auth
 Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
     Route::get('login-register', 'loginRegisterForm')->name('auth.login-register-form');
@@ -86,11 +85,24 @@ Route::controller(FrontProductController::class)->prefix('market')->group(functi
 Route::controller(CartController::class)->prefix('cart')->group(function () {
     //cart
     Route::get('/','cart')->name('front.sales-process.cart');
-    Route::post('/', 'updateCart')->name('front.sales-process.update-cart');
     Route::post('/add-to-cart/{product}', 'addToCart')->name('front.sales-process.add-to-cart');
     Route::get('/remove-from-cart/{cartItem}','removeFromCart')->name('front.sales-process.remove-from-cart');
     Route::get('/remove-from-cart-session/{productid}/{colorid}/{guaranteeid}','removeFromCartSession')->name('front.sales-process.remove-from-cart-session');
+    Route::post('/go-to-checkout','toCheckout')->name('front.sales-process.go-to-checkout');
 });
+//cart/checkout
+Route::controller(CheckoutController::class)->prefix('cart/checkout')->group(function () {
+    Route::get('/address-and-delivery', 'addressAndDelivery')->name('front.sales-process.address-and-delivery');
+    Route::get('/choose-address-and-delivery','chooseAddressAndDelivery')->name('front.sales-process.choose-address-and-delivery');
+});
+//cart/payment
+Route::controller(FrontPaymentController::class)->prefix('cart/payment')->group(function () {
+    Route::get('/','payment')->name('front.sales-process.payment');
+    Route::post('/copan-discount','copanDiscount')->name('front.sales-process.copanDiscount');
+    Route::post('/copan-submit','paymentSubmit')->name('front.sales-process.paymentSubmit');
+});
+
+
 //profile
 Route::prefix('profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {

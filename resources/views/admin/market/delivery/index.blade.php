@@ -34,6 +34,7 @@
                                 <th>نام روش ارسال</th>
                                 <th>هزینه ارسال</th>
                                 <th>زمان ارسال</th>
+                                <th>وضعیت</th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                             </tr>
                         </thead>
@@ -45,6 +46,13 @@
                                 <td>{{ $delivery_method->name }}</td>
                                 <td>{{ $delivery_method->amount }} تومان</td>
                                 <td>{{ $delivery_method->delivery_time . ' - ' . $delivery_method->delivery_time_unit }}</td>
+                                <td>
+                                    <label>
+                                        <input id="{{ $delivery_method->id }}" onchange="changeStatus({{ $delivery_method->id }})" data-url="{{ route('admin.market.delivery.status', $delivery_method->id) }}" type="checkbox" @if ($delivery_method->status === 1)
+                                        checked
+                                        @endif>
+                                    </label>
+                                </td>
                                 <td class="width-16-rem text-left">
                                     <a href="{{ route('admin.market.delivery.edit', $delivery_method->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
                                     <form class="d-inline" action="{{ route('admin.market.delivery.destroy', $delivery_method->id) }}" method="post">
@@ -69,6 +77,73 @@
 
 
 @section('script')
+
+
+
+<script type="text/javascript">
+    function changeStatus(id){
+        var element = $("#" + id)
+        var url = element.attr('data-url')
+        var elementValue = !element.prop('checked');
+
+        $.ajax({
+            url : url,
+            type : "GET",
+            success : function(response){
+                if(response.status){
+                    if(response.checked){
+                        element.prop('checked', true);
+                        // successToast('ایتم با موفقیت فعال شد')
+                        sweetalertStatusSuccess('ایتم با موفقیت فعال شد')
+
+                    }
+                    else{
+                        element.prop('checked', false);
+                        // successToast('ایتم با موفقیت غیر فعال شد')
+                        sweetalertStatusSuccess('ایتم با موفقیت غیر فعال شد')
+
+                    }
+                }
+                else{
+                    element.prop('checked', elementValue);
+                    // errorToast('هنگام ویرایش مشکلی بوجود امده است')
+                    sweetalertStatusError('هنگام ویرایش مشکلی بوجود امده است')
+
+                }
+            },
+            error : function(){
+                element.prop('checked', elementValue);
+                // errorToast('ارتباط برقرار نشد')
+                sweetalertStatusError('ارتباط برقرار نشد')
+
+            }
+        });
+
+        function sweetalertStatusSuccess(msg){
+            $(document).ready(function (){
+                Swal.fire({
+                    title:msg,
+                    text:'عملیات با موفقیت ذخیره شد',
+                    icon: 'success',
+                    confirmButtonText: 'باشه',
+                });
+            });
+        }
+
+        function sweetalertStatusError(msg){
+            $(document).ready(function (){
+                Swal.fire({
+                    title:msg,
+                    text:'هنگام ویرایش مشکلی بوجود امده است',
+                    icon: 'error',
+                    confirmButtonText: 'باشه',
+                });
+            });
+        }
+    }
+</script>
+
+
     <script type="text/javascript">
         function sweetalertStatusSuccess(msg) {
             $(document).ready(function() {

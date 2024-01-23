@@ -37,23 +37,6 @@ class CartController extends Controller
             return back()->with('alert-section-warning','برای ادامه کار , لطفا وارد حساب خود شوید');
         }
     }
-
-    // public function updateCart(Request $request)
-    // {
-    // 	$inputs=$request->all();
-    // 	$cartItems=CartItem::where('user_id',Auth::user()->id)->get();
-
-    // 	foreach($cartItems as $cartItem)
-    // 	{
-    // 		if(isset($inputs['number'][$cartItem->id]))
-    // 		{
-    // 			$cartItem->update(['number'=>$inputs['number'][$cartItem->id]]);
-    // 		}
-    // 	}
-    // 	return redirect()->route('customer.sales-process.address-and-delivery');		
-
-    // }
-
     public function addToCart(Product $product, Request $request)
     {
        
@@ -118,7 +101,6 @@ class CartController extends Controller
         }
 
     }
-
     public function removeFromCart(CartItem $cartItem)
     {
             if(Auth::user()->id=== $cartItem->user->id){
@@ -140,6 +122,11 @@ class CartController extends Controller
         $request->session()->put('shoppingCart',$items);
         return back()->with('alert-section-success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد');
 
+    }
+
+    public function toCheckout(Request $request)
+    {
+        return redirect()->route('front.sales-process.address-and-delivery');
     }
 
 

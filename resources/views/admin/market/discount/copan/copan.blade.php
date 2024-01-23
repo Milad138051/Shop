@@ -47,7 +47,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $copan->code }}</td>
-                                <td>{{ $copan->amount }}</td>
+                                <td>{{ $copan->amount }} تومان</td>
                                 <td>{{ $copan->amount_type == 0 ? 'درصدی' : 'عددی' }}</td>
                                 <td>{{ $copan->discount_ceiling ?? '-' }} تومان </td>
                                 <td>{{ $copan->type == 0 ? 'عمومی' : 'خصوصی' }}</td>

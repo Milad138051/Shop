@@ -54,4 +54,22 @@ class DeliveryController extends Controller
        return redirect()->route('admin.market.delivery.index')->with('swal-success', 'روش ارسال شما با موفقیت حذف شد');
     }
 
+    public function status(Delivery $delivery){
+
+        $delivery->status = $delivery->status == 0 ? 1 : 0;
+        $result = $delivery->save();
+        if($result){
+                if($delivery->status == 0){
+                    return response()->json(['status' => true, 'checked' => false]);
+                }
+                else{
+                    return response()->json(['status' => true, 'checked' => true]);
+                }
+        }
+        else{
+            return response()->json(['status' => false]);
+        }
+
+    }
+
 }

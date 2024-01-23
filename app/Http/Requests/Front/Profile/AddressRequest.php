@@ -28,7 +28,9 @@ class AddressRequest extends FormRequest
                 // 'postal_code' => ['required', new PostalCode()],
                 'no' => 'required',
                 'unit' => 'required',
-                'receiver' => 'sometimes',
+                'city' => 'required',
+                'province' => 'required',
+                'recipient_name' => 'required|string',
                 'mobile' => 'required',
             ];
           }else{
@@ -38,7 +40,9 @@ class AddressRequest extends FormRequest
                 // 'postal_code' => ['required', new PostalCode()],
                 'no' => 'required',
                 'unit' => 'required',
-                'receiver' => 'sometimes',
+                'city' => 'required',
+                'province' => 'required',
+                'recipient_name' => 'required|string',
                 'mobile' => 'required',
             ];
           }

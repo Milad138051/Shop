@@ -23,106 +23,111 @@
 @section('content')
     <div class="max-w-[1440px] mx-auto px-3">
         <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
-          <form action="" method="post" id="id=cart_items">
-            @csrf
-            <div class="relative overflow-x-auto rounded-2xl border">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="hidden md:table-header-group text-xs text-gray-700 bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-16 py-3">
-                                <span class="sr-only">تصویر</span>
-                            </th>
-                            <th scope="col" class="md:pr-6 py-3">
-                                نام محصول
-                            </th>
-                            <th scope="col" class="md:pr-6 py-3">
-                                رنگ
-                            </th>
-                            <th scope="col" class="md:pr-6 py-3">
-                                گارانتی
-                            </th>
-                            <th scope="col" class="pr-10 py-3">
-                                تعداد
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                قیمت
-                            </th>
-                            
-                            <th scope="col" class="px-6 py-3">
-                                تخفیف
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                دستورات
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="grid grid-cols-1 sm:grid-cols-2 md:contents gap-5">
-                        @auth
-                            @foreach ($cartItems as $cartItem)
-                                @php
-                                    $totalProductPrice = 0;
-                                    $totalDiscount = 0;
-                                    $totalProductPrice += $cartItem->cartItemProductPrice();
-                                    $totalDiscount += $cartItem->cartItemProductDiscount();
-                                @endphp
+            <form id="a-form" action="{{ route('front.sales-process.go-to-checkout') }}" method="post">
+                @csrf
+                <div class="relative overflow-x-auto rounded-2xl border">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                        <thead class="hidden md:table-header-group text-xs text-gray-700 bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-16 py-3">
+                                    <span class="sr-only">تصویر</span>
+                                </th>
+                                <th scope="col" class="md:pr-6 py-3">
+                                    نام محصول
+                                </th>
+                                <th scope="col" class="md:pr-6 py-3">
+                                    رنگ
+                                </th>
+                                <th scope="col" class="md:pr-6 py-3">
+                                    گارانتی
+                                </th>
+                                <th scope="col" class="pr-10 py-3">
+                                    تعداد
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    قیمت
+                                </th>
 
-                                <tr
-                                    class="bg-white border-b hover:bg-gray-50 grid grid-cols-1 justify-items-center md:table-row">
-                                    <td class="p-4">
-                                        <img src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
-                                            class="w-48 md:w-32 max-w-full max-h-full rounded-lg" alt="">
-                                    </td>
-                                    <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
-                                        {{ $cartItem->product->name }}
-                                    </td>
-                                    <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
-                                        <p>
-                                            @if (!empty($cartItem->color))
-                                                <span style="background-color: {{ $cartItem->color->color }}"
-                                                    class="cart-product-selected-color me-1"></span> <span>
-                                                    {{ $cartItem->color->color_name }}</span>
+                                <th scope="col" class="px-6 py-3">
+                                    تخفیف
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    دستورات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="grid grid-cols-1 sm:grid-cols-2 md:contents gap-5">
+                            @auth
+                                @foreach ($cartItems as $cartItem)
+                                    @php
+                                        $totalProductPrice = 0;
+                                        $totalDiscount = 0;
+                                        $totalProductPrice += $cartItem->cartItemProductPrice();
+                                        $totalDiscount += $cartItem->cartItemProductDiscount();
+                                    @endphp
+
+                                    <tr
+                                        class="bg-white border-b hover:bg-gray-50 grid grid-cols-1 justify-items-center md:table-row">
+                                        <td class="p-4">
+                                            <img src="{{ asset($cartItem->product->image['indexArray']['medium']) }}"
+                                                class="w-48 md:w-32 max-w-full max-h-full rounded-lg" alt="">
+                                        </td>
+                                        <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
+                                            {{ $cartItem->product->name }}
+                                        </td>
+                                        <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
+                                            <p>
+                                                @if (!empty($cartItem->color))
+                                                    <span style="background-color: {{ $cartItem->color->color }}"
+                                                        class="cart-product-selected-color me-1"></span> <span>
+                                                        {{ $cartItem->color->color_name }}</span>
+                                                @else
+                                                    <span>رنگ منتخب وجود ندارد</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                        <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
+                                            @if (!empty($cartItem->guarantee))
+                                                {{ $cartItem->guarantee->name }}
                                             @else
-                                                <span>رنگ منتخب وجود ندارد</span>
+                                                ندارد
                                             @endif
-                                        </p>
-                                    </td>
-                                    <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
-                                      @if(!empty($cartItem->guarantee))
-                                      {{ $cartItem->guarantee->name }}
-                                      @else
-                                      ندارد
-                                      @endif
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="quantity flex items-center">
-                                            <input class="w-12 h-8 mx-2 text-center border focus:outline-none rounded-lg number" name="number"
-                                                type="number" min="1" step="1" value="{{ $cartItem->number }}" data-product-price={{ $cartItem->cartItemProductPrice() }} data-product-discount={{ $cartItem->cartItemProductDiscount() }} readonly="readonly">
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
-                                     {{ priceFormat($cartItem->cartItemProductPrice()) }}
-                                      تومان
-                                    </td>
-                                    <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
-                                      @if(!empty($cartItem->product->activeAmazingSale()))
-                                      {{ priceFormat($cartItem->cartItemProductDiscount()) }} تومان
-                                      @else
-                                      ندارد
-                                      @endif
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <a href="{{ route('front.sales-process.remove-from-cart', $cartItem) }}"
-                                            class=" text-red-600">حذف</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endauth
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="quantity flex items-center">
+                                                <input
+                                                    class="w-12 h-8 mx-2 text-center border focus:outline-none rounded-lg number"
+                                                    name="number" type="number" min="1" step="1"
+                                                    value="{{ $cartItem->number }}"
+                                                    data-product-price={{ $cartItem->cartItemProductPrice() }}
+                                                    data-product-discount={{ $cartItem->cartItemProductDiscount() }}
+                                                    readonly="readonly">
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
+                                            {{ priceFormat($cartItem->cartItemProductPrice()) }}
+                                            تومان
+                                        </td>
+                                        <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
+                                            @if (!empty($cartItem->product->activeAmazingSale()))
+                                                {{ priceFormat($cartItem->cartItemProductDiscount()) }} تومان
+                                            @else
+                                                ندارد
+                                            @endif
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('front.sales-process.remove-from-cart', $cartItem) }}"
+                                                class=" text-red-600">حذف</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endauth
 
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
 
-          </form>
+            </form>
             <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
                 <div class="flex justify-between">
                     <div>
@@ -130,7 +135,7 @@
                     </div>
                     <div class="flex gap-x-1">
                         <div id="total_product_price">
-                          {{ priceFormat($totalProductPrice) }}
+                            {{ priceFormat($totalProductPrice) }}
                         </div>
                         <div>
                             تومان
@@ -140,11 +145,11 @@
 
                 <div class="flex justify-between">
                     <div>
-                      تخفیف کالاها  
+                        تخفیف کالاها
                     </div>
                     <div class="flex gap-x-1">
                         <div id="total_discount">
-                          {{ priceFormat($totalDiscount) }}
+                            {{ priceFormat($totalDiscount) }}
                         </div>
                         <div>
                             تومان
@@ -157,7 +162,7 @@
                     </div>
                     <div class="flex gap-x-1">
                         <div id="total_price">
-                          {{ priceFormat($totalProductPrice - $totalDiscount) }}
+                            {{ priceFormat($totalProductPrice - $totalDiscount) }}
                         </div>
                         <div>
                             تومان
@@ -165,55 +170,50 @@
                     </div>
                 </div>
             </div>
-            <a href="#" class="flex justify-center items-center opacity-90 my-5">
-                <button onclick="document.getElementById('cart_items').submit();"
-                    class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm">تایید
-                    و پرداخت</button>
-            </a>
+            <div class="flex justify-center items-center opacity-90 my-5">
+                <button type="submit" form="a-form" class="btn btn-danger d-block">تکمیل فرآیند خرید</button>
+            </div>
         </div>
     </div>
 @endsection
 
 
 @section('script')
-
-<script>
-    $(document).ready(function(){
-        bill();
-    })
-
-
-    function bill() {
-        var total_product_price = 0;
-        var total_discount = 0;
-        var total_price = 0;
-
-        $('.number').each(function() {
-            var productPrice = parseFloat($(this).data('product-price'));
-            var productDiscount = parseFloat($(this).data('product-discount'));
-            var number = parseFloat($(this).val());
-
-            total_product_price += productPrice * number;
-            total_discount += productDiscount * number;
+    <script>
+        $(document).ready(function() {
+            bill();
         })
 
-        total_price = total_product_price - total_discount;
 
-        $('#total_product_price').html(toFarsiNumber(total_product_price));
-        $('#total_discount').html(toFarsiNumber(total_discount));
-        $('#total_price').html(toFarsiNumber(total_price));
+        function bill() {
+            var total_product_price = 0;
+            var total_discount = 0;
+            var total_price = 0;
+
+            $('.number').each(function() {
+                var productPrice = parseFloat($(this).data('product-price'));
+                var productDiscount = parseFloat($(this).data('product-discount'));
+                var number = parseFloat($(this).val());
+
+                total_product_price += productPrice * number;
+                total_discount += productDiscount * number;
+            })
+
+            total_price = total_product_price - total_discount;
+
+            $('#total_product_price').html(toFarsiNumber(total_product_price));
+            $('#total_discount').html(toFarsiNumber(total_discount));
+            $('#total_price').html(toFarsiNumber(total_price));
 
 
-        function toFarsiNumber(number)
-        {
-            const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            // add comma
-            number = new Intl.NumberFormat().format(number);
-            //convert to persian
-            return number.toString().replace(/\d/g, x => farsiDigits[x]);
+            function toFarsiNumber(number) {
+                const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                // add comma
+                number = new Intl.NumberFormat().format(number);
+                //convert to persian
+                return number.toString().replace(/\d/g, x => farsiDigits[x]);
+            }
+
         }
-
-    }
-
-</script>
+    </script>
 @endsection
