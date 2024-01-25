@@ -47,7 +47,7 @@
                 <div class="text-lg md:text-xl opacity-70 mb-3">
                     انتخاب نوع پرداخت
                 </div>
-                <form action="{{ route('front.sales-process.choose-address-and-delivery') }}" id="a-form">
+                <form action="{{ route('front.sales-process.paymentSubmit') }}" id="a-form" method="POST">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 px-5 md:px-20">
                         <div class="mb-4">
@@ -74,20 +74,20 @@
                 </form>
             </div>
 
-
             <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
-                @php
+                <div class="flex justify-between">
+                    @php
                     $totalProductPrice = 0;
                     $totalDiscount = 0;
                 @endphp
-
+    
+    
                 @foreach ($cartItems as $cartItem)
                     @php
-                        $totalProductPrice += $cartItem->cartItemProductPrice() * $cartItem->number;
-                        $totalDiscount += $cartItem->cartItemProductDiscount() * $cartItem->number;
+                        $totalProductPrice += $cartItem->cartItemProductPrice();
+                        $totalDiscount += $cartItem->cartItemProductDiscount();
                     @endphp
                 @endforeach
-                <div class="flex justify-between">
                     <div>
                         قیمت کالاها:
                     </div>
@@ -190,8 +190,7 @@
                     </div>
                     <div class="flex gap-x-1">
                         <div>
-                            {{ priceFormat($order->order_final_amount) }}
-
+                            {{priceFormat(($totalProductPrice - $totalDiscount) + $order->delivery_amount) }}
                         </div>
                         <div>
                             تومان

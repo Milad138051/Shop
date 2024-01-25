@@ -44,7 +44,7 @@ class CartItem extends Model
     }
 
 
-    // productPrice * (discountPercentage / 100)
+    // productPrice or (productPrice + colorPrice + guaranteePrice) * (discountPercentage / 100)
     public function cartItemProductDiscount()
     {
       $cartItemProductPrice=$this->cartItemProductPrice();

@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">تخفیف عمومی</h3>
+                    <h3 class="card-title">فروش شگفت انگیز</h3>
                     <a href="{{ route('admin.market.discount.amazingSale.create') }}" class="btn btn-info btn-sm">افزودن کالا به لیست فروش شگفت انگیز  </a>
 
 

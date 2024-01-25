@@ -141,7 +141,7 @@
                                                                 id="{{ 'color_' . $color->id }}"
                                                                 value="{{ $color->id }}"
                                                                 data-color-name="{{ $color->color_name }}"
-                                                                data-color-price={{ $color->price_increase }}
+                                                                data-color-price="{{ $color->price_increase }}"
                                                                 @if ($key == 0) checked @endif>
                                                         @endforeach
 
@@ -193,7 +193,7 @@
                                                 name="guarantee" id="guarantee">
                                                 @foreach ($guarantees as $key => $guarantee)
                                                     <option value="{{ $guarantee->id }}"
-                                                        data-guarantee-price={{ $guarantee->price_increase }}
+                                                        data-guarantee-price="{{ $guarantee->price_increase }}"
                                                         @if ($key == 0) selected @endif>
                                                         {{ $guarantee->name }}</option>
                                                 @endforeach
@@ -218,11 +218,16 @@
 
                                             @if(!empty($amazingSale))
                                             <div>
-                                                تخفیف
+                                                 درصد تخفیف   
                                             </div>
                                             @endif
+                                            {{-- @if(!empty($amazingSale))
                                             <div>
-                                                قیمت:
+                                                 میزان تخفیف   
+                                            </div>
+                                            @endif --}}
+                                            <div>
+                                                قیمت (شامل هزینه گارانتی و رنگ کالا) :
                                             </div>
                                             @if($product->marketable_number > 0)
                                             <div>
@@ -230,7 +235,7 @@
                                             </div>
                                             @endif
                                             <div>
-                                                قیمت نهایی  (شامل هزینه گارانتی و رنگ کالا) : 
+                                                قیمت نهایی : 
                                             </div>
                                         </div>
                                         <div class="text-left opacity-70 text-sm flex flex-col gap-y-6">
@@ -238,19 +243,24 @@
                                                 {{ $product->marketable_number }} عدد
                                             </div>
                                             @if(!empty($amazingSale))
+                                            <div id="product-discount-price" data-product-discount-price="{{ ($product->price * ($amazingSale->percentage / 100) ) }}">
+                                                <div>
+                                                    {{ $amazingSale->percentage}} درصد
+                                                </div>
+                                            </div>
+                                            @endif
+                                            {{-- @if(!empty($amazingSale))
                                             <div>
                                                 <div id="product-discount-price" data-product-discount-price="{{ ($product->price * ($amazingSale->percentage / 100) ) }}">
-                                                    {{ priceFormat($product->price * ($amazingSale->percentage / 100) ) }}
+                                                    {{ PriceFormat($product->price * ($amazingSale->percentage / 100) ) }} 
                                                 </div>
                                                 <div>
                                                     تومان
                                                 </div>                         
                                             </div>
-                                            @endif
+                                            @endif --}}
                                             <div class="flex text-red-500">
-                                                <div id="product_price" data-product-original-price="{{ $product->price }}">
-                                                    {{priceFormat ($product->price) }}
-                                                </div>
+                                                <div id="product_price" data-product-original-price="{{ $product->price }}" data-amazing-sale="{{$product->activeAmazingSale()->percentage ?? ''}}"></div>
                                                 <div>
                                                     تومان
                                                 </div>
@@ -588,6 +598,7 @@
             var number = 1;
             var product_discount_price = 0;
             var product_original_price = parseFloat($('#product_price').attr('data-product-original-price'));
+            var amazing_sale_percentage = parseFloat($('#product_price').attr('data-amazing-sale'));
 
             if ($('input[name="color"]:checked').length != 0) {
                 selected_color_price = parseFloat(selected_color.attr('data-color-price'));
@@ -595,6 +606,7 @@
 
             if ($('#guarantee option:selected').length != 0) {
                 selected_guarantee_price = parseFloat($('#guarantee option:selected').attr('data-guarantee-price'));
+
             }
 
             if ($('#number').val() > 0) {
@@ -602,17 +614,20 @@
             }
 
             if ($('#product-discount-price').length != 0) {
-                product_discount_price = parseFloat($('#product-discount-price').attr('data-product-discount-price'));
+                {{-- product_discount_price = parseFloat($('#product-discount-price').attr('data-product-discount-price')); --}}
+                product_discount_price = (product_original_price + selected_color_price + selected_guarantee_price) * amazing_sale_percentage /100 ;
+
             }
 
             //final price
             var product_price = product_original_price + selected_color_price + selected_guarantee_price;
             var final_price = number * (product_price - product_discount_price);
 
-            // console.log(number, product_price, final_price);
-            $('#product-price').html(toFarsiNumber(product_price));
+            $('#product_price').html(toFarsiNumber(product_price));
             $('#final-price').html(toFarsiNumber(final_price));
         }
+
+
 
         function toFarsiNumber(number) {
             const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];

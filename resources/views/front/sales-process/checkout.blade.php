@@ -216,7 +216,8 @@
 
 
             <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
-                @php
+                <div class="flex justify-between">
+                    @php
                     $totalProductPrice = 0;
                     $totalDiscount = 0;
                 @endphp
@@ -227,12 +228,11 @@
                         $totalDiscount += $cartItem->cartItemProductDiscount() * $cartItem->number;
                     @endphp
                 @endforeach
-                <div class="flex justify-between">
                     <div>
-                        قیمت کالاها:
+                        قیمت کالاها ({{$cartItem->count()}}):
                     </div>
                     <div class="flex gap-x-1">
-                        <div>
+                        <div id="total_product_price">
                             {{ priceFormat($totalProductPrice) }}
                         </div>
                         <div>
@@ -240,30 +240,27 @@
                         </div>
                     </div>
                 </div>
-                @if ($totalDiscount !== 0)
-                    <div class="flex justify-between">
-                        <div>
-                            تخفیف کالاها
+
+                <div class="flex justify-between">
+                    <div>
+                        تخفیف کالاها
+                    </div>
+                    <div class="flex gap-x-1">
+                        <div id="total_discount">
+                            {{ priceFormat($totalDiscount) }}
                         </div>
-                        <div class="flex gap-x-1">
-                            <div>
-                                {{ priceFormat($totalDiscount) }}
-                            </div>
-                            <div>
-                                تومان
-                            </div>
+                        <div>
+                            تومان
                         </div>
                     </div>
-                @endif
-
+                </div>
                 <div class="flex justify-between">
                     <div class="text-red-600">
                         مجموع نهایی:
                     </div>
                     <div class="flex gap-x-1">
-                        <div>
-                            {{ priceFormat($totalProductPrice - $totalDiscount) }}
-
+                        <div id="total_price">
+                            {{priceFormat($totalProductPrice - $totalDiscount) }}
                         </div>
                         <div>
                             تومان

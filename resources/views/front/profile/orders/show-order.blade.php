@@ -3,6 +3,16 @@
 
 @section('head-tag')
 <title>سفارش های من</title>
+
+<style>
+          .cart-product-selected-color {
+            background-color: #000000;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            border-radius: 70%;
+        }
+</style>
 @endsection
 
 @section('content')
@@ -26,11 +36,17 @@
                 <th scope="col" class="pr-10 py-3">
                   تعداد
                 </th>
+                <th scope="col" class="pr-10 py-3">
+                  رنگ
+                </th>
+                <th scope="col" class="pr-10 py-3">
+                  گارانتی
+                </th>
                 <th scope="col" class="px-6 py-3">
                   قیمت
                 </th>
                 <th scope="col" class="px-6 py-3">
-                   قیمت نهایی
+                     قیمت نهایی (شامل هزینه رنگ + گارانتی)
                 </th>
               </tr>
             </thead>
@@ -48,11 +64,21 @@
                   <input class="w-12 h-8 mx-2 text-center border focus:outline-none rounded-lg" type="number" value="{{$item->number}}" readonly>
                 </div>
               </td>
-              <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
-               {{priceFormat($item->final_product_price ?? '-')}} تومان
+              <td class="px-6 py-4">
+                <span style="background-color: {{ $item->color->color }}"
+                  class="cart-product-selected-color me-1"></span> <span>
+                  {{ $item->color->color_name }}
+                </span>
+              </td>
+              <td class="px-6 py-4">
+
+                {{$item->guarantee->name}}
               </td>
               <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
-                {{ $item->final_total_price ?? '-'}} تومان
+               {{priceFormat($item->singleProduct->price * $item->number ?? '-')}} تومان
+              </td>
+              <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
+                {{ priceFormat($item->final_total_price ?? '-')}} تومان
               </td>
             </tr>               
              @endforeach
@@ -67,7 +93,20 @@
               </div>
               <div class="flex gap-x-1">
                 <div>
-                  {{PriceFormat($order->order_final_amount)}}
+                  {{priceFormat($order->order_final_amount)}}
+                </div>
+                <div>
+                  تومان
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between">
+              <div>
+                هزینه پست:
+              </div>
+              <div class="flex gap-x-1">
+                <div>
+                  {{priceFormat($order->delivery_amount)}}
                 </div>
                 <div>
                   تومان
@@ -95,7 +134,7 @@
               </div>
               <div class="flex gap-x-1">
                 <div>
-                  {{priceFormat($order->order_final_amount -  $order->order_discount_amount)}}
+                  {{priceFormat(($order->order_final_amount))}}
                 </div>
                 <div>
                   تومان

@@ -250,7 +250,7 @@
                                 قیمت:
                               </div>
                               <div>
-                               {{$product['productObject']['price']}}
+                               {{PriceFormat($product['productObject']['price'])}}
                               </div>
                               <div>
                                 تومان
@@ -298,7 +298,7 @@
                                 قیمت:
                               </div>
                               <div>
-                                {{$cartItem->product->price}}
+                                {{PriceFormat($cartItem->product->price)}}
                               </div>
                               <div>
                                 تومان

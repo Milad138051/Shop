@@ -99,7 +99,9 @@ Route::controller(CheckoutController::class)->prefix('cart/checkout')->group(fun
 Route::controller(FrontPaymentController::class)->prefix('cart/payment')->group(function () {
     Route::get('/','payment')->name('front.sales-process.payment');
     Route::post('/copan-discount','copanDiscount')->name('front.sales-process.copanDiscount');
-    Route::post('/copan-submit','paymentSubmit')->name('front.sales-process.paymentSubmit');
+    Route::post('/payment-submit','paymentSubmit')->name('front.sales-process.paymentSubmit');
+	Route::post('/verify', 'verifyPayment')->name('cart.verifyPayment');
+	Route::get('/callback-payment/{order}', 'callback')->name('cart.callback');
 });
 
 

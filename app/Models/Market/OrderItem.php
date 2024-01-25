@@ -22,10 +22,10 @@ class OrderItem extends Model
 	    return $this->belongsTo(Product::class,'product_id');
 	}
 	
-	// public function amzaingSale()
-	// {
-	//     return $this->belongsTo(AmazingSale::class);
-	// }
+	public function amzaingSale()
+	{
+	    return $this->belongsTo(AmazingSale::class);
+	}
 	
 	public function color()
 	{

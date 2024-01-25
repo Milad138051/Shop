@@ -25,6 +25,7 @@ class CheckoutController extends Controller
 		$cartItems=CartItem::where('user_id',$user->id)->get();
 		$addresses=Address::where('user_id',auth()->user()->id)->get();
 		$deliveryMethods=Delivery::where('status',1)->get();
+        // dd($deliveryMethods);
 		if(empty(CartItem::where('user_id',$user->id)->count()))
 		{
             return redirect()->route('front.sales-process.cart');
@@ -82,7 +83,7 @@ class CheckoutController extends Controller
         $inputs['delivery_id'] = $delivery->id;
         $inputs['delivery_amount'] = $delivery->amount;
         $inputs['delivery_object'] = $delivery;
-        $inputs['order_final_amount'] = $finalPrice;
+        $inputs['order_final_amount'] = $finalPrice + $delivery->amount;
         $inputs['address_object'] = $address;
 		if($commonDiscount)
 		{
@@ -90,9 +91,10 @@ class CheckoutController extends Controller
 		}
         $inputs['order_discount_amount'] = $totalFinalDiscountPriceWithNumbers;
         $inputs['order_common_discount_amount'] = $commonPercentageDiscountAmount;
+        // dd($inputs);
         $inputs['order_total_products_discount_amount'] = $inputs['order_discount_amount'] + $inputs['order_common_discount_amount'];
         Order::updateOrCreate(
-            ['user_id' => $user->id, 'order_status' => 0],
+            ['user_id' => $user->id, 'order_status' => 1],
             $inputs
         );
 

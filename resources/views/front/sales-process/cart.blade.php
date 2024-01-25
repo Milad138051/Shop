@@ -45,7 +45,7 @@
                                     تعداد
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    قیمت
+                                    قیمت (هزینه رنگ + گارانتی)
                                 </th>
 
                                 <th scope="col" class="px-6 py-3">
@@ -58,10 +58,13 @@
                         </thead>
                         <tbody class="grid grid-cols-1 sm:grid-cols-2 md:contents gap-5">
                             @auth
+
+                                @php
+                                    $totalProductPrice = 0;
+                                    $totalDiscount = 0;
+                                @endphp
                                 @foreach ($cartItems as $cartItem)
                                     @php
-                                        $totalProductPrice = 0;
-                                        $totalDiscount = 0;
                                         $totalProductPrice += $cartItem->cartItemProductPrice();
                                         $totalDiscount += $cartItem->cartItemProductDiscount();
                                     @endphp
@@ -95,6 +98,7 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="quantity flex items-center">
+    
                                                 <input
                                                     class="w-12 h-8 mx-2 text-center border focus:outline-none rounded-lg number"
                                                     name="number" type="number" min="1" step="1"
@@ -108,13 +112,16 @@
                                             {{ priceFormat($cartItem->cartItemProductPrice()) }}
                                             تومان
                                         </td>
+
                                         <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
                                             @if (!empty($cartItem->product->activeAmazingSale()))
                                                 {{ priceFormat($cartItem->cartItemProductDiscount()) }} تومان
+                                                {{-- {{ PriceFormat($cartItem->product->price * ($cartItem->product->activeAmazingSale()->percentage / 100) ) }}  تومان --}}
                                             @else
                                                 ندارد
                                             @endif
                                         </td>
+
                                         <td class="px-6 py-4">
                                             <a href="{{ route('front.sales-process.remove-from-cart', $cartItem) }}"
                                                 class=" text-red-600">حذف</a>
@@ -126,12 +133,12 @@
                         </tbody>
                     </table>
                 </div>
-
             </form>
+
             <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
                 <div class="flex justify-between">
                     <div>
-                        قیمت کالاها:
+                        قیمت کالاها ({{$cartItem->count()}}):
                     </div>
                     <div class="flex gap-x-1">
                         <div id="total_product_price">
@@ -162,7 +169,7 @@
                     </div>
                     <div class="flex gap-x-1">
                         <div id="total_price">
-                            {{ priceFormat($totalProductPrice - $totalDiscount) }}
+                            {{priceFormat($totalProductPrice - $totalDiscount) }}
                         </div>
                         <div>
                             تومان
@@ -179,41 +186,47 @@
 
 
 @section('script')
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
+        bill();
+
+        $('.cart-number').click(function() {
             bill();
         })
+    })
 
 
-        function bill() {
-            var total_product_price = 0;
-            var total_discount = 0;
-            var total_price = 0;
+    function bill() {
+        var total_product_price = 0;
+        var total_discount = 0;
+        var total_price = 0;
 
-            $('.number').each(function() {
-                var productPrice = parseFloat($(this).data('product-price'));
-                var productDiscount = parseFloat($(this).data('product-discount'));
-                var number = parseFloat($(this).val());
+        $('.number').each(function() {
+            var productPrice = parseFloat($(this).data('product-price'));
+            var productDiscount = parseFloat($(this).data('product-discount'));
+            var number = parseFloat($(this).val());
 
-                total_product_price += productPrice * number;
-                total_discount += productDiscount * number;
-            })
+            total_product_price += productPrice * number;
+            total_discount += productDiscount * number;
+        })
 
-            total_price = total_product_price - total_discount;
+        total_price = total_product_price - total_discount;
 
-            $('#total_product_price').html(toFarsiNumber(total_product_price));
-            $('#total_discount').html(toFarsiNumber(total_discount));
-            $('#total_price').html(toFarsiNumber(total_price));
+        $('#total_product_price').html(toFarsiNumber(total_product_price));
+        $('#total_discount').html(toFarsiNumber(total_discount));
+        $('#total_price').html(toFarsiNumber(total_price));
 
 
-            function toFarsiNumber(number) {
-                const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-                // add comma
-                number = new Intl.NumberFormat().format(number);
-                //convert to persian
-                return number.toString().replace(/\d/g, x => farsiDigits[x]);
-            }
-
+        function toFarsiNumber(number) {
+            const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            // add comma
+            number = new Intl.NumberFormat().format(number);
+            //convert to persian
+            return number.toString().replace(/\d/g, x => farsiDigits[x]);
         }
-    </script>
+
+    }
+</script>
+
+
 @endsection
