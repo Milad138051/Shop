@@ -190,7 +190,7 @@
                     </div>
                     <div class="flex gap-x-1">
                         <div>
-                            {{priceFormat(($totalProductPrice - $totalDiscount) + $order->delivery_amount) }}
+                            {{priceFormat(($order->order_final_amount - $totalDiscount)) }}
                         </div>
                         <div>
                             تومان

@@ -27,7 +27,10 @@
                                             تاریخ ثبت سفارش
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            وضعیت
+                                            وضعیت سفارش
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            وضعیت پرداخت
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             مجموع
@@ -47,6 +50,35 @@
                                             <td class="px-6 py-4">
                                                 {{ jalaliDate($order->created_at) }}
                                             </td>
+                                            @if ($order->order_status == 0)
+                                                <td class="lg:px-6 py-4 text-red-500">
+                                                    بررسی نشده
+                                                </td>
+                                            @elseif($order->order_status == 1)
+                                            <td class="lg:px-6 py-4 text-red-500">
+                                                در انتظار تایید
+                                            </td>
+                                            @elseif($order->order_status == 2)
+                                            <td class="lg:px-6 py-4 text-red-500">
+                                                تایید شده
+                                            </td>
+                                            @elseif($order->order_status == 3)
+                                            <td class="lg:px-6 py-4 text-red-500">
+                                                تایید نشده
+                                            </td>
+                                            @elseif($order->order_status == 4)
+                                            <td class="lg:px-6 py-4 text-red-500">
+                                                باطل شده
+                                            </td>
+                                            @elseif($order->order_status == 5)
+                                            <td class="lg:px-6 py-4 text-red-500">
+                                                مرجوع شده
+                                            </td>
+                                            @endif
+
+
+
+
                                             @if ($order->payment_status == 0)
                                                 <td class="lg:px-6 py-4 text-red-500">
                                                     پرداخت نشده

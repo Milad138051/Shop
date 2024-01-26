@@ -10,7 +10,7 @@ return [
     | You can switch to a different driver at runtime.
     |
     */
-    'default' => 'local',
+    'default' => 'zibal',
 
     /*
     |--------------------------------------------------------------------------
@@ -315,7 +315,7 @@ return [
             'mode' => 'normal', // can be normal, direct
 
             'merchantId' => 'zibal',
-            'callbackUrl' => env('APP_URL') .'/cart/payment/verify-payment',
+            'callbackUrl' => env('APP_URL') .'/cart/payment/verify',
             'description' => 'payment using zibal',
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],

@@ -89,19 +89,6 @@
           <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20 text-sm">
             <div class="flex justify-between">
               <div>
-                قیمت کل:
-              </div>
-              <div class="flex gap-x-1">
-                <div>
-                  {{priceFormat($order->order_final_amount)}}
-                </div>
-                <div>
-                  تومان
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-between">
-              <div>
                 هزینه پست:
               </div>
               <div class="flex gap-x-1">

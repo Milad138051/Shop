@@ -100,7 +100,7 @@ Route::controller(FrontPaymentController::class)->prefix('cart/payment')->group(
     Route::get('/','payment')->name('front.sales-process.payment');
     Route::post('/copan-discount','copanDiscount')->name('front.sales-process.copanDiscount');
     Route::post('/payment-submit','paymentSubmit')->name('front.sales-process.paymentSubmit');
-	Route::post('/verify', 'verifyPayment')->name('cart.verifyPayment');
+	Route::get('/verify', 'verifyPayment')->name('cart.verifyPayment');
 	Route::get('/callback-payment/{order}', 'callback')->name('cart.callback');
 });
 

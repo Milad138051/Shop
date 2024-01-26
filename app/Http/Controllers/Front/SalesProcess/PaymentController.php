@@ -23,16 +23,21 @@ class PaymentController extends Controller
     public function payment()
     {
         $user = auth()->user();
-
-        // calculate delivery amount
         $order = Order::where('user_id', $user->id)->where('order_status', 1)->first();
-        // $order->order_final_amount = +$order->order_final_amount + $order->delivery_amount;
-        // $order->save;
-
+        if ($order->orderItems->count() > 0) {
+            foreach ($order->orderItems as $item) {
+                $item->delete();
+            }
+        }
+        if ($order->copan_id !== null) {
+            $order->update([
+                'copan_id' => null,
+                'order_copan_discount_amount' => null,
+            ]);
+        }
         $cartItems = CartItem::where('user_id', $user->id)->get();
         return view('front.sales-process.payment', compact('cartItems', 'order'));
     }
-
 
     public function copanDiscount(Request $request)
     {
@@ -40,7 +45,6 @@ class PaymentController extends Controller
             ['copan' => 'required']
         );
         $copan = Copan::where([['code', $request->copan], ['status', 1], ['end_date', '>', now()], ['start_date', '<', now()]])->first();
-        // dd($copan);
         if ($copan != null) {
             // چک میکنیم که اگه کد خصوصی بود فقط برا همون کاربر کارکنه
             if ($copan->user_id != null) {
@@ -52,10 +56,11 @@ class PaymentController extends Controller
                 }
             }
 
-            $order = Order::where('user_id', Auth::user()->id)->where('order_status', 0)->where('copan_id', null)->first();
+            $order = Order::where('user_id', Auth::user()->id)->where('order_status', 1)->where('copan_id', null)->first();
+            // dd($order);
 
 
-            //میایم سفارشی از کاربر رو که در حال انجامه رو پیدا میکنیم و چک میکنیم قبلا روش مد تخفیف اعمال نکرده باشه 
+            //میایم سفارشی از کاربر رو که در حال انجامه رو پیدا میکنیم و چک میکنیم قبلا روش کد تخفیف اعمال نکرده باشه 
             if ($order) {
                 //اگه کد تخفیف از نوع درصدی بود
                 if ($copan->amount_type == 0) {
@@ -73,6 +78,8 @@ class PaymentController extends Controller
 
                 // میزان تخفیف . چه عددی چه درصدی رو از قیمت سفارش کاربر کم میکنیم
                 $order->order_final_amount = $order->order_final_amount - $copanDiscountAmount;
+                // dd($copanDiscountAmount);
+                // dd($order->order_final_amount);
 
                 //میزان تخفیف گرفته شده از کد تخفیف رو جمع میکنیم با بقیه تخفیفاتی که ممکنه کاربر گرفته باشه مثل تخفیف عمومی و تخفیف شگفت انگیز
                 $finalDiscount = $order->order_total_products_discount_amount + $copanDiscountAmount;
@@ -107,12 +114,11 @@ class PaymentController extends Controller
                 $targetModel = OnlinePayment::class;
                 $type = 0;
                 // $paymentType=0;
-                // dd('online');
                 break;
             case '1':
                 $targetModel = CashPayment::class;
                 $type = 1;
-                // $paymentType=2;
+                // $paymentType=1;
                 $cash_receiver = $request->cash_receiver ? $request->cash_receiver : null;
                 break;
 
@@ -122,6 +128,7 @@ class PaymentController extends Controller
                 );
         }
 
+        //create online or cash payment
         $paymented = $targetModel::create([
             'amount' => $order->order_final_amount,
             'user_id' => auth()->user()->id,
@@ -129,8 +136,10 @@ class PaymentController extends Controller
             // 'cash_receiver'=>$cash_receiver,
             'cash_receiver' => $order->address->recipient_name,
             'status' => 1,
+            'order_id'=>$order->id,
         ]);
 
+        //create payment
         $payment = Payment::create([
             'amount' => $order->order_final_amount,
             'user_id' => auth()->user()->id,
@@ -144,22 +153,20 @@ class PaymentController extends Controller
 
         //online
         if ($request->payment_type == 0) {
-            // dd('ONLINE');
             $order->update(['order_status' => 1, 'payment_type' => $type]);
-            dd($order->order_final_amount);
-            $invoice = (new Invoice)->amount($order->order_final_amount);
+            session([
+                'amount' => strval($order->order_final_amount),
+                'order_id' => strval($order->id),
+                'online_payment_id'=>$paymented->id,
+            ]);
 
-            return ShetabitPayment::purchase($invoice, function ($driver, $transactionId) {
-                OnlinePayment::create([
-                    'transaction_id' => strval($transactionId),
-                    'user_id' => auth()->user()->id,
-                    // 'gateway' => $driver,
-                ]);
+            $invoice = (new Invoice)->amount($order->order_final_amount);
+            return ShetabitPayment::purchase($invoice, function ($driver, $transactionId) use($paymented) {
+                $paymented->update(['transaction_id'=>$transactionId]);
             })->pay()->render();
         }
         //cash
         if ($request->payment_type == 1) {
-            // dd('OFFLINE');
             $order->update(['order_status' => 2, 'payment_type' => $type, 'payment_status' => 0]);
             $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
             foreach ($cartItems as $cartItem) {
@@ -177,95 +184,114 @@ class PaymentController extends Controller
                     'guarantee_id' => $cartItem->guarantee_id,
                 ]);
 
-                
-                $product=Product::find($cartItem->product_id);
+
+                $product = Product::find($cartItem->product_id);
                 $product->update([
-                    'marketable_number'=>$product->marketable_number- $cartItem->number,
+                    'marketable_number' => $product->marketable_number - $cartItem->number,
                 ]);
                 $cartItem->delete();
             }
-            return redirect()->route('cart.callback',$order);
+            return redirect()->route('cart.callback', $order);
         }
-    
     }
 
-
-    public function verifyPayment(Request $request)
+    public function verifyPayment()
     {
 
-        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
-
-        $onlinePayment = OnlinePayment::where('user_id', auth()->user()->id)->first();
-        $order = Order::where('order_status', 1)->where('user_id', auth()->user()->id)->first();
+        $total_amount = intval(session()->get('amount'));
+        $order_id = intval(session()->get('order_id'));
+        $online_payment_id = intval(session()->get('online_payment_id'));
+        $onlinePayment = OnlinePayment::find($online_payment_id);
         $transaction_id = $onlinePayment->transaction_id;
-        $total_amount = $order->order_final_amount;
-        // $order_id = intval(session()->get('order_id'));
+
+        $order = Order::find($order_id);
 
         try {
             ShetabitPayment::amount($total_amount)->transactionId($transaction_id)->verify();
-            // $this->submitOrder($order_id);
-
             $order->update([
                 'order_status' => 2,
                 'payment_status' => 1,
                 'delivery_status' => 1
             ]);
-
-
             $onlinePayment->update([
                 'user_id' => auth()->user()->id,
-                'gatetway' => Config::get('payment.default'),
-                'amount' => $total_amount
+                'gatetway' => 'zibal',
+                'amount' => $total_amount,
+                'order_id'=>$order->id,
             ]);
+            $this->afterPayment($order);
+            return redirect()->route('cart.callback', $order);
+        }
+         catch (InvalidPaymentException $exception) {
 
-            foreach ($cartItems as $cartItem) {
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $cartItem->product_id,
-                    'product' => $cartItem->product,
-                    'amazing_sale_id' => $cartItem->product->activeAmazingSale()->id ?? null,
-                    'amazing_sale_object' => $cartItem->product->activeAmazingSale() ?? null,
-                    'amazing_sale_discount_amount' => empty($cartItem->product->activeAmazingSale()) ? 0 : $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSale()->percentage / 100),
-                    'number' => $cartItem->number,
-                    'final_product_price' => empty($cartItem->product->activeAmazingSale()) ? $cartItem->cartItemProductPrice() : ($cartItem->cartItemProductPrice() - $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSale()->percentage / 100)),
-                    'final_total_price' => $cartItem->cartItemFinalPrice(),
-                    'color_id' => $cartItem->color_id,
-                    'guarantee_id' => $cartItem->guarantee_id,
-                ]);
-                $cartItem->product->update([
-                    'marketable_number'=>  $cartItem->product->number - $cartItem->number
-                ]);
-
-                $cartItem->delete();
-            }
-
-            return redirect()->route('cart.callback',$order);
-            // ->with('alert-section-success', 'پرداخت شما با موفقیت انجام شد. میتوانید وضعیت سفارشتان را از صفحه پروفایل بررسی کنید.');
-
-            // return redirect()->route('front.profile.profile')->with('alert-section-success', 'پرداخت شما با موفقیت انجام شد. میتوانید وضعیت سفارشتان را از صفحه پروفایل بررسی کنید.');
-        } catch (InvalidPaymentException $exception) {
-
-
+            dd($exception->getMessage());
             $order->update([
                 'order_status' => 1,
                 'payment_status' => 0
             ]);
 
-            // return redirect()->route('front.sales-process.cart')->with('alert-section-error', ['title' => 'پرداخت شما به دلیل زیر ناموفق بود :', 'message' => $exception->getMessage()]);
+            $this->afterPayment($order);
+            session()->forget(['transaction_id', 'amount', 'order_id','online_payment_id','gateway']);
 
-            return redirect()->route('cart.callback',$order);
+            return redirect()->route('cart.callback', $order);
         }
     }
 
 
     public function callback(Order $order)
     {
-        if($order->order_status==2){
-            return view('front.sales-process.success-payment',compact('order'));
+        return view('front.sales-process.callback-payment', compact('order'));
+    }
+
+
+
+    public function afterPayment($order)
+    {
+        //success
+        if ($order->order_status == '2') {
+            $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+            foreach ($cartItems as $cartItem) {
+                $product = Product::find($cartItem->product_id);
+                $product->update([
+                    'marketable_number' => $product->marketable_number - $cartItem->number,
+                ]);
+            }
+            $this->createOrderItems($order);
+            $this->clearCart();
         }
-        else{
-            dd('ss');
-            // return view('front.sales-process.no-success-payment',compact('order'));
+        //falied
+        elseif ($order->order_status == '1') {
+            $this->createOrderItems($order);
         }
     }
+
+    public function clearCart()
+    {
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+        foreach ($cartItems as $cartItem) {
+            $cartItem->delete();
+        }
+    }
+
+
+    public function createOrderItems($order)
+    {
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
+        foreach ($cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'product' => $cartItem->product,
+                'amazing_sale_id' => $cartItem->product->activeAmazingSale()->id ?? null,
+                'amazing_sale_object' => $cartItem->product->activeAmazingSale() ?? null,
+                'amazing_sale_discount_amount' => empty($cartItem->product->activeAmazingSale()) ? 0 : $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSale()->percentage / 100),
+                'number' => $cartItem->number,
+                'final_product_price' => empty($cartItem->product->activeAmazingSale()) ? $cartItem->cartItemProductPrice() : ($cartItem->cartItemProductPrice() - $cartItem->cartItemProductPrice() * ($cartItem->product->activeAmazingSale()->percentage / 100)),
+                'final_total_price' => $cartItem->cartItemFinalPrice(),
+                'color_id' => $cartItem->color_id,
+                'guarantee_id' => $cartItem->guarantee_id,
+            ]);
+        }
+    }
+
 }

@@ -293,7 +293,7 @@
                             <div class="opacity-80 w-full text-sm">
                               {{$cartItem->product->name}}
                             </div>
-                            <div class="flex opacity-75 text-xs">
+                            {{-- <div class="flex opacity-75 text-xs">
                               <div>
                                 قیمت:
                               </div>
@@ -303,7 +303,7 @@
                               <div>
                                 تومان
                               </div>
-                            </div>
+                            </div> --}}
                           </div>
                           <form action="{{route('front.sales-process.remove-from-cart',$cartItem)}}">
                             @csrf
