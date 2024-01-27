@@ -85,9 +85,17 @@ class PaymentController extends Controller
                 $finalDiscount = $order->order_total_products_discount_amount + $copanDiscountAmount;
 
                 // در اخرم سفارش کاربر رو با اطلاعات جدید اپدیت میکنیم
-                $order->update(
-                    ['copan_id' => $copan->id, 'order_copan_discount_amount' => $copanDiscountAmount, 'order_total_products_discount_amount' => $finalDiscount]
-                );
+                // $order->update([
+                //      'copan_id' => $copan->id,
+                //      'copan_object'=>$copan,
+                //      'order_copan_discount_amount' => $copanDiscountAmount, 
+                //      'order_total_products_discount_amount' => $finalDiscount
+                //     ]);
+                $order->copan_id=$copan->id;
+                $order->copan_object=$copan;
+                $order->order_copan_discount_amount=$copanDiscountAmount;
+                $order->order_total_products_discount_amount=$finalDiscount;
+                $order->update();
                 return redirect()->back()->with(['copan' => 'کد تخفیف با موفقیت اعمال شد']);
             } else {
                 return redirect()->back()->withErrors(['copan' => ['درخواست نامعتبر']]);
@@ -136,7 +144,7 @@ class PaymentController extends Controller
             // 'cash_receiver'=>$cash_receiver,
             'cash_receiver' => $order->address->recipient_name,
             'status' => 1,
-            'order_id'=>$order->id,
+            'order_id' => $order->id,
         ]);
 
         //create payment
@@ -157,12 +165,12 @@ class PaymentController extends Controller
             session([
                 'amount' => strval($order->order_final_amount),
                 'order_id' => strval($order->id),
-                'online_payment_id'=>$paymented->id,
+                'online_payment_id' => $paymented->id,
             ]);
 
             $invoice = (new Invoice)->amount($order->order_final_amount);
-            return ShetabitPayment::purchase($invoice, function ($driver, $transactionId) use($paymented) {
-                $paymented->update(['transaction_id'=>$transactionId]);
+            return ShetabitPayment::purchase($invoice, function ($driver, $transactionId) use ($paymented) {
+                $paymented->update(['transaction_id' => $transactionId]);
             })->pay()->render();
         }
         //cash
@@ -197,7 +205,6 @@ class PaymentController extends Controller
 
     public function verifyPayment()
     {
-
         $total_amount = intval(session()->get('amount'));
         $order_id = intval(session()->get('order_id'));
         $online_payment_id = intval(session()->get('online_payment_id'));
@@ -217,21 +224,20 @@ class PaymentController extends Controller
                 'user_id' => auth()->user()->id,
                 'gatetway' => 'zibal',
                 'amount' => $total_amount,
-                'order_id'=>$order->id,
+                'order_id' => $order->id,
             ]);
             $this->afterPayment($order);
             return redirect()->route('cart.callback', $order);
-        }
-         catch (InvalidPaymentException $exception) {
+        } catch (InvalidPaymentException $exception) {
 
-            dd($exception->getMessage());
+            // dd($exception->getMessage());
             $order->update([
                 'order_status' => 1,
                 'payment_status' => 0
             ]);
 
             $this->afterPayment($order);
-            session()->forget(['transaction_id', 'amount', 'order_id','online_payment_id','gateway']);
+            session()->forget(['transaction_id', 'amount', 'order_id', 'online_payment_id', 'gateway']);
 
             return redirect()->route('cart.callback', $order);
         }
@@ -247,36 +253,34 @@ class PaymentController extends Controller
 
     public function afterPayment($order)
     {
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
         //success
         if ($order->order_status == '2') {
-            $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
             foreach ($cartItems as $cartItem) {
                 $product = Product::find($cartItem->product_id);
                 $product->update([
                     'marketable_number' => $product->marketable_number - $cartItem->number,
                 ]);
             }
-            $this->createOrderItems($order);
-            $this->clearCart();
+            $this->createOrderItems($cartItems, $order);
+            $this->clearCart($cartItems);
         }
         //falied
         elseif ($order->order_status == '1') {
-            $this->createOrderItems($order);
+            $this->createOrderItems($cartItems, $order);
         }
     }
 
-    public function clearCart()
+    public function clearCart($cartItems)
     {
-        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
         foreach ($cartItems as $cartItem) {
             $cartItem->delete();
         }
     }
 
 
-    public function createOrderItems($order)
+    public function createOrderItems($cartItems, $order)
     {
-        $cartItems = CartItem::where('user_id', Auth::user()->id)->get();
         foreach ($cartItems as $cartItem) {
             OrderItem::create([
                 'order_id' => $order->id,
