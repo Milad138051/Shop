@@ -73,6 +73,7 @@ Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('front.con
 //product
 Route::controller(FrontProductController::class)->prefix('market')->group(function () {
     Route::get('/product/{product}', 'product')->name('front.market.product');
+    Route::get('/products/{category?}','products')->name('front.products');
     Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');
     Route::post('/add-review/{product}', 'addReview')->name('front.market.add-review');
     Route::post('/add-comment/{product}', 'addComment')->name('front.market.add-comment');

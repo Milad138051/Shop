@@ -32,8 +32,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>نام کالا</th>
+                                <th>نام دسته</th>
                                 <th> تصویر کالا</th>
                                 {{-- <th> اسلاگ</th> --}}
+                                <th> برند</th>
                                 <th> قیمت</th>
                                 <th>دسته </th>
                                 <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
@@ -44,11 +46,13 @@
                                 <tr>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category->name }}</td>
                                     <td>
                                         <img src="{{ asset($product->image['indexArray'][$product->image['currentImage']]) }}"
                                             width="100" height="115">
                                     </td>
                                     {{-- <td>{{ $product->slug }}</td> --}}
+                                    <td>{{ $product->brand->persian_name }}</td>
                                     <td>{{ $product->price }} تومان</td>
                                     <td>{{ $product->category->name }}</td>
 

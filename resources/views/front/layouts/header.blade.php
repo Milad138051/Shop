@@ -8,12 +8,17 @@
         </a>
         <div class="order-3 w-full mt-3 lg:mt-0 lg:w-5/12 lg:mr-[10%]">
           <div class="relative">
-            <input
-              type="search"
-              id="default-search"
+            <form action="{{route('front.products',request()->category ? request()->category->id : null)}}" method="get">
+              @csrf
+              <input
+              type="text"
+              name="search"
+              value="{{request()->search}}"
+              id="search"
               class="sm:block w-full px-4 py-3 sm:pl-12 text-sm sm:text-base pl-8 text-red-900 placeholder:text-red-600 rounded-2xl text-right placeholder:text-sm focus:outline-red-400 border-2 border-red-400"
               placeholder="جستجو محصول"
-              onfocus="showModalSearch()"/>
+              />  
+            </form>
             <div
               class="absolute inset-y-0 left-0 flex items-center pl-4">
               <img class="w-5 h-5 text-gray-500" src="{{asset('front-assets/image/search.png')}}" alt="" />
