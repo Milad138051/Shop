@@ -1,33 +1,17 @@
 @extends('front.layouts.master')
 
 @section('head-tag')
-<title>بلاگ</title>
+<title>دسته {{$postCategory->name}}</title>
 @endsection
 
 @section('content')
 <div class="max-w-[1440px] mx-auto px-3">
     <div class="my-5 lg:my-10 p-1 md:p-3">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        @foreach ($categories->chunk(4) as $groupes)
-        @foreach ($groupes as $groupe)
-        <div class="grid gap-4">
-            <a href="{{route('front.blogs.index-category',$groupe)}}" class="relative hover:scale-105 transition">
-                <img class="h-auto w-full rounded-xl" src="{{asset($groupe->image['indexArray']['medium'])}}" alt="">
-                <div class="absolute top-0 bg-neutral-900 bg-opacity-70 rounded-xl w-full h-full flex justify-center items-center text-center text-white text-lg md:text-xl">
-                  {{$groupe->name}}
-                </div>
-              </a>                 
-            </div>
-            @endforeach
-        @endforeach
-
-
-      </div>
-
+      <h5>پست های موجود در دسته {{$postCategory->name}}</h5>
       <div class="md:flex w-full mt-14 gap-x-7">
         <div class="w-full md:w-8/12 lg:w-9/12">
-            @foreach ($posts as $post)
+            @forelse ($posts as $post)
             <a href="{{route('front.blogs.show-blog',$post)}}" class="flex flex-col sm:flex md:flex-row items-center shadow-sm p-2 mx-auto my-6 max-w-md md:max-w-full rounded-2xl bg-white ">
                 <div class="md:ml-6 mb-3 md:mb-0">
                   <img class="hover:scale-105 transition rounded-xl w-full md:w-auto mx-auto max-h-56" src="{{asset($post->image['indexArray']['medium'])}}" alt="" />
@@ -41,7 +25,11 @@
                   </div>
                 </div>
               </a>
-            @endforeach
+
+              @empty
+
+              <p class="text-danger">پستی وجود ندارد</p>
+            @endforelse
           
 
           <div class="mb-10">

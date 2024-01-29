@@ -11,5 +11,10 @@ class PostCategory extends Model
     use HasFactory,SoftDeletes;
     protected $guarded=['id'];
     protected $casts = ['image' => 'array'];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class,'category_id');
+    }
     
 }

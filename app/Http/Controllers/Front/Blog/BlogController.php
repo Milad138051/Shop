@@ -12,17 +12,23 @@ use Illuminate\Support\Facades\Auth;
 class BlogController extends Controller
 {
     public function index()
-    {
-        
+    {   
         $categories=PostCategory::all();
         $posts=Post::orderBy('id','DESC')->paginate(5);
         $latests=Post::latest()->where('status',1)->take(5)->get();
 
         return view('front.blog.blogs',compact('categories','posts','latests'));
     }
+    public function indexCategory(PostCategory $postCategory)
+    {
+        $posts=Post::where('category_id',$postCategory->id)->paginate(5);
+        $latests=Post::latest()->where('status',1)->take(5)->get();
+        return view('front.blog.blogsCategory',compact('posts','latests','postCategory'));
+    }
 
     public function showBlog(Post $post)
     {
+        // dd($post);
         $latests=Post::latest()->where('status',1)->take(5)->get();
         return view('front.blog.show-blog',compact('post','latests'));
     }

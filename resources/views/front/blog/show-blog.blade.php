@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-    <title>پست</title>
+    <title>{{$post->title}}</title>
 @endsection
 
 @section('content')

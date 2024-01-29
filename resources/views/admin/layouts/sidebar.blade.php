@@ -25,6 +25,12 @@ use App\Models\Market\Payment;
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-header">محتوا</li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.content.faq.index') }}" class="nav-link">
+                            <i class="fa fa-circle-o nav-icon"></i>
+                            <p>سوالات متداول</p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-envelope-o"></i>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Content\FAQController;
 use App\Http\Controllers\Front\Blog\BlogController;
 use App\Http\Controllers\Front\Profile\AddressController;
 use App\Http\Controllers\Front\Profile\CompareController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\Admin\Content\PostCategoryController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
 use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
 use App\Http\Controllers\Front\Market\ProductController as FrontProductController;
+use App\Http\Controllers\Front\Market\FAQController as FrontFAQController;
 use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
 use App\Http\Controllers\Front\Profile\OrderController as FrontOrderController;
 use App\Http\Controllers\Front\SalesProcess\PaymentController as FrontPaymentController;
@@ -70,6 +72,7 @@ Route::get('/', [HomeController::class, 'index'])->name('front.home');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('front.about-us');
 Route::get('/welcome', [HomeController::class, 'welcome'])->name('front.welcome');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('front.contact-us');
+Route::get('/faqs', [FrontFAQController::class, 'index'])->name('front.faqs');
 //product
 Route::controller(FrontProductController::class)->prefix('market')->group(function () {
     Route::get('/product/{product}', 'product')->name('front.market.product');
@@ -104,8 +107,6 @@ Route::controller(FrontPaymentController::class)->prefix('cart/payment')->group(
 	Route::get('/verify', 'verifyPayment')->name('cart.verifyPayment');
 	Route::get('/callback-payment/{order}', 'callback')->name('cart.callback');
 });
-
-
 //profile
 Route::prefix('profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
@@ -143,7 +144,8 @@ Route::prefix('profile')->group(function () {
 //blogs
 Route::controller(BlogController::class)->prefix('blogs')->group(function () {
     Route::get('/','index')->name('front.blogs.index');
-    Route::get('/{post}','showBlog')->name('front.blogs.show-blog');
+    Route::get('/{postCategory}','indexCategory')->name('front.blogs.index-category');
+    Route::get('show/{post}','showBlog')->name('front.blogs.show-blog');
     Route::post('/add-comment/{post}', 'addComment')->name('front.blogs.add-comment');
     Route::post('/add-comment-replay/{post}/{comment}', 'addReplay')->name('front.blogs.add-replay');
 });
@@ -181,6 +183,13 @@ Route::prefix('admin')->group(function () {
             Route::delete('/destroy/{comment}', 'delete')->name('admin.content.comment.delete');
             Route::get('/approved/{comment}', 'approved')->name('admin.content.comment.approved');
             Route::post('/answer/{comment}', 'answer')->name('admin.content.comment.answer');
+        });
+        //faq
+        Route::controller(FAQController::class)->prefix('faq')->group(function () {
+            Route::get('/', 'index')->name('admin.content.faq.index');
+            Route::get('/create', 'create')->name('admin.content.faq.create');
+            Route::post('/store', 'store')->name('admin.content.faq.store');
+            Route::delete('/destroy/{comment}', 'delete')->name('admin.content.faq.delete');
         });
     });
 

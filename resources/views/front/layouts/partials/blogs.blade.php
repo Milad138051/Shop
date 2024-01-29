@@ -1,7 +1,7 @@
 <div class="bg-white rounded-2xl py-8 shadow-xl my-10">
     <div class="flex justify-between px-5 md:px-10 items-center">
       <div class="text-red-500">خواندنی ها</div>
-      <a href="{{route('front.blogs.index')}}><div class="transition px-4 py-2 rounded-xl flex justify-center items-center text-red-500 hover:text-red-600">مطالب بیشتر<img class="w-4" src="./assets/image/arrow-left.png" alt=""></div></a>
+      <a href="{{route('front.blogs.index')}}"><div class="transition px-4 py-2 rounded-xl flex justify-center items-center text-red-500 hover:text-red-600">مطالب بیشتر<img class="w-4" src="./assets/image/arrow-left.png" alt=""></div></a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 px-10 gap-5">

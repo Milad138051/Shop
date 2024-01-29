@@ -32,7 +32,6 @@ class ProductController extends Controller
 	}
 
 	
-	
 	public function products(Request $request,Category $category=null)
 	{
 		//sorting

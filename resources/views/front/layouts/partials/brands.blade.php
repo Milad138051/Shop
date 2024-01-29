@@ -10,7 +10,7 @@
       
       @foreach ($brands as $brand)
       <a href="./#" class="card swiper-slide" style="border:none!important">
-        <img class="max-w-[100px]" src="{{ asset($brand->logo['indexArray']['large']) }}" alt="" />
+        <img class="max-w-[100px]" src="{{ asset($brand->logo['indexArray']['medium']) }}" alt="" />
       </a>
       @endforeach    
         </div>

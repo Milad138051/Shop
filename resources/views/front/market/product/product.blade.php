@@ -58,21 +58,11 @@
                                     {{-- //addtofavorite --}}
                                     @if ($product->user->contains(auth()->user()->id))
                                     <button type="button" class="product-add-to-favorite"  data-url="{{ route('front.market.add-to-favorite', $product) }}" title="حذف از علاقه مندی">
-                                    <svg
-                                    class="h-7 w-7 text-red-500 hover:text-red-600 fill-current transition cursor-pointer inline"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z">
-                                    </path>
+                                          <i class="fa fa-heart text-danger"></i>
                                     </button>
                                     @else
                                     <button type="button" class="product-add-to-favorite" data-url="{{ route('front.market.add-to-favorite', $product) }}" title="اضافه به علاقه مندی">
-                                        <svg
-                                        class="h-7 w-7 text-red-500 hover:text-red-600 full-current transition cursor-pointer inline"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path
-                                        d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z">
-                                    </path>
+                                                    <i class="fa fa-heart"></i>
                                    </button>
                                     @endif
 
@@ -654,8 +644,8 @@
                     } else if (result.status == 2) {
                         $(element).children().first().removeClass('full-current')
                         $(element).children().first().addClass('fill-current')
-                        $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
-                        $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
+                        $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
+                        $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
                     }
                 }
             })

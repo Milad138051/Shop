@@ -21,12 +21,12 @@
                 {{$product->name}}
               </div>
             </span>
-            <div class="flex justify-center text-xs opacity-75">
+            {{-- <div class="flex justify-center text-xs opacity-75">
               <div class="line-through">1.350.000</div>
               <div class="line-through">تومان</div>
-            </div>
+            </div> --}}
             <div class="flex justify-center mt-1 mb-2 text-sm">
-              <div>{{$product->price}}</div>
+              <div>{{PriceFormat($product->price)}}</div>
               <div>تومان</div>
             </div>
           </div>

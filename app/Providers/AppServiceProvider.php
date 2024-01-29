@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Market\CartItem;
+use App\Models\Market\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -43,6 +44,14 @@ class AppServiceProvider extends ServiceProvider
                 $cartItems=CartItem::where('user_id',Auth::user()->id)->get();
                 $view->with('cartItems',$cartItems);
             }
+            // else{
+            //     $cartItems=collect();
+            //     $view->with('cartItems',$cartItems);
+            // }
+		});
+        view()->composer('front.layouts.header',function($view){
+                $categories=Category::where('show_in_menu',1)->where('status',1)->get();
+                $view->with('categories',$categories);
 		});
 
     }

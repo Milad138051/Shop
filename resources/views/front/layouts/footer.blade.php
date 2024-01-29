@@ -79,7 +79,7 @@
               </li>
               <li>
                 <a
-                  href="./faq.html"
+                  href="{{route('front.faqs')}}"
                   class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
                 >
                   سوالات متداول
