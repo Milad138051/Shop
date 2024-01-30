@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Front\Profile;
 
+use App\Rules\PostalCode;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddressRequest extends FormRequest
@@ -24,8 +25,8 @@ class AddressRequest extends FormRequest
         if($this->isMethod('post')){
             return [
                 'address' => 'required|min:1|max:300',
-                'postal_code' => ['required'],
-                // 'postal_code' => ['required', new PostalCode()],
+                // 'postal_code' => ['required'],
+                'postal_code' => ['required', new PostalCode()],
                 'no' => 'required',
                 'unit' => 'required',
                 'city' => 'required',
@@ -36,8 +37,8 @@ class AddressRequest extends FormRequest
           }else{
             return [
                 'address' => 'required|min:1|max:300',
-                'postal_code' => ['required'],
-                // 'postal_code' => ['required', new PostalCode()],
+                // 'postal_code' => ['required'],
+                'postal_code' => ['required', new PostalCode()],
                 'no' => 'required',
                 'unit' => 'required',
                 'city' => 'required',

@@ -59,6 +59,17 @@
                 </span>
             @enderror
               </div>
+              <div class="mb-4">
+                <label for="national_code" class="inline-block mb-2 ml-1 font-semibold text-xs text-slate-700">کد ملی</label>
+                <input id="national_code" name="national_code" type="text" class="text-sm block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-normal text-gray-700 outline-none focus:border-red-300" value="{{old('national_code',auth()->user()->national_code ?? '-')}}">
+                @error('national_code')
+                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                    <strong>
+                        {{ $message }}
+                    </strong>
+                </span>
+            @enderror
+              </div>
 
               <div class="flex items-center pt-7 h-16">
                 <span class="w-auto ml-2 font-semibold text-xs text-slate-700">

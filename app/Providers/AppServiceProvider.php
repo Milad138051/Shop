@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
             // }
 		});
         view()->composer('front.layouts.header',function($view){
-                $categories=Category::where('show_in_menu',1)->where('status',1)->get();
+                $categories=Category::where('show_in_menu',1)->where('parent_id',null)->where('status',1)->get();
                 $view->with('categories',$categories);
 		});
 

@@ -1,18 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\Content\FAQController;
-use App\Http\Controllers\Front\Blog\BlogController;
-use App\Http\Controllers\Front\Profile\AddressController;
-use App\Http\Controllers\Front\Profile\CompareController;
-use App\Http\Controllers\Front\Profile\FavoriteController;
-use App\Http\Controllers\Front\Profile\ProfileController;
-use App\Http\Controllers\Front\SalesProcess\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
+use App\Http\Controllers\Front\Blog\BlogController;
+use App\Http\Controllers\Admin\Content\FAQController;
 use App\Http\Controllers\Admin\Content\PostController;
 use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\OrderController;
+use App\Http\Controllers\Admin\Market\StoreController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\User\CustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -27,16 +23,21 @@ use App\Http\Controllers\Admin\Market\DeliveryController;
 use App\Http\Controllers\Admin\Market\DiscountController;
 use App\Http\Controllers\Admin\Market\PropertyController;
 use App\Http\Controllers\Admin\User\PermissionController;
+use App\Http\Controllers\Front\Profile\AddressController;
+use App\Http\Controllers\Front\Profile\CompareController;
+use App\Http\Controllers\Front\Profile\ProfileController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
+use App\Http\Controllers\Front\Profile\FavoriteController;
 use App\Http\Controllers\Front\SalesProcess\CartController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
-use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
-use App\Http\Controllers\Front\Market\ProductController as FrontProductController;
+use App\Http\Controllers\Front\SalesProcess\CheckoutController;
 use App\Http\Controllers\Front\Market\FAQController as FrontFAQController;
-use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
 use App\Http\Controllers\Front\Profile\OrderController as FrontOrderController;
+use App\Http\Controllers\Front\Market\ProductController as FrontProductController;
+use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
+use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
 use App\Http\Controllers\Front\SalesProcess\PaymentController as FrontPaymentController;
 
 
@@ -75,77 +76,77 @@ Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('front.con
 Route::get('/faqs', [FrontFAQController::class, 'index'])->name('front.faqs');
 //product
 Route::controller(FrontProductController::class)->prefix('market')->group(function () {
-    Route::get('/product/{product}', 'product')->name('front.market.product');
-    Route::get('/products/{category?}','products')->name('front.products');
-    Route::get('/add-comment/{product}', 'addCommentView')->name('front.market.add-comment.page');
-    Route::post('/add-review/{product}', 'addReview')->name('front.market.add-review');
-    Route::post('/add-comment/{product}', 'addComment')->name('front.market.add-comment');
-    Route::post('/add-comment-replay/{product}/{comment}', 'addReplay')->name('front.market.add-replay');
-    Route::get('/add-to-favorite/{product}', 'addToFavorite')->name('front.market.add-to-favorite');
-    Route::get('/add-to-compare/{product}','addToCompare')->name('front.market.add-to-compare');
+    Route::get('/product/{product:slug}', 'product')->name('front.market.product');
+    Route::get('/products/{category?}', 'products')->name('front.products');
+    Route::get('/add-comment/{product:slug}', 'addCommentView')->name('front.market.add-comment.page');
+    Route::post('/add-review/{product:slug}', 'addReview')->name('front.market.add-review');
+    Route::post('/add-comment/{product:slug}', 'addComment')->name('front.market.add-comment');
+    Route::post('/add-comment-replay/{product:slug}/{comment}', 'addReplay')->name('front.market.add-replay');
+    Route::get('/add-to-favorite/{product:slug}', 'addToFavorite')->name('front.market.add-to-favorite');
+    Route::get('/add-to-compare/{product:slug}', 'addToCompare')->name('front.market.add-to-compare');
     // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
 });
 //cart
 Route::controller(CartController::class)->prefix('cart')->group(function () {
     //cart
-    Route::get('/','cart')->name('front.sales-process.cart');
+    Route::get('/', 'cart')->name('front.sales-process.cart');
     Route::post('/add-to-cart/{product}', 'addToCart')->name('front.sales-process.add-to-cart');
-    Route::get('/remove-from-cart/{cartItem}','removeFromCart')->name('front.sales-process.remove-from-cart');
-    Route::get('/remove-from-cart-session/{productid}/{colorid}/{guaranteeid}','removeFromCartSession')->name('front.sales-process.remove-from-cart-session');
-    Route::post('/go-to-checkout','toCheckout')->name('front.sales-process.go-to-checkout');
+    Route::get('/remove-from-cart/{cartItem}', 'removeFromCart')->name('front.sales-process.remove-from-cart');
+    Route::get('/remove-from-cart-session/{productid}/{colorid}/{guaranteeid}', 'removeFromCartSession')->name('front.sales-process.remove-from-cart-session');
+    Route::post('/go-to-checkout', 'toCheckout')->name('front.sales-process.go-to-checkout');
 });
 //cart/checkout
 Route::controller(CheckoutController::class)->prefix('cart/checkout')->group(function () {
     Route::get('/address-and-delivery', 'addressAndDelivery')->name('front.sales-process.address-and-delivery');
-    Route::get('/choose-address-and-delivery','chooseAddressAndDelivery')->name('front.sales-process.choose-address-and-delivery');
+    Route::get('/choose-address-and-delivery', 'chooseAddressAndDelivery')->name('front.sales-process.choose-address-and-delivery');
 });
 //cart/payment
 Route::controller(FrontPaymentController::class)->prefix('cart/payment')->group(function () {
-    Route::get('/','payment')->name('front.sales-process.payment');
-    Route::post('/copan-discount','copanDiscount')->name('front.sales-process.copanDiscount');
-    Route::post('/payment-submit','paymentSubmit')->name('front.sales-process.paymentSubmit');
-	Route::get('/verify', 'verifyPayment')->name('cart.verifyPayment');
-	Route::get('/callback-payment/{order}', 'callback')->name('cart.callback');
+    Route::get('/', 'payment')->name('front.sales-process.payment');
+    Route::post('/copan-discount', 'copanDiscount')->name('front.sales-process.copanDiscount');
+    Route::post('/payment-submit', 'paymentSubmit')->name('front.sales-process.paymentSubmit');
+    Route::get('/verify', 'verifyPayment')->name('cart.verifyPayment');
+    Route::get('/callback-payment/{order}', 'callback')->name('cart.callback');
 });
 //profile
 Route::prefix('profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
-    Route::get('/',[ProfileController::class,'profile'])->name('front.profile.profile');
-    Route::get('/update',[ProfileController::class, 'updateView'])->name('front.profile.update-view');
-    Route::put('/update',[ProfileController::class, 'update'])->name('front.profile.update');
+        Route::get('/', [ProfileController::class, 'profile'])->name('front.profile.profile');
+        Route::get('/update', [ProfileController::class, 'updateView'])->name('front.profile.update-view');
+        Route::put('/update', [ProfileController::class, 'update'])->name('front.profile.update');
     });
     Route::controller(AddressController::class)->group(function () {
-    Route::get('/addresses', 'index')->name('front.profile.addresses');
-    Route::post('/add-address', 'addAddress')->name('front.profile.add-address');
-    Route::put('/update-address/{address}', 'updateAdresses')->name('front.profile.addresses.update');
-    Route::get('/addresses/delete/{address}','deleteAddress')->name('front.profile.addresses.delete');
+        Route::get('/addresses', 'index')->name('front.profile.addresses');
+        Route::post('/add-address', 'addAddress')->name('front.profile.add-address');
+        Route::put('/update-address/{address}', 'updateAdresses')->name('front.profile.addresses.update');
+        Route::get('/addresses/delete/{address}', 'deleteAddress')->name('front.profile.addresses.delete');
     });
     Route::controller(FrontCommentController::class)->group(function () {
         Route::get('/comments', 'index')->name('front.profile.comments');
         Route::delete('/comments/{comment}', 'delete')->name('front.profile.comments.delete');
-    
+
     });
-    Route::controller(FrontOrderController::class)->group(function(){
-        Route::get('/orders','index')->name('front.profile.orders');
+    Route::controller(FrontOrderController::class)->group(function () {
+        Route::get('/orders', 'index')->name('front.profile.orders');
         Route::get('/orders/{order}', 'showOrder')->name('front.profile.showOrder');
-    
+
     });
-    Route::controller(FavoriteController::class)->group(function(){
-        Route::get('/my-favorites','index')->name('front.profile.favorites');
-        Route::get('/my-favorites/delete/{product}','delete')->name('front.profile.favorites.delete');
+    Route::controller(FavoriteController::class)->group(function () {
+        Route::get('/my-favorites', 'index')->name('front.profile.favorites');
+        Route::get('/my-favorites/delete/{product}', 'delete')->name('front.profile.favorites.delete');
     });
-    Route::controller(CompareController::class)->group(function(){
-        Route::get('/my-compare-list','index')->name('front.profile.compares');
-        Route::get('/compare-item/delete/{product}','delete')->name('front.profile.compares.delete');
+    Route::controller(CompareController::class)->group(function () {
+        Route::get('/my-compare-list', 'index')->name('front.profile.compares');
+        Route::get('/compare-item/delete/{product}', 'delete')->name('front.profile.compares.delete');
     });
 
 
 });
 //blogs
 Route::controller(BlogController::class)->prefix('blogs')->group(function () {
-    Route::get('/','index')->name('front.blogs.index');
-    Route::get('/{postCategory}','indexCategory')->name('front.blogs.index-category');
-    Route::get('show/{post}','showBlog')->name('front.blogs.show-blog');
+    Route::get('/', 'index')->name('front.blogs.index');
+    Route::get('/{postCategory}', 'indexCategory')->name('front.blogs.index-category');
+    Route::get('show/{post}', 'showBlog')->name('front.blogs.show-blog');
     Route::post('/add-comment/{post}', 'addComment')->name('front.blogs.add-comment');
     Route::post('/add-comment-replay/{post}/{comment}', 'addReplay')->name('front.blogs.add-replay');
 });
@@ -154,7 +155,7 @@ Route::controller(BlogController::class)->prefix('blogs')->group(function () {
 
 
 //admin-panel
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('', [AdminDashboardController::class, 'index'])->name('admin.home');
     Route::prefix('content')->group(function () {
         //post category
@@ -236,6 +237,17 @@ Route::prefix('admin')->group(function () {
             Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
             Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
         });
+        
+        //store
+        Route::controller(StoreController::class)->prefix('store')->group(function () {
+            Route::get('/', 'index')->name('admin.market.store.index');
+            // Route::get('/add-to-store/{product}','addToStore')->name('admin.market.store.add-to-store');
+            // Route::post('/store/{product}','store')->name('admin.market.store.store');
+            Route::get('/edit/{product}','edit')->name('admin.market.store.edit');
+            Route::put('/update/{product}', 'update')->name('admin.market.store.update');
+            Route::post('/search', 'search')->name('admin.market.store.search');
+        });
+
         //property
         Route::prefix('property')->group(function () {
             Route::get('/', [PropertyController::class, 'index'])->name('admin.market.property.index');

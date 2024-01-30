@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Front\Profile;
 
+use App\Rules\NationalCode;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
@@ -26,7 +28,7 @@ class UpdateProfileRequest extends FormRequest
         'first_name' => 'nullable|string|min:3',
         'last_name' => 'nullable|string|min:3',
         'profile_photo_path'=>'sometimes|image|mimes:png,jpg,jpeg,gif',
-        // 'national_code' => ['sometimes', new NationalCode(), Rule::unique('users')->ignore($this->user()->national_code, 'national_code')],
+        'national_code' => ['sometimes', new NationalCode(), Rule::unique('users')->ignore($this->user()->national_code, 'national_code')],
     ];
     }
 }

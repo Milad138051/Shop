@@ -9,10 +9,21 @@ use App\Models\Market\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
+
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Sluggable;
+
+	public function sluggable(): array
+    {
+        return[
+            'slug' =>[
+                'source' => 'name',
+            ]
+        ];
+    }
 
     protected $fillable = ['name', 'introduction', 'slug', 'image', 'status', 'tags','price', 'marketable', 'sold_number', 'frozen_number', 'marketable_number', 'brand_id', 'category_id','related_categories', 'published_at'];
 

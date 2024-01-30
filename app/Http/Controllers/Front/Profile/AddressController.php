@@ -33,7 +33,7 @@ class AddressController extends Controller
 		$inputs['postal_code']=convertArabicToEnglish($request->postal_code);
 		$inputs['postal_code']=convertPersianToEnglish($inputs['postal_code']);
 		$address->update($inputs);
-		return back()->with('alert-sestion-success','ادرس شما با موفقیت ثبت شد');
+		return back()->with('alert-section-success','ادرس شما با موفقیت ثبت شد');
 	}
 
 	public function deleteAddress(Address $address)

@@ -130,4 +130,14 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(ProductReview::class);
 	}
+
+    public function isAdmin()
+    {
+        if($this->user_type==1)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

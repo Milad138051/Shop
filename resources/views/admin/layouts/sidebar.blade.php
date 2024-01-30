@@ -1,4 +1,3 @@
-use App\Models\Market\Payment;
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('admin.home') }}" class="brand-link">
@@ -10,16 +9,6 @@ use App\Models\Market\Payment;
     <!-- Sidebar -->
     <div class="sidebar">
         <div>
-            <!-- Sidebar user panel (optional) -->
-            {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="{{route('admin.home')}}" class="d-block">پنل مدیریت</a>
-          </div>
-        </div> --}}
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -115,6 +104,12 @@ use App\Models\Market\Payment;
                                 <a href="{{ route('admin.market.banner.index') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>بنرها</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.market.store.index') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>انبار</p>
                                 </a>
                             </li>
                         </ul>

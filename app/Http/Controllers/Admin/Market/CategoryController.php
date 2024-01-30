@@ -37,9 +37,9 @@ class CategoryController extends Controller
         {
             return redirect()->route('admin.market.category.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
          }  
+         $inputs['image'] = $result;
 		}
        
-        $inputs['image'] = $result;
         Category::create($inputs);
         return redirect()->route('admin.market.category.index')->with('swal-success', 'دسته بندی جدید شما با موفقیت ثبت شد');
     }

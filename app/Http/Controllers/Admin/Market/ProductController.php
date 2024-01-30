@@ -47,9 +47,9 @@ class ProductController extends Controller
          {
             return redirect()->route('admin.market.product.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
          }      
+         $inputs['image'] = $result;
 	    }
       
-        $inputs['image'] = $result;
         DB::transaction(function () use ($request, $inputs) {
 			//dd($inputs);
         $product = Product::create($inputs);

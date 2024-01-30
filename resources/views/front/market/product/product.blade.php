@@ -36,39 +36,46 @@
                 <div class="lg:flex">
                     <div class="w-full lg:w-1/3">
                         @auth
-                        <div>
-                            <span class="flex items-center pr-20 pb-2">
-                               
-                                {{-- addtocompare --}}
-                                @if ($product->compares->contains(function($compare,$key){
-									return $compare->id===auth()->user()->compare->id;
-								}))
-                                <button type="button" class="product-add-to-compare" data-url="{{ route('front.market.add-to-compare', $product) }}">
-                                    <img onclick="showAlertAddTocomparison()" class="w-6 ml-2 cursor-pointer"
-                                    src="{{ asset('front-assets/image/comparison.png') }}" alt="" title="حذف از لیست مقایسه">
-                                </button>
-                                @else
-                                <button type="button" class="product-add-to-compare" data-url="{{ route('front.market.add-to-compare', $product) }}">
-                                    <img onclick="showAlertAddTocomparison()" class="w-6 ml-2 cursor-pointer"
-                                    src="{{ asset('front-assets/image/comparison.png') }}" alt="" title="اضافه به لیست مقایسه">
-                                </button>
-                                @endif
-                                
-                               
-                                    {{-- //addtofavorite --}}
-                                    @if ($product->user->contains(auth()->user()->id))
-                                    <button type="button" class="product-add-to-favorite"  data-url="{{ route('front.market.add-to-favorite', $product) }}" title="حذف از علاقه مندی">
-                                          <i class="fa fa-heart text-danger"></i>
-                                    </button>
+                            <div>
+                                <span class="flex items-center pr-20 pb-2">
+
+                                    {{-- addtocompare --}}
+                                    @if (
+                                        $product->compares->contains(function ($compare, $key) {
+                                            return $compare->id === auth()->user()->compare->id;
+                                        }))
+                                        <button type="button" class="product-add-to-compare"
+                                            data-url="{{ route('front.market.add-to-compare', $product) }}"
+                                            title="حذف از لیست مقایسه">
+                                            <i class="fa fa fa-industry text-danger mx-3"></i>
+                                        </button>
                                     @else
-                                    <button type="button" class="product-add-to-favorite" data-url="{{ route('front.market.add-to-favorite', $product) }}" title="اضافه به علاقه مندی">
-                                                    <i class="fa fa-heart"></i>
-                                   </button>
+                                        <button type="button" class="product-add-to-compare"
+                                            data-url="{{ route('front.market.add-to-compare', $product) }}"
+                                            title="اضافه به لیست مقایسه">
+                                            <i class="fa fa fa-industry mx-3"></i>
+                                        </button>
                                     @endif
 
 
-                            </span>
-                        </div>
+                                    {{-- //addtofavorite --}}
+                                    @if ($product->user->contains(auth()->user()->id))
+                                        <button type="button" class="product-add-to-favorite"
+                                            data-url="{{ route('front.market.add-to-favorite', $product) }}"
+                                            title="حذف از علاقه مندی">
+                                            <i class="fa fa-heart text-danger mx-3"></i>
+                                        </button>
+                                    @else
+                                        <button type="button" class="product-add-to-favorite"
+                                            data-url="{{ route('front.market.add-to-favorite', $product) }}"
+                                            title="اضافه به علاقه مندی">
+                                            <i class="fa fa-heart mx-3"></i>
+                                        </button>
+                                    @endif
+
+
+                                </span>
+                            </div>
                         @endauth
                         <div>
                             @php
@@ -103,143 +110,144 @@
                             {{ $product->name }}
                         </div>
 
-                        <form action="{{route('front.sales-process.add-to-cart',$product)}}" method="POST">
+                        <form action="{{ route('front.sales-process.add-to-cart', $product) }}" method="POST">
                             @csrf
-                        <div class="md:flex sm:pr-7">
-                            <div class="md:w-2/3">
+                            <div class="md:flex sm:pr-7">
+                                <div class="md:w-2/3">
 
-                                @php
-                                    $colors = $product->colors()->get();
-                                @endphp
-                                @if ($colors->count() != 0)
-                                    <div class="flex items-center" style="margin-top: 25px">
-                                        <div class="opacity-70 text-sm mb-1">
-                                            رنگ بندی:
-                                        </div>
-                                        <div class="flex flex-wrap">
-                                            <div class="flex items-center gap-x-2">
-                                                <div class="flex w-max">
-                                                    <p>
-                                                        @foreach ($colors as $key => $color)
-                                                            <label for="{{ 'color_' . $color->id }}"
-                                                                style="background-color: {{ $color->color ?? '#ffffff' }};"
-                                                                class="product-info-colors me-1" data-bs-toggle="tooltip"
-                                                                data-bs-placement="bottom"
-                                                                title="{{ $color->color_name }}"></label>
-
-                                                            <input style="display:none" type="radio" name="color"
-                                                                id="{{ 'color_' . $color->id }}"
-                                                                value="{{ $color->id }}"
-                                                                data-color-name="{{ $color->color_name }}"
-                                                                data-color-price="{{ $color->price_increase }}"
-                                                                @if ($key == 0) checked @endif>
-                                                        @endforeach
-
-                                                    </p>
-                                                    <p style="margin-right:5px"><span>رنگ انتخاب شده : <span
-                                                                id="selected_color_name">
-                                                                {{ $colors->first()->color_name }}</span></span>
-
-                                                    </p>
-                                                </div>
+                                    @php
+                                        $colors = $product->colors()->get();
+                                    @endphp
+                                    @if ($colors->count() != 0)
+                                        <div class="flex items-center" style="margin-top: 25px">
+                                            <div class="opacity-70 text-sm mb-1">
+                                                رنگ بندی:
                                             </div>
-                                        </div>
-                                    </div>
-                                @endif
+                                            <div class="flex flex-wrap">
+                                                <div class="flex items-center gap-x-2">
+                                                    <div class="flex w-max">
+                                                        <p>
+                                                            @foreach ($colors as $key => $color)
+                                                                <label for="{{ 'color_' . $color->id }}"
+                                                                    style="background-color: {{ $color->color ?? '#ffffff' }};"
+                                                                    class="product-info-colors me-1"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                    title="{{ $color->color_name }}"></label>
 
-                                <div>
-                                    <div class="mt-4 mb-2 opacity-80 text-sm font-semibold">
-                                        ویژگی های محصول:
-                                    </div>
-                                    <div class="flex flex-col gap-y-2 text-xs">
+                                                                <input style="display:none" type="radio" name="color"
+                                                                    id="{{ 'color_' . $color->id }}"
+                                                                    value="{{ $color->id }}"
+                                                                    data-color-name="{{ $color->color_name }}"
+                                                                    data-color-price="{{ $color->price_increase }}"
+                                                                    @if ($key == 0) checked @endif>
+                                                            @endforeach
 
-                                        @foreach ($product->metas()->get() as $meta)
-                                            <div class=" flex items-center">
-                                                <h3 class="opacity-60 ml-1">
-                                                    {{ $meta->meta_key }} :
-                                                </h3>
-                                                <div class="opacity-80">
-                                                    <div class="text-right">
-                                                        {{ $meta->meta_value }}
+                                                        </p>
+                                                        <p style="margin-right:5px"><span>رنگ انتخاب شده : <span
+                                                                    id="selected_color_name">
+                                                                    {{ $colors->first()->color_name }}</span></span>
+
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        </div>
+                                    @endif
+
+                                    <div>
+                                        <div class="mt-4 mb-2 opacity-80 text-sm font-semibold">
+                                            ویژگی های محصول:
+                                        </div>
+                                        <div class="flex flex-col gap-y-2 text-xs">
+
+                                            @foreach ($product->metas()->get() as $meta)
+                                                <div class=" flex items-center">
+                                                    <h3 class="opacity-60 ml-1">
+                                                        {{ $meta->meta_key }} :
+                                                    </h3>
+                                                    <div class="opacity-80">
+                                                        <div class="text-right">
+                                                            {{ $meta->meta_value }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
 
 
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="mt-4 mb-2 opacity-80 text-sm font-semibold">
-                                        گارانتی :
-                                    </div>
-                                    <div class="flex flex-col gap-y-2 text-xs">
+                                    <div>
+                                        <div class="mt-4 mb-2 opacity-80 text-sm font-semibold">
+                                            گارانتی :
+                                        </div>
+                                        <div class="flex flex-col gap-y-2 text-xs">
 
-                                        @php
-                                            $guarantees = $product->guarantees()->get();
-                                        @endphp
-                                        @if ($guarantees->count() != 0)
-                                            <select class="border focus:outline-none rounded-lg" style="text-align: left;width:150px"
-                                                name="guarantee" id="guarantee">
-                                                @foreach ($guarantees as $key => $guarantee)
-                                                    <option value="{{ $guarantee->id }}"
-                                                        data-guarantee-price="{{ $guarantee->price_increase }}"
-                                                        @if ($key == 0) selected @endif>
-                                                        {{ $guarantee->name }}</option>
-                                                @endforeach
-
-                                            </select>
-                                        @endif
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="md:w-2/5 mt-5 md:mt-0">
-                                <div class="pb-5 rounded-2xl shadow-xl border">
-                                    <div class="flex justify-between px-3 py-5">
-                                        <div class="text-right opacity-80 text-sm flex flex-col gap-y-6">
-
-                                            <div>
-                                                موجود در انبار:
-                                            </div>
                                             @php
-                                            $amazingSale = $product->activeAmazingSale();
+                                                $guarantees = $product->guarantees()->get();
                                             @endphp
+                                            @if ($guarantees->count() != 0)
+                                                <select class="border focus:outline-none rounded-lg"
+                                                    style="text-align: left;width:150px" name="guarantee" id="guarantee">
+                                                    @foreach ($guarantees as $key => $guarantee)
+                                                        <option value="{{ $guarantee->id }}"
+                                                            data-guarantee-price="{{ $guarantee->price_increase }}"
+                                                            @if ($key == 0) selected @endif>
+                                                            {{ $guarantee->name }}</option>
+                                                    @endforeach
 
-                                            @if(!empty($amazingSale))
-                                            <div>
-                                                 درصد تخفیف   
-                                            </div>
+                                                </select>
                                             @endif
-                                            {{-- @if(!empty($amazingSale))
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="md:w-2/5 mt-5 md:mt-0">
+                                    <div class="pb-5 rounded-2xl shadow-xl border">
+                                        <div class="flex justify-between px-3 py-5">
+                                            <div class="text-right opacity-80 text-sm flex flex-col gap-y-6">
+
+                                                <div>
+                                                    موجود در انبار:
+                                                </div>
+                                                @php
+                                                    $amazingSale = $product->activeAmazingSale();
+                                                @endphp
+
+                                                @if (!empty($amazingSale))
+                                                    <div>
+                                                        درصد تخفیف
+                                                    </div>
+                                                @endif
+                                                {{-- @if (!empty($amazingSale))
                                             <div>
                                                  میزان تخفیف   
                                             </div>
                                             @endif --}}
-                                            <div>
-                                                قیمت (شامل هزینه گارانتی و رنگ کالا) :
-                                            </div>
-                                            @if($product->marketable_number > 0)
-                                            <div>
-                                                تعداد:
-                                            </div>
-                                            @endif
-                                            <div>
-                                                قیمت نهایی : 
-                                            </div>
-                                        </div>
-                                        <div class="text-left opacity-70 text-sm flex flex-col gap-y-6">
-                                            <div>
-                                                {{ $product->marketable_number }} عدد
-                                            </div>
-                                            @if(!empty($amazingSale))
-                                            <div id="product-discount-price" data-product-discount-price="{{ ($product->price * ($amazingSale->percentage / 100) ) }}">
                                                 <div>
-                                                    {{ $amazingSale->percentage}} درصد
+                                                    قیمت (شامل هزینه گارانتی و رنگ کالا) :
+                                                </div>
+                                                @if ($product->marketable_number > 0)
+                                                    <div>
+                                                        تعداد:
+                                                    </div>
+                                                @endif
+                                                <div>
+                                                    قیمت نهایی :
                                                 </div>
                                             </div>
-                                            @endif
-                                            {{-- @if(!empty($amazingSale))
+                                            <div class="text-left opacity-70 text-sm flex flex-col gap-y-6">
+                                                <div>
+                                                    {{ $product->marketable_number }} عدد
+                                                </div>
+                                                @if (!empty($amazingSale))
+                                                    <div id="product-discount-price"
+                                                        data-product-discount-price="{{ $product->price * ($amazingSale->percentage / 100) }}">
+                                                        <div>
+                                                            {{ $amazingSale->percentage }} درصد
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                {{-- @if (!empty($amazingSale))
                                             <div>
                                                 <div id="product-discount-price" data-product-discount-price="{{ ($product->price * ($amazingSale->percentage / 100) ) }}">
                                                     {{ PriceFormat($product->price * ($amazingSale->percentage / 100) ) }} 
@@ -249,48 +257,53 @@
                                                 </div>                         
                                             </div>
                                             @endif --}}
-                                            <div class="flex text-red-500">
-                                                <div id="product_price" data-product-original-price="{{ $product->price }}" data-amazing-sale="{{$product->activeAmazingSale()->percentage ?? ''}}"></div>
-                                                <div>
-                                                    تومان
-                                                </div>
-                                            </div>
-                                            @if($product->marketable_number > 0)
-                                            <div
-                                                class="flex text-sm sm:text-sm items-center justify-center lg:justify-start">
-                                                <div class="flex items-center justify-center select-none">
-                                                    <div class="quantity flex items-center">
-                                                        <input name="number" id="number"
-                                                            class="w-12 h-7 mx-2 text-center border focus:outline-none rounded-lg cart-number"
-                                                            type="number" min="1" step="1" value="1" readonly="readonly">
+                                                <div class="flex text-red-500">
+                                                    <div id="product_price"
+                                                        data-product-original-price="{{ $product->price }}"
+                                                        data-amazing-sale="{{ $product->activeAmazingSale()->percentage ?? '' }}">
+                                                    </div>
+                                                    <div>
+                                                        تومان
                                                     </div>
                                                 </div>
+                                                @if ($product->marketable_number > 0)
+                                                    <div
+                                                        class="flex text-sm sm:text-sm items-center justify-center lg:justify-start">
+                                                        <div class="flex items-center justify-center select-none">
+                                                            <div class="quantity flex items-center">
+                                                                <input name="number" id="number"
+                                                                    class="w-12 h-7 mx-2 text-center border focus:outline-none rounded-lg cart-number"
+                                                                    type="number" min="1" step="1"
+                                                                    value="1" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <div class="flex text-red-500">
+                                                    <div class="flex text-red-500" id="final-price"></div>
+                                                    تومان
+                                                </div>
+
+
                                             </div>
-                                            @endif
-                                            <div class="flex text-red-500">
-                                                <div class="flex text-red-500" id="final-price"></div>
-                                                تومان 
-                                            </div>
-                                            
-                                            
                                         </div>
-                                    </div>
-                                    <span class="flex justify-center items-center opacity-90">
-                                        @if($product->marketable_number > 0)
-                                        <button type="submit"
-                                            class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm">افزودن
-                                            به سبد خرید</button>
+                                        <span class="flex justify-center items-center opacity-90">
+                                            @if ($product->marketable_number > 0)
+                                                <button type="submit"
+                                                    class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm">افزودن
+                                                    به سبد خرید</button>
                                             @else
-                                            <button class="px-7 py-2 text-center text-white bg-gray-500 align-middle border-0 rounded-lg shadow-md text-sm">ناموجود</button>
+                                                <button
+                                                    class="px-7 py-2 text-center text-white bg-gray-500 align-middle border-0 rounded-lg shadow-md text-sm">ناموجود</button>
                                             @endif
-                                    </span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                      </form>
+                        </form>
                     </div>
                 </div>
-               
+
                 <div class="flex justify-around my-5">
                     <div class="flex flex-col items-center justify-center">
                         <div>
@@ -325,7 +338,7 @@
                         </div>
                     </div>
                 </div>
-              
+
                 <!-- TABS -->
                 <div class="mx-auto">
                     <div class="border-b border-gray-200 mb-4">
@@ -344,13 +357,17 @@
                                     aria-controls="details" aria-selected="false">مشخصات</button>
                             </li>
                             @php
-                            $commentsCount=App\Models\Content\Comment::where('commentable_type','App\Models\Market\Product')->where('approved',1)->where('commentable_id',$product->id)->count();
+                                $commentsCount = App\Models\Content\Comment::where('commentable_type', 'App\Models\Market\Product')
+                                    ->where('approved', 1)
+                                    ->where('commentable_id', $product->id)
+                                    ->count();
                             @endphp
                             <li role="presentation">
                                 <button
                                     class="inline-block text-gray-500 hover:text-gray-600 hover:border-gray-300 rounded-t-lg py-4 px-4 text-sm font-medium text-center border-transparent border-b-2"
                                     id="commentsBuy-tab" data-tabs-target="#commentsBuy" type="button" role="tab"
-                                    aria-controls="commentsBuy" aria-selected="false">دیدگاه ها ({{$commentsCount}})</button>
+                                    aria-controls="commentsBuy" aria-selected="false">دیدگاه ها
+                                    ({{ $commentsCount }})</button>
                             </li>
                         </ul>
                     </div>
@@ -366,7 +383,7 @@
                                 {!! $product->introduction !!}
                             </p>
                         </div>
-                         {{-- details --}}
+                        {{-- details --}}
                         <div class="bg-gray-50 p-4 rounded-xl hidden" id="details" role="tabpanel"
                             aria-labelledby="details-tab">
                             <span class="border-b-red-500 border-b">
@@ -397,114 +414,120 @@
                                 <!-- UO COMMENTS -->
                                 <div>
                                     <div>دیدگاه ها</div>
-                                    <a href="{{route('front.market.add-comment.page',$product)}}" class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm" style="float:left">ارسال دیدگاه</a>
-                                    <div class="opacity-70 text-xs">{{$commentsCount}} دیدگاه</div>
+                                    <a href="{{ route('front.market.add-comment.page', $product) }}"
+                                        class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm"
+                                        style="float:left">ارسال دیدگاه</a>
+                                    <div class="opacity-70 text-xs">{{ $commentsCount }} دیدگاه</div>
                                 </div>
                                 <!-- COMMENT -->
-                                
+
                                 @foreach ($product->activeComments() as $activeComment)
-                                @php
-                                $author = $activeComment->user()->first();
-                                @endphp
-                                <div class="bg-gray-50 rounded-xl px-3 sm:px-5 py-3 my-2" style="border: 1px solid #d7d7d7">
-                                  
-                                    
-                                    <div class="d-flex flex-row-reverse">
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal-{{$activeComment->id}}" data-bs-whatever="@mdo">
-                                            پاسخ
-                                        </button>
-                                        <!-- start add replay Modal -->
-                                        <div class="modal fade" id="exampleModal-{{$activeComment->id}}" tabindex="-1"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="mb-3">
-                                                            <form action="{{route('front.market.add-replay',[$product,$activeComment])}}"
-                                                                  id="form-{{$activeComment->id}}" method="POST">
-                                                                @csrf
-                                                                <label for="message-text"
-                                                                       class="col-form-label">دیدگاه:</label>
-                                                                <textarea class="form-control" id="message-text"
-                                                                          name="body"></textarea>
-                                                            </form>
+                                    @php
+                                        $author = $activeComment->user()->first();
+                                    @endphp
+                                    <div class="bg-gray-50 rounded-xl px-3 sm:px-5 py-3 my-2"
+                                        style="border: 1px solid #d7d7d7">
+
+
+                                        <div class="d-flex flex-row-reverse">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal-{{ $activeComment->id }}"
+                                                data-bs-whatever="@mdo">
+                                                پاسخ
+                                            </button>
+                                            <!-- start add replay Modal -->
+                                            <div class="modal fade" id="exampleModal-{{ $activeComment->id }}"
+                                                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <form
+                                                                    action="{{ route('front.market.add-replay', [$product, $activeComment]) }}"
+                                                                    id="form-{{ $activeComment->id }}" method="POST">
+                                                                    @csrf
+                                                                    <label for="message-text"
+                                                                        class="col-form-label">دیدگاه:</label>
+                                                                    <textarea class="form-control" id="message-text" name="body"></textarea>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">بستن
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                onclick="document.getElementById('form-{{ $activeComment->id }}').submit();">
+                                                                ثبت
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">بستن
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary"
-                                                                onclick="document.getElementById('form-{{$activeComment->id}}').submit();">
-                                                            ثبت
-                                                        </button>
-                                                    </div>
                                                 </div>
                                             </div>
+                                            <!-- end add replay Modal -->
                                         </div>
-                                        <!-- end add replay Modal -->
-                                    </div>
 
-                                    <div class="flex flex-col items-stat gap-y-2">
-                                        <div class="flex items-center">
-                                            {{-- <div class="text-green-400 bg-green-100 px-1 rounded-md text-sm">
+                                        <div class="flex flex-col items-stat gap-y-2">
+                                            <div class="flex items-center">
+                                                {{-- <div class="text-green-400 bg-green-100 px-1 rounded-md text-sm">
                                                 4.7
                                             </div> --}}
-                                            <div class="text-xs opacity-60 pr-1">
-                                                ارسال شده توسط            
-                                                
-                                            @if(empty($author->first_name) && empty($author->last_name))
-                                                {{$author->name}}
-                                                @else
-                                                {{ $author->first_name . ' ' . $author->last_name }}
-                                            @endif
-                                            </div>
-                                            <div class="text-xs opacity-60 pr-1 @if($activeComment->answers()->count() > 0) border-bottom  @endif">
-                                                {{ jalaliDate($activeComment->created_at) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="opacity-60 text-sm py-3">
-                                        {{$activeComment->body}}
-                                        </div>
-                                        @foreach ($activeComment->activeAnswers() as $commentAnswer)
-                                        @php
-                                        $author = $commentAnswer->user()->first();
-                                        @endphp
-                                        <div class="bg-gray-50 rounded-xl px-3 sm:px-5 py-3 my-2" style="border: 1px solid rgba(249,128,128,var(--tw-border-opacity))">
+                                                <div class="text-xs opacity-60 pr-1">
+                                                    ارسال شده توسط
 
-                                            <div class="flex flex-col items-stat gap-y-2">
-                                                <div class="flex items-center">
-                                                    <div class="text-xs opacity-60 pr-1">
-                                                        ارسال شده توسط            
-                                                        
-                                                    @if(empty($author->first_name) && empty($author->last_name))
-                                                        {{$author->name}}
-                                                        @else
+                                                    @if (empty($author->first_name) && empty($author->last_name))
+                                                        {{ $author->name }}
+                                                    @else
                                                         {{ $author->first_name . ' ' . $author->last_name }}
                                                     @endif
-                                                    </div>
-                                                    <div class="text-xs opacity-60 pr-1">
-                                                        {{ jalaliDate($commentAnswer->created_at) }}
-                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <div class="opacity-60 text-sm py-3">
-                                                {{$commentAnswer->body}}
+                                                <div
+                                                    class="text-xs opacity-60 pr-1 @if ($activeComment->answers()->count() > 0) border-bottom @endif">
+                                                    {{ jalaliDate($activeComment->created_at) }}
                                                 </div>
                                             </div>
                                         </div>
-                                        @endforeach
+                                        <div>
+                                            <div class="opacity-60 text-sm py-3">
+                                                {{ $activeComment->body }}
+                                            </div>
+                                            @foreach ($activeComment->activeAnswers() as $commentAnswer)
+                                                @php
+                                                    $author = $commentAnswer->user()->first();
+                                                @endphp
+                                                <div class="bg-gray-50 rounded-xl px-3 sm:px-5 py-3 my-2"
+                                                    style="border: 1px solid rgba(249,128,128,var(--tw-border-opacity))">
+
+                                                    <div class="flex flex-col items-stat gap-y-2">
+                                                        <div class="flex items-center">
+                                                            <div class="text-xs opacity-60 pr-1">
+                                                                ارسال شده توسط
+
+                                                                @if (empty($author->first_name) && empty($author->last_name))
+                                                                    {{ $author->name }}
+                                                                @else
+                                                                    {{ $author->first_name . ' ' . $author->last_name }}
+                                                                @endif
+                                                            </div>
+                                                            <div class="text-xs opacity-60 pr-1">
+                                                                {{ jalaliDate($commentAnswer->created_at) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="opacity-60 text-sm py-3">
+                                                            {{ $commentAnswer->body }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
                             </div>
                             </p>
                         </div>
@@ -512,44 +535,45 @@
                 </div>
 
                 {{-- related products --}}
-                @if($relatedProducts->count() > 0)
-                <!-- SLIDER -->
-                <div class="bg-white rounded-2xl pt-10">
-                    <!-- TOP SLIDER -->
-                    <div class="flex justify-between px-5 md:px-10 items-center">
-                        <div class="border-b-2 border-red-500 pb-1">مرتبط ترین ها</div>
-                    </div>
+                @if ($relatedProducts->count() > 0)
                     <!-- SLIDER -->
-                    <div class="containerPSlider swiper">
-                        <div class="slide-container1 px-2">
-                            <div class="card-wrapper swiper-wrapper py-4">
-                                @foreach ($relatedProducts as $relatedProduct)
-                                <span class="card swiper-slide my-2 p-2 md:p-3 ">
-                                    <div class="image-box mb-6 ">
-                                        <a href="{{route('front.market.product',$relatedProduct)}}">
-                                            <img class="hover:scale-105 transition rounded-3xl w-full mx-auto"
-                                                src="{{ asset($relatedProduct->image['indexArray']['medium']) }}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="space-y-3 text-center">
-                                        <span class="text-sm opacity-80 mb-2 h-8 md:h-10">
-                                            <a href="#">
-                                                {{$relatedProduct->name}}
-                                            </a>
-                                        </span>
-                                        <div class="flex justify-center mt-1 mb-2 text-sm">
-                                            <div>{{$relatedProduct->price}}</div>
-                                            <div>تومان</div>
-                                        </div>
-                                    </div>
-                                </span>
-                                @endforeach
-                            </div>
+                    <div class="bg-white rounded-2xl pt-10">
+                        <!-- TOP SLIDER -->
+                        <div class="flex justify-between px-5 md:px-10 items-center">
+                            <div class="border-b-2 border-red-500 pb-1">مرتبط ترین ها</div>
                         </div>
-                        <div class="swiper-button-next swiper-navBtn"></div>
-                        <div class="swiper-button-prev swiper-navBtn"></div>
+                        <!-- SLIDER -->
+                        <div class="containerPSlider swiper">
+                            <div class="slide-container1 px-2">
+                                <div class="card-wrapper swiper-wrapper py-4">
+                                    @foreach ($relatedProducts as $relatedProduct)
+                                        <span class="card swiper-slide my-2 p-2 md:p-3 ">
+                                            <div class="image-box mb-6 ">
+                                                <a href="{{ route('front.market.product', $relatedProduct) }}">
+                                                    <img class="hover:scale-105 transition rounded-3xl w-full mx-auto"
+                                                        src="{{ asset($relatedProduct->image['indexArray']['medium']) }}"
+                                                        alt="">
+                                                </a>
+                                            </div>
+                                            <div class="space-y-3 text-center">
+                                                <span class="text-sm opacity-80 mb-2 h-8 md:h-10">
+                                                    <a href="#">
+                                                        {{ $relatedProduct->name }}
+                                                    </a>
+                                                </span>
+                                                <div class="flex justify-center mt-1 mb-2 text-sm">
+                                                    <div>{{ $relatedProduct->price }}</div>
+                                                    <div>تومان</div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="swiper-button-next swiper-navBtn"></div>
+                            <div class="swiper-button-prev swiper-navBtn"></div>
+                        </div>
                     </div>
-                </div>
                 @endif
             </div>
         </div>
@@ -605,7 +629,8 @@
 
             if ($('#product-discount-price').length != 0) {
                 {{-- product_discount_price = parseFloat($('#product-discount-price').attr('data-product-discount-price')); --}}
-                product_discount_price = (product_original_price + selected_color_price + selected_guarantee_price) * amazing_sale_percentage /100 ;
+                product_discount_price = (product_original_price + selected_color_price + selected_guarantee_price) *
+                    amazing_sale_percentage / 100;
 
             }
 
@@ -637,13 +662,11 @@
                 url: url,
                 success: function(result) {
                     if (result.status == 1) {
-                        $(element).children().first().removeClass('fill-current');
-                        $(element).children().first().addClass('full-current');
+                        $(element).children().first().addClass('text-danger');
                         $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
                     } else if (result.status == 2) {
-                        $(element).children().first().removeClass('full-current')
-                        $(element).children().first().addClass('fill-current')
+                        $(element).children().first().removeClass('text-danger')
                         $(element).attr('data-original-title', 'افزودن به علاقه مندی ها');
                         $(element).attr('data-bs-original-title', 'افزودن به علاقه مندی ها');
                     }
