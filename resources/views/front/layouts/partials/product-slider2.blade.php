@@ -1,8 +1,8 @@
 <div class="bg-white rounded-2xl pt-10 shadow-xl my-10">
     <!-- TOP SLIDER -->
     <div class="flex justify-between px-5 md:px-10 items-center">
-      <div class="border-b-2 border-red-500 pb-1">کالای دیجیتال</div>
-      <a href="./search.html"><div class="transition px-4 py-2 rounded-xl flex justify-center items-center text-red-500 hover:text-red-600">دیدن همه<img class="w-4" src="./assets/image/arrow-left.png" alt=""></div></a>
+      <div class="border-b-2 border-red-500 pb-1">جدید ترین ها</div>
+      <a href="{{route('front.products')}}"><div class="transition px-4 py-2 rounded-xl flex justify-center items-center text-red-500 hover:text-red-600">دیدن همه<img class="w-4" src="./assets/image/arrow-left.png" alt=""></div></a>
     </div>
     <!-- SLIDER -->
     <div class="containerPSlider swiper">

@@ -47,8 +47,12 @@
       @include('front.layouts.partials.section-image2')
       {{-- done --}}
       
-      <!-- OFF PRODUCTS -->
-      @include('front.layouts.partials.off-products')
+
+
+      <!-- aamzingSales -->
+      @if ($amazingSaleProducts->count() > 0)
+      @include('front.layouts.partials.off-products')   
+      @endif
 
 
 

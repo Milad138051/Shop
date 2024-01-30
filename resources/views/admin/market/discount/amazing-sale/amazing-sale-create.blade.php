@@ -37,13 +37,18 @@
 
                         <div class="form-group">
                             <label for="">انتخاب کالا</label>
-                            <select name="product_id" id="" class="form-control form-control-sm">
-                                <option value="">کالا را انتخاب کنید</option>
-                                @foreach ($products as $product)
-                                <option value="{{ $product->id }}" @if(old('product_id') == $product->id) selected @endif>{{ $product->name }}</option>
-                                @endforeach
 
+                            <select class="form-control form-control-sm" id="select_product"
+                            name="product_id">
+                            <option value="">کالا را انتخاب کنید</option>
+
+                            @foreach ($products as $product)
+                                <option value="{{ $product->id }}">
+                                    {{ $product->name }}
+                                </option>
+                            @endforeach
                             </select>
+
                             @error('product_id')
                             <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
                                 <strong>
@@ -141,5 +146,12 @@
                 })
             });
     </script>
+
+<script>
+    var select_relatedProduct = $('#select_product');
+    select_relatedProduct.select2({
+        placeholder: 'لطفا کالا را انتخاب نمایید',
+    })
+</script>
 @endsection
 

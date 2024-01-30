@@ -21,6 +21,7 @@ class ProductController extends Controller
 		// $relatedProducts=Product::with('category')->whereHas('category',function($q) use ($product){
 		// 	$q->where('id',$product->category->id);
 		// })->get()->except($product->id);
+		$product->update(['viewed'=> $product->viewed += 1]);
 
 		$relatedCategoriesIdsDecoded=json_decode($product->related_categories);
 		if($relatedCategoriesIdsDecoded!==null){
@@ -31,7 +32,6 @@ class ProductController extends Controller
 		return view('front.market.product.product',compact('product','relatedProducts'));
 	}
 
-	
 	public function products(Request $request,Category $category=null)
 	{
 		//sorting
@@ -64,6 +64,7 @@ class ProductController extends Controller
 		//	
 		//selection productCtegory
 		if($category){
+		$category->update(['viewed'=>$category->viewed += 1]);
 		$productModel=$category->products();
 		}else{
 		$productModel=new Product();
@@ -111,8 +112,6 @@ class ProductController extends Controller
 		return view('front.market.products',compact('products','brands','selectedBrandsArray','categories'));
 	}
 	
-	
-
 	public function addCommentView(Product $product)
 	{
 		return view('front.market.product.add-comment',compact('product'));

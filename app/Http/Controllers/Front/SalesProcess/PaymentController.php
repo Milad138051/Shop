@@ -260,6 +260,7 @@ class PaymentController extends Controller
                 $product = Product::find($cartItem->product_id);
                 $product->update([
                     'marketable_number' => $product->marketable_number - $cartItem->number,
+                    'sold_number'=> $product->sold_number + $cartItem->number
                 ]);
             }
             $this->createOrderItems($cartItems, $order);

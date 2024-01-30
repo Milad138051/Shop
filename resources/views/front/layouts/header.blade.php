@@ -407,6 +407,21 @@
                   <span class=" border-b-2 border-red-600">بلاگ</span>
                 </a>
               </li>
+
+              <li class="block relative">
+                <a
+                  href="{{route('front.about-us')}}"
+                  class="flex items-center h-10 text-sm leading-10 px-4 mx-1 transition text-gray-700 hover:text-red-500">
+                  <span class=" border-b-2 border-red-600">درباره ما</span>
+                </a>
+              </li>
+              <li class="block relative">
+                <a
+                  href="{{route('front.contact-us')}}"
+                  class="flex items-center h-10 text-sm leading-10 px-4 mx-1 transition text-gray-700 hover:text-red-500">
+                  <span class=" border-b-2 border-red-600">ارتباط با ما</span>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
