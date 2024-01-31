@@ -100,5 +100,15 @@ class Product extends Model
 	{
 		return $this->hasMany(ProductReview::class);
 	}
+
+	public function questions()
+	{
+		return $this->hasMany(AnswerQuestion::class);
+	}
+
+	public function activeQuestions()
+	{
+        return $this->questions()->where('approved', 1)->whereNull('parent_id')->get();
+	}
 	
 }

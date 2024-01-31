@@ -30,6 +30,7 @@
                                 <div class="opacity-80 text-lg font-semibold">
                                     {{ $product->name }}
                                 </div>
+                                @if($product->CategoryValues()->count() >0 )
                                 <form action="{{ route('front.market.add-review', $product) }}" method="post">
                                 <div class="lg:flex flex-wrap gap-y-5 justify-center">
                                             @csrf
@@ -57,6 +58,7 @@
                                             @endforeach
                                             <button class="inline-block px-8 py-2 my-1 font-semibold leading-normal text-center text-white bg-red-500 align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer text-xs active:opacity-85" type="submit">ثبت</button>
                                         </form>
+                                        @endif
                                 </div>
                             </div>
                         </div>

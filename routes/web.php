@@ -84,6 +84,8 @@ Route::controller(FrontProductController::class)->prefix('market')->group(functi
     Route::post('/add-comment-replay/{product:slug}/{comment}', 'addReplay')->name('front.market.add-replay');
     Route::get('/add-to-favorite/{product:slug}', 'addToFavorite')->name('front.market.add-to-favorite');
     Route::get('/add-to-compare/{product:slug}', 'addToCompare')->name('front.market.add-to-compare');
+    Route::post('/add-question/{product}', 'addQuestion')->name('front.market.add-question');
+    Route::post('/add-question-replay/{product}/{answerQuestion}', 'addQuestionReplay')->name('front.market.add-replay-question');
     // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
 });
 //cart

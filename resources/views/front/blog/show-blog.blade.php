@@ -2,7 +2,7 @@
 
 
 @section('head-tag')
-    <title>{{$post->title}}</title>
+    <title>{{ $post->title }}</title>
 @endsection
 
 @section('content')
@@ -19,7 +19,8 @@
                                 </div>
                                 <div class="flex">
                                     <div>نویسنده: </div>
-                                    <div>{{ $post->user->first_name . ' ' . $post->user->last_name ?? $post > user->name }}</div>
+                                    <div>{{ $post->user->first_name . ' ' . $post->user->last_name ?? $post > user->name }}
+                                    </div>
                                 </div>
                                 <div class="flex">
                                     <div>دسته بندی: </div>
@@ -47,7 +48,10 @@
                         <div>
                             <div>نظرات</div>
                             @php
-                            $commentsCount=App\Models\Content\Comment::where('commentable_type','App\Models\Content\Post')->where('approved',1)->where('commentable_id',$post->id)->count();
+                                $commentsCount = App\Models\Content\Comment::where('commentable_type', 'App\Models\Content\Post')
+                                    ->where('approved', 1)
+                                    ->where('commentable_id', $post->id)
+                                    ->count();
                             @endphp
                             <div class="pr-5 opacity-70 text-xs"> {{ $commentsCount }} نظر</div>
                         </div>
@@ -64,7 +68,8 @@
                                             alt="">
                                     </div>
                                     <div class="text-sm opacity-60 pr-1">
-                                        نوشته شده توسط {{ $author->first_name . ' ' . $author->last_name ?? $author->name }} در {{jalaliDate($activeComment->created_at)}}
+                                        نوشته شده توسط {{ $author->first_name . ' ' . $author->last_name ?? $author->name }}
+                                        در {{ jalaliDate($activeComment->created_at) }}
                                     </div>
                                 </div>
                                 <div class="opacity-60 text-sm py-3">
@@ -113,31 +118,7 @@
                                 <!-- RESPONSE -->
 
                                 @foreach ($activeComment->activeAnswers() as $commentAnswer)
-                                    @php
-                                        $authorr = $commentAnswer->user()->first();
-                                    @endphp
-
-                                    <div class="bg-gray-100 rounded-xl pl-2 pr-5 sm:pr-8 py-3">
-                                        <div class="flex items-center">
-                                            <div>
-                                                <img class="w-10"
-                                                    @if ($authorr->profile_photo_path) src="{{ asset($authorr->profile_photo_path) }}" @else src="{{ asset('front-assets/image/team-2.jpg') }}" @endif
-                                                    alt="">
-                                            </div>
-                                            <div class="text-sm opacity-60 pr-1">
-                                                نوشته شده توسط
-                                                {{ $authorr->first_name . ' ' . $authorr->last_name ?? $authorr->name }} در {{jalaliDate($commentAnswer->created_at)}}
-                                            </div>
-                                        </div>
-                                        <div class="opacity-60 text-sm py-3">
-                                            {!! $commentAnswer->body !!}
-                                        </div>
-                                        {{-- <div>
-                  <button class="mr-auto px-2 sm:px-4 py-2 opacity-80 md:w-auto text-xs sm:text-sm xl:text-base flex justify-center items-center">
-                    پاسخ
-                  </button>
-                </div> --}}
-                                    </div>
+                                @include('front.layouts.partials.blog-comment-child',['comment'=>$commentAnswer])
                                 @endforeach
                             </div>
                         @endforeach
@@ -148,17 +129,18 @@
 
 
                         {{-- //send comment --}}
-                        <form action="{{route('front.blogs.add-comment',$post)}}" method="POST">
-                          @csrf
-                        <div class="mb-4">
-                            <label for="mailTicket" class="inline-block mb-2 ml-1 font-semibold text-xs text-slate-700">نظر
-                                شما:</label>
-                            <textarea cols="30" rows="5" name="body"
-                                class="text-sm block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 font-normal text-gray-700 outline-none focus:border-red-300"></textarea>
-                        </div>
-                        <button type="submit"
-                            class="inline-block px-8 py-2 ml-auto font-semibold text-center text-white bg-red-500 rounded-lg shadow-md text-xs">ارسال
-                            نظر</button>
+                        <form action="{{ route('front.blogs.add-comment', $post) }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="mailTicket"
+                                    class="inline-block mb-2 ml-1 font-semibold text-xs text-slate-700">نظر
+                                    شما:</label>
+                                <textarea cols="30" rows="5" name="body"
+                                    class="text-sm block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 font-normal text-gray-700 outline-none focus:border-red-300"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="inline-block px-8 py-2 ml-auto font-semibold text-center text-white bg-red-500 rounded-lg shadow-md text-xs">ارسال
+                                نظر</button>
                         </form>
 
                     </div>

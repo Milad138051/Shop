@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front\Market;
 
+use App\Models\Market\AnswerQuestion;
 use App\Models\Market\Brand;
 use Illuminate\Http\Request;
 use App\Models\Market\Compare;
@@ -25,7 +26,7 @@ class ProductController extends Controller
 
 		$relatedCategoriesIdsDecoded=json_decode($product->related_categories);
 		if($relatedCategoriesIdsDecoded!==null){
-			$relatedProducts=Product::whereIn('category_id',$relatedCategoriesIdsDecoded)->get();
+			$relatedProducts=Product::whereIn('category_id',$relatedCategoriesIdsDecoded)->get()->except($product->id);;
 		}else{
 			$relatedProducts=null;
 		}		
@@ -159,7 +160,7 @@ class ProductController extends Controller
         $inputs['commentable_id'] = $product->id;
         $inputs['commentable_type'] = Product::class;
         Comment::create($inputs);
-		return redirect()->route('front.market.product',$product->id)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
+		return redirect()->route('front.market.product',$product)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
 	}
 	else{
 		return back()->with('alert-section-error','برای ثبت دیدگاه , ابتدا وارد حساب خود شوید');
@@ -182,7 +183,7 @@ class ProductController extends Controller
 			$inputs['commentable_id'] = $product->id;
 			$inputs['commentable_type'] = Product::class;
 			Comment::create($inputs);
-			return redirect()->route('front.market.product',$product->id)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
+			return redirect()->route('front.market.product',$product)->with('alert-section-success',' نظر شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
 		}else{
 			return back()->with('alert-section-error','برای ثبت دیدگاه , ابتدا وارد حساب خود شوید');
 		}
@@ -239,4 +240,46 @@ class ProductController extends Controller
        }
 	}
 	
+	public function addQuestion(Product $product,Request $request)
+	{
+	if(Auth::check()){
+
+		$request->validate([
+		'body'=>'required|max:2000',
+		]);
+		
+        $inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
+        $inputs['author_id'] = Auth::user()->id;
+        $inputs['product_id'] = $product->id;
+		$inputs['approved'] = 1;
+		$inputs['status'] = 1;
+        AnswerQuestion::create($inputs);
+		return redirect()->route('front.market.product',$product)->with('alert-section-success',' سوال شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
+	}
+	else{
+		return back()->with('alert-section-error','برای ثبت سوال , ابتدا وارد حساب خود شوید');
+	}
+}
+	
+	public function addQuestionReplay(Product $product,AnswerQuestion $answerQuestion,Request $request)
+	{
+		if(Auth::check()){
+			$request->validate([
+				'body'=>'required|max:2000',
+			]);
+			
+			$inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
+			$inputs['author_id'] = Auth::user()->id;
+			$inputs['parent_id'] = $answerQuestion->id;
+			$inputs['approved'] = 1;
+			$inputs['status'] = 1;
+			$inputs['product_id'] = $product->id;
+			// dd($inputs);
+			AnswerQuestion::create($inputs);
+			return redirect()->route('front.market.product',$product)->with('alert-section-success',' جواب شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
+		}else{
+			return back()->with('alert-section-error','برای ثبت جواب , ابتدا وارد حساب خود شوید');
+		}
+		
+	}
 	}

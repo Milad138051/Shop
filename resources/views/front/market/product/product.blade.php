@@ -20,11 +20,12 @@
     <div class="max-w-[1440px] mx-auto px-3">
         <div class="flex gap-x-2 px-10 mt-5 md:mt-10">
             <div>
-                <a href="{{route('front.home')}}" class="hover:text-red-500 transition text-sm opacity-70">خانه</a>
+                <a href="{{ route('front.home') }}" class="hover:text-red-500 transition text-sm opacity-70">خانه</a>
             </div>
             <div class="opacity-70">/</div>
             <div>
-                <a href="{{route('front.products',$product->category->id)}}" class="hover:text-red-500 transition text-sm opacity-70">{{$product->category->name}}</a>
+                <a href="{{ route('front.products', $product->category->id) }}"
+                    class="hover:text-red-500 transition text-sm opacity-70">{{ $product->category->name }}</a>
             </div>
 
         </div>
@@ -210,6 +211,10 @@
                                                     $amazingSale = $product->activeAmazingSale();
                                                 @endphp
 
+                                                <div>
+                                                    قیمت (شامل هزینه گارانتی و رنگ کالا) :
+                                                </div>
+
                                                 @if (!empty($amazingSale))
                                                     <div>
                                                         درصد تخفیف
@@ -220,9 +225,6 @@
                                                  میزان تخفیف   
                                             </div>
                                             @endif --}}
-                                                <div>
-                                                    قیمت (شامل هزینه گارانتی و رنگ کالا) :
-                                                </div>
                                                 @if ($product->marketable_number > 0)
                                                     <div>
                                                         تعداد:
@@ -236,14 +238,6 @@
                                                 <div>
                                                     {{ $product->marketable_number }} عدد
                                                 </div>
-                                                @if (!empty($amazingSale))
-                                                    <div id="product-discount-price"
-                                                        data-product-discount-price="{{ $product->price * ($amazingSale->percentage / 100) }}">
-                                                        <div>
-                                                            {{ $amazingSale->percentage }} درصد
-                                                        </div>
-                                                    </div>
-                                                @endif
                                                 {{-- @if (!empty($amazingSale))
                                             <div>
                                                 <div id="product-discount-price" data-product-discount-price="{{ ($product->price * ($amazingSale->percentage / 100) ) }}">
@@ -263,6 +257,15 @@
                                                         تومان
                                                     </div>
                                                 </div>
+
+                                                @if (!empty($amazingSale))
+                                                    <div id="product-discount-price"
+                                                        data-product-discount-price="{{ $product->price * ($amazingSale->percentage / 100) }}">
+                                                        <div>
+                                                            {{ $amazingSale->percentage }} درصد
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 @if ($product->marketable_number > 0)
                                                     <div
                                                         class="flex text-sm sm:text-sm items-center justify-center lg:justify-start">
@@ -365,6 +368,19 @@
                                     id="commentsBuy-tab" data-tabs-target="#commentsBuy" type="button" role="tab"
                                     aria-controls="commentsBuy" aria-selected="false">دیدگاه ها
                                     ({{ $commentsCount }})</button>
+                            </li>
+
+                            @php
+                            $questionCount = App\Models\Market\AnswerQuestion::where('status',1)
+                            ->where('approved',1)
+                            ->where('product_id',$product->id)
+                            ->count();
+                            @endphp
+                            <li role="presentation">
+                                <button
+                                    class="inline-block text-gray-500 hover:text-gray-600 hover:border-gray-300 rounded-t-lg py-4 px-4 text-sm font-medium text-center border-transparent border-b-2"
+                                    id="comments-tab" data-tabs-target="#comments" type="button" role="tab"
+                                    aria-controls="comments" aria-selected="false">پرسش ها ({{$questionCount}})</button>
                             </li>
                         </ul>
                     </div>
@@ -470,9 +486,6 @@
 
                                         <div class="flex flex-col items-stat gap-y-2">
                                             <div class="flex items-center">
-                                                {{-- <div class="text-green-400 bg-green-100 px-1 rounded-md text-sm">
-                                                4.7
-                                            </div> --}}
                                                 <div class="text-xs opacity-60 pr-1">
                                                     ارسال شده توسط
 
@@ -493,38 +506,115 @@
                                                 {{ $activeComment->body }}
                                             </div>
                                             @foreach ($activeComment->activeAnswers() as $commentAnswer)
-                                                @php
-                                                    $author = $commentAnswer->user()->first();
-                                                @endphp
-                                                <div class="bg-gray-50 rounded-xl px-3 sm:px-5 py-3 my-2"
-                                                    style="border: 1px solid rgba(249,128,128,var(--tw-border-opacity))">
-
-                                                    <div class="flex flex-col items-stat gap-y-2">
-                                                        <div class="flex items-center">
-                                                            <div class="text-xs opacity-60 pr-1">
-                                                                ارسال شده توسط
-
-                                                                @if (empty($author->first_name) && empty($author->last_name))
-                                                                    {{ $author->name }}
-                                                                @else
-                                                                    {{ $author->first_name . ' ' . $author->last_name }}
-                                                                @endif
-                                                            </div>
-                                                            <div class="text-xs opacity-60 pr-1">
-                                                                {{ jalaliDate($commentAnswer->created_at) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="opacity-60 text-sm py-3">
-                                                            {{ $commentAnswer->body }}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @include('front.layouts.partials.comment-child', [
+                                                    'comment' => $commentAnswer,
+                                                ])
                                             @endforeach
                                         </div>
                                     </div>
                                 @endforeach
+                            </div>
+                            </p>
+                        </div>
+                        {{-- question & answer --}}
+                        <div class="bg-gray-50 p-4 rounded-xl hidden" id="comments" role="tabpanel"
+                            aria-labelledby="comments-tab">
+                            <span class="border-b-red-500 border-b">
+                                پرسش های محصول
+                            </span>
+                            <p class="text-gray-500 text-sm">
+                            <div class="flex flex-col py-4 px-4 mx-auto my-6 max-w-7xl rounded-2xl bg-white">
+                                <!-- UO COMMENTS -->
+                                <div>
+                                    <div>سوالات</div>
+                                    <div class="pr-5 opacity-70 text-xs">{{$questionCount}} پرسش</div>
+                                </div>
+                                <!-- COMMENT -->
+                                @foreach ($product->activeQuestions() as $activeQuestion)
+                                    @php
+                                        $author = $activeQuestion->user()->first();
+                                    @endphp
+                                    <div class="bg-gray-50 rounded-xl px-5 py-3 my-2">
+                                        <div class="flex items-center">
+                                            <div>
+                                                <img class="w-10" src="{{asset(auth()->user()->profile_photo_path)}}" alt="">
+                                            </div>
+                                            <div class="text-sm opacity-60 pr-1">
+                                                نوشته شده توسط {{ $author->first_name . ' ' . $author->last_name }}
+                                            </div>
+                                        </div>
+                                        <div class="opacity-60 text-sm py-3">
+                                            {{ $activeQuestion->body }}
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal-{{ $activeQuestion->id }}"
+                                                data-bs-whatever="@mdo"
+                                                class="mr-auto px-2 sm:px-4 py-2 opacity-80 md:w-auto text-xs sm:text-sm xl:text-base flex justify-center items-center">
+                                                پاسخ
+                                            </button>
+                                            <!-- start add answer Modal -->
+                                            <div class="modal fade" id="exampleModal-{{ $activeQuestion->id }}"
+                                                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <form
+                                                                    action="{{ route('front.market.add-replay-question', [$product, $activeQuestion]) }}"
+                                                                    id="form-{{ $activeQuestion->id }}" method="POST">
+                                                                    @csrf
+                                                                    <label for="message-text"
+                                                                        class="col-form-label">پاسخ:</label>
+                                                                    <textarea class="form-control" id="message-text" name="body"></textarea>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">بستن
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                onclick="document.getElementById('form-{{ $activeQuestion->id }}').submit();">
+                                                                ثبت
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end add answer Modal -->
+                                        </div>
+                                        <!-- RESPONSE -->
+                                        @foreach ($activeQuestion->activeAnswers() as $answer)
+                                            @include('front.layouts.partials.question-asnwer', [
+                                                'answer' => $answer,
+                                            ])
+                                        @endforeach
+
+                                    </div>
+                                @endforeach
+
+
+                                <!-- BOX SENT COMMENT -->
+                                <div class="mb-4">
+                                    <form action="{{ route('front.market.add-question', $product) }}" type="submit"
+                                        method="post">
+                                        @csrf
+
+                                        <label for="mailTicket"
+                                            class="inline-block mb-2 ml-1 font-semibold text-xs text-slate-700">سوال
+                                            شما:</label>
+                                        <textarea cols="30" rows="5" name="body"
+                                            class="text-sm block w-full rounded-lg border border-gray-400 bg-white px-3 py-2 font-normal text-gray-700 outline-none focus:border-red-300"></textarea>
+                                </div>
+                                <button
+                                    class="inline-block px-8 py-2 ml-auto font-semibold text-center text-white bg-red-500 rounded-lg shadow-md text-xs">ارسال
+                                    پرسش</button>
+                                </form>
                             </div>
                             </p>
                         </div>
