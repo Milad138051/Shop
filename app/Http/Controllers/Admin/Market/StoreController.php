@@ -9,6 +9,12 @@ use App\Http\Requests\Admin\Market\StoreRequest;
 
 class StoreController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:store-show');
+    }
+    
     public function index()
     {
         $products = Product::orderBy('created_at', 'desc')->simplePaginate(15);

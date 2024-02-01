@@ -251,7 +251,7 @@ class ProductController extends Controller
         $inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
         $inputs['author_id'] = Auth::user()->id;
         $inputs['product_id'] = $product->id;
-		$inputs['approved'] = 1;
+		// $inputs['approved'] = 1;
 		$inputs['status'] = 1;
         AnswerQuestion::create($inputs);
 		return redirect()->route('front.market.product',$product)->with('alert-section-success',' سوال شما با موفقیت ثبت شد و پس از تایید , نمایش داده خواهد شد');
@@ -271,7 +271,7 @@ class ProductController extends Controller
 			$inputs['body'] = str_replace(PHP_EOL, '<br/>', $request->body);
 			$inputs['author_id'] = Auth::user()->id;
 			$inputs['parent_id'] = $answerQuestion->id;
-			$inputs['approved'] = 1;
+			// $inputs['approved'] = 1;
 			$inputs['status'] = 1;
 			$inputs['product_id'] = $product->id;
 			// dd($inputs);
@@ -282,4 +282,7 @@ class ProductController extends Controller
 		}
 		
 	}
-	}
+
+
+	
+}

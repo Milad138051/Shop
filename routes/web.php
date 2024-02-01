@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ADmin\Market\AnswerQuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Admin\Market\StoreController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\User\CustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\Content\BannerController;
+use App\Http\Controllers\Admin\Market\BannerController;
 use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\PaymentController;
 use App\Http\Controllers\Admin\Market\ProductController;
@@ -159,6 +160,7 @@ Route::controller(BlogController::class)->prefix('blogs')->group(function () {
 //admin-panel
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('', [AdminDashboardController::class, 'index'])->name('admin.home');
+   
     Route::prefix('content')->group(function () {
         //post category
         Route::controller(PostCategoryController::class)->prefix('postCategory')->group(function () {
@@ -239,17 +241,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
             Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
         });
-        
         //store
         Route::controller(StoreController::class)->prefix('store')->group(function () {
             Route::get('/', 'index')->name('admin.market.store.index');
             // Route::get('/add-to-store/{product}','addToStore')->name('admin.market.store.add-to-store');
             // Route::post('/store/{product}','store')->name('admin.market.store.store');
-            Route::get('/edit/{product}','edit')->name('admin.market.store.edit');
+            Route::get('/edit/{product}', 'edit')->name('admin.market.store.edit');
             Route::put('/update/{product}', 'update')->name('admin.market.store.update');
             Route::post('/search', 'search')->name('admin.market.store.search');
         });
-
         //property
         Route::prefix('property')->group(function () {
             Route::get('/', [PropertyController::class, 'index'])->name('admin.market.property.index');
@@ -347,6 +347,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::put('/update/{banner}', 'update')->name('admin.market.banner.update');
             Route::get('/status/{banner}', 'status')->name('admin.market.banner.status');
             Route::delete('/destroy/{banner}', 'destroy')->name('admin.market.banner.destroy');
+        });
+        //question & answer
+        Route::controller(AnswerQuestionController::class)->prefix('question-answer')->group(function () {
+            Route::get('/', 'index')->name('admin.market.question-answer.index');
+            Route::get('/show/{answerQuestion}', 'show')->name('admin.market.question-answer.show');
+            // Route::get('/status/{answerQuestion}', 'status')->name('admin.question-answer.status');
+            Route::delete('/destroy/{answerQuestion}', 'delete')->name('admin.market.question-answer.delete');
+            Route::get('/approved/{answerQuestion}', 'approved')->name('admin.market.question-answer.approved');
+            Route::post('/answer/{answerQuestion}', 'answer')->name('admin.market.question-answer.answer');
         });
     });
 

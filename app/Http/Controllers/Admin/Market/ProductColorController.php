@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 
 class ProductColorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:color-product');
+    }
 
     public function index(Product $product)
     {

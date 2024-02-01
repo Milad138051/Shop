@@ -20,10 +20,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
         //  $this->call(PostCategorySeeder::class);
         //  $this->call(PostSeeder::class);
-         $this->call(CommentSeeder::class);
-         $this->call(ProductCommentSeeder::class);
+        //  $this->call(CommentSeeder::class);
+        //  $this->call(ProductCommentSeeder::class);
         //  $this->call(CategorySeeder::class);
         //  $this->call(BrandSeeder::class);
+        $this->call(RoleSeeder::class);
+         $this->call(PermissionSeeder::class);
 
          Schema::enableForeignKeyConstraints();
     }

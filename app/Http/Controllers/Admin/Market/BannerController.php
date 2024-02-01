@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Content;
+namespace App\Http\Controllers\Admin\Market;
 
 use Illuminate\Http\Request;
 use App\Models\Market\Banner;
@@ -10,6 +10,23 @@ use App\Http\Requests\Admin\Market\BannerRequest;
 
 class BannerController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:show-banner')->only(['index']);
+        $this->middleware('can:create-banner')->only(['craete', 'store']);
+        $this->middleware('can:update-banner')->only(['edit', 'update','status']);
+        $this->middleware('can:delete-banner')->only(['destroy']);
+
+        // $this->middleware('role:market-admin');
+        // $this->middleware('role:super-admin');
+        // $this->middleware('role:operator')->only(['create']);
+        // $this->middleware('role:accounting')->only(['store']);
+        // $this->middleware('role:operator')->only(['edit']);
+        // $this->middleware('can:show-category')->only(['index']);
+        // $this->middleware('can:update-category')->only(['edit', 'update']);
+    }
+
     public function index()
     {
 		$banners=Banner::orderby('created_at','desc')->simplePaginate(15);

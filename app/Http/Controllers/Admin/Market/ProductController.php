@@ -14,6 +14,13 @@ use App\Http\Requests\Admin\Market\ProductRequest;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-product')->only(['index']);
+        $this->middleware('can:create-product')->only(['store','create']);
+        $this->middleware('can:edit-product')->only(['update','edit']);
+        $this->middleware('can:delete-product')->only(['destroy']);
+    }
     public function index()
     {
 		$products=Product::orderBy('created_at','desc')->get();
@@ -27,8 +34,6 @@ class ProductController extends Controller
 		$brands=Brand::all();
         return view('admin.market.product.create',compact('productCategories','brands'));
     }
-
-
     public function store(ProductRequest $request, ImageService $imageService)
     {
 		

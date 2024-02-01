@@ -10,6 +10,15 @@ use App\Http\Requests\Admin\Market\CategoryAttributeRequest;
 
 class PropertyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-property')->only(['index']);
+        $this->middleware('can:create-property')->only(['store','create']);
+        $this->middleware('can:edit-property')->only(['update','edit']);
+        $this->middleware('can:delete-property')->only(['destroy']);
+    }
+
+
     public function index()
     {
 		$category_attributes=CategoryAttribute::all();
@@ -22,7 +31,6 @@ class PropertyController extends Controller
 		$productCategories=Category::all();
         return view('admin.market.property.create',compact('productCategories'));
     }
-
 
     public function store(CategoryAttributeRequest $request)
     {
@@ -39,7 +47,6 @@ class PropertyController extends Controller
 
     }
 
-
     public function update(CategoryAttributeRequest $request, CategoryAttribute $categoryAttribute)
     {
         $inputs = $request->all();
@@ -47,9 +54,9 @@ class PropertyController extends Controller
         return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم شما با موفقیت ویرایش شد');
     }
 
-
     public function destroy(CategoryAttribute $categoryAttribute)
     {
         $result = $categoryAttribute->delete();
         return redirect()->route('admin.market.property.index')->with('swal-success', 'فرم شما با موفقیت حذف شد');
-    }}
+    }
+}

@@ -10,6 +10,14 @@ use App\Http\Requests\Admin\Market\CategoryRequest;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-productCategory')->only(['index']);
+        $this->middleware('can:create-productCategory')->only(['store','create']);
+        $this->middleware('can:edit-productCategory')->only(['update','edit']);
+        $this->middleware('can:delete-productCategory')->only(['delete']);
+    }
+
     public function index()
     {
         $productCategories =Category::orderBy('created_at', 'desc')->simplePaginate(15);

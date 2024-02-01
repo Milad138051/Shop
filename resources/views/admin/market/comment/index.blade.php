@@ -33,7 +33,7 @@
                                 <th>id</th>
                                 <th>comment</th>
                                 <th>answer to</th>
-                                <th>user_id</th>
+                                <th>user</th>
                                 <th>product_id</th>
                                 <th>product_name</th>
                                 <th>type</th>
@@ -54,7 +54,7 @@
                                     {{Str::limit($comment->parent->body, 10)}}
                                     @endif
                                     </td>
-                                    <td>{{ $comment->author_id }}</td>
+                                    <td>{{ $comment->user->fullName ?? $comment->user->first_name.''.$comment->user->last_name }}</td>
                                     <td>{{ $comment->commentable->id }}</td>
                                     <td>{{ $comment->commentable->name }}</td>
                                     <td>{{$comment->parent_id ? 'جواب ' : 'کامنت کاربر'}}</td>

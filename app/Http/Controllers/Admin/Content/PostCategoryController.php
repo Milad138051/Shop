@@ -10,6 +10,15 @@ use App\Http\Requests\Admin\Content\PostCategoryRequest;
 
 class PostCategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:show-postCategory')->only(['index']);
+        $this->middleware('can:create-postCategory')->only(['store','create']);
+        $this->middleware('can:edit-postCategory')->only(['update','edit']);
+        $this->middleware('can:delete-postCategory')->only(['delete']);
+    }
+
     public function index()
     {
         $postCategories=PostCategory::orderBy('id','Desc')->get();

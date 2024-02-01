@@ -9,6 +9,12 @@ use App\Http\Controllers\Controller;
 
 class GuaranteeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:gurantee-product');
+    }
+
     public function index(Product $product)
     {
         return view('admin.market.product.guarantee.index', compact('product'));

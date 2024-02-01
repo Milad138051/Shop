@@ -15,6 +15,23 @@ use App\Http\Requests\Admin\Market\CommonDiscountRequest;
 
 class DiscountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-copan')->only(['copan']);
+        $this->middleware('can:create-copan')->only(['copanStore','copanCreate']);
+        $this->middleware('can:edit-copan')->only(['copanUpdate','copanEdit']);
+        $this->middleware('can:delete-copan')->only(['copanDestroy']);
+
+        $this->middleware('can:show-commonDiscount')->only(['commonDiscount']);
+        $this->middleware('can:create-commonDiscount')->only(['commonDiscountStore','commonDiscountCreate']);
+        $this->middleware('can:edit-commonDiscount')->only(['commonDiscountUpdate','commonDiscountEdit']);
+        $this->middleware('can:delete-commonDiscount')->only(['commonDiscountDestroy']);
+
+        $this->middleware('can:show-amazingSale')->only(['amazingSale']);
+        $this->middleware('can:create-amazingSale')->only(['amazingSaleStore','amazingSaleCreate']);
+        $this->middleware('can:edit-amazingSale')->only(['amazingSaleUpdate','amazingSaleEdit']);
+        $this->middleware('can:delete-amazingSale')->only(['amazingSaleDestroy']);
+    }
     public function copan()
     {
         $copans = Copan::orderBy('id', 'desc')->get();
@@ -114,8 +131,6 @@ class DiscountController extends Controller
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     public function amazingSale()
     {
         $amazingSales = AmazingSale::orderBy('created_at', 'desc')->get();

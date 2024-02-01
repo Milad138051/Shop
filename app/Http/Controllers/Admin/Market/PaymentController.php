@@ -8,6 +8,12 @@ use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:payment-show');
+
+    }
     public function index()
     {
         $payments = Payment::all();

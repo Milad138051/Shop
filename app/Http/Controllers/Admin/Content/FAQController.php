@@ -8,6 +8,13 @@ use App\Http\Controllers\Controller;
 
 class FAQController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:show-faq');
+
+    }
+
     public function index()
     {
         $faqs=FAQ::orderBy('id','desc')->get();

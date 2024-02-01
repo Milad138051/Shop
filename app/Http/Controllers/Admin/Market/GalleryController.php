@@ -10,6 +10,10 @@ use App\Http\Services\Image\ImageService;
 
 class GalleryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:gallery-product');
+    }
 
     public function index(Product $product)
     {

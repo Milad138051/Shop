@@ -10,6 +10,15 @@ use App\Http\Requests\Admin\Market\BrandRequest;
 
 class BrandController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:show-brand')->only(['index']);
+        $this->middleware('can:create-brand')->only(['craete', 'store']);
+        $this->middleware('can:update-brand')->only(['edit', 'update']);
+        $this->middleware('can:delete-brand')->only(['delete']);
+
+    }
     public function index()
     {
 	    $brands = Brand::orderBy('id','desc')->get();

@@ -10,6 +10,11 @@ use App\Http\Requests\Admin\Market\CategoryValueRequest;
 
 class PropertyValueController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:value-option');
+
+    }
     public function index(CategoryAttribute $categoryAttribute)
     {
         return view('admin.market.property.value.index', compact('categoryAttribute'));

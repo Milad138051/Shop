@@ -10,11 +10,17 @@ use App\Http\Requests\Admin\Content\CommentRequest;
 class CommentController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('can:show-postComment')->only(['index','show']);
+        $this->middleware('can:approved-postComment')->only(['approved']);
+        $this->middleware('can:answer-postComment')->only(['answer']);
+    }
+
     public function index()
     {
         $comments = Comment::orderBy('id', 'desc')->where('commentable_type', 'App\Models\Content\Post')->simplePaginate(15);
         return view('admin.content.comment.index', compact('comments'));
-
     }
 
 

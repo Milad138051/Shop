@@ -9,6 +9,12 @@ use App\Http\Requests\Admin\Content\CommentRequest;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-productComment')->only(['index','show']);
+        $this->middleware('can:approved-productComment')->only(['approved']);
+        $this->middleware('can:answer-productComment')->only(['answer']);
+    }
 
     public function index()
     {

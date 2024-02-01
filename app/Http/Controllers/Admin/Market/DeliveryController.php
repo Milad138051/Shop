@@ -9,6 +9,13 @@ use App\Http\Requests\Admin\Market\DeliveryRequest;
 
 class DeliveryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-delivery')->only(['index','show']);
+        $this->middleware('can:create-delivery')->only(['store','create']);
+        $this->middleware('can:edit-delivery')->only(['update','edit','status']);
+        $this->middleware('can:delete-delivery')->only(['destroy']);
+    }
     public function index()
     {
         $delivery_methods = Delivery::all();

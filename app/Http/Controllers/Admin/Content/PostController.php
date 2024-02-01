@@ -11,6 +11,14 @@ use App\Http\Services\Image\ImageService;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-post')->only(['index']);
+        $this->middleware('can:create-post')->only(['store','create']);
+        $this->middleware('can:edit-post')->only(['update','edit']);
+        $this->middleware('can:delete-post')->only(['delete']);
+    }
+
     public function index()
     {
         $posts=Post::orderBy('id','DESC')->get();

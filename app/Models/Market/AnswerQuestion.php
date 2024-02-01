@@ -20,6 +20,16 @@ class AnswerQuestion extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo($this, 'parent_id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
     public function answers()
     {
         return $this->hasMany($this, 'parent_id');

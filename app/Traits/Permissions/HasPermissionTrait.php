@@ -21,6 +21,7 @@ trait HasPermissionTrait
 
     public function hasPermission($permission)
     {
+        // dd($permission);
         return (bool) $this->permissions->where('name', $permission->name)->count();
     }
 

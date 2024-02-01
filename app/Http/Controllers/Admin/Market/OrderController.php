@@ -8,6 +8,12 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+
+    public function __construct()
+    {
+            $this->middleware('can:order-show');
+    }
+
     public function newOrders()
     {
 		$orders=Order::where('order_status',0)->get();

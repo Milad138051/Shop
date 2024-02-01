@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-    <title>نظرات</title>
+    <title>پرسش و پاسخ</title>
 @endsection
 
 
@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">نظرات پست ها</h3>
+                    <h3 class="card-title">پرسش و پاسخ ها</h3>
                     <a href="#" class="btn btn-success text-white disabled">ایجاد</a>
 
 
@@ -31,11 +31,11 @@
                         <thead>
                             <tr>
                                 <th>id</th>
-                                <th>comment</th>
+                                <th>question</th>
                                 <th>answer to</th>
-                                <th>user</th>
-                                <th>post_id</th>
-                                <th>post_title</th>
+                                <th>author</th>
+                                <th>product_id</th>
+                                <th>product_name</th>
                                 <th>type</th>
                                 <th>status</th>
                                 <th>tools</th>
@@ -43,17 +43,23 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($comments as $comment)
+                            @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ Str::limit($comment->body, 15) }}</td>
-                                    <td>{{$comment->parent ? Str::limit($comment->parent->body, 10) :'ندارد'}}</td>
-                                    <td>{{ $comment->user->fullName ?? $comment->user->first_name.''.$comment->user->last_name }}</td>
-                                    <td>{{ $comment->commentable->id }}</td>
-                                    <td>{{ $comment->commentable->title }}</td>
-                                    <td>{{$comment->parent_id ? 'جواب ' : 'کامنت کاربر'}}</td>
+                                    <td>{{Str::limit($item->body, 30)}}</td>
                                     <td>
-                                        @if ($comment->approved == 1)
+                                    @if ($item->parent_id ==null)
+                                    والدی ندارد
+                                    @else
+                                    {{Str::limit($item->parent->body, 30)}}
+                                    @endif
+                                    </td>
+                                    <td>{{ $item->user->fullName ?? $item->user->first_name.''.$item->user->last_name }}</td>
+                                    <td>{{ $item->product->id }}</td>
+                                    <td>{{ $item->product->name }}</td>
+                                    <td>{{$item->parent_id ? 'جواب ' : 'سوال کاربر'}}</td>
+                                    <td>
+                                        @if ($item->approved == 1)
                                             <span class="badge badge-success btn-sm">تایید شده</span>
                                         @else
                                             <span class="badge bg-danger btn-sm">در انتظار تایید</span>
@@ -65,9 +71,9 @@
                       @csrf
                       <button type="submit" class="btn btn-danger text-white">حذف</button>
                   </form> --}}
-                                        <a href="{{ route('admin.content.comment.show', $comment) }}"
+                                        <a href="{{ route('admin.market.question-answer.show', $item) }}"
                                             class="btn btn-primary text-white">نمایش</a>
-                                        <a href="{{ route('admin.content.comment.approved', $comment) }}"
+                                        <a href="{{ route('admin.market.question-answer.approved', $item) }}"
                                             class="btn btn-warning text-white">تغییر وضعیت</a>
                                     </td>
                                 </tr>
@@ -107,7 +113,6 @@
                 });
             });
         }
-
     </script>
 
 
