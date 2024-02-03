@@ -1,5 +1,4 @@
 <div>
-
      <!-- TOP -->
       <nav
         class="relative px-5 py-2 flex flex-wrap justify-between items-start pt-5 bg-white">
@@ -335,8 +334,6 @@
         </div>
      
       </nav>
-
-
       <!-- DOWN -->
       <div class="w-full">
         <div class="py-2 px-5 bg-white shadow-stone-50 shadow-md hidden lg:block">
@@ -443,7 +440,7 @@
                   <div>
                     <div
                       class="md:flex justify-center align-middle lg:inline-block py-2 px-4 text-sm text-neutral-800 rounded-xl hover:text-neutral-700 hover:bg-red-100 transition">
-                      <a href="./cart.html">
+                      <a href="{{route('front.sales-process.cart')}}">
                         <img
                           class="inline ml-1 w-5"
                           src="{{asset('front-assets/image/shopping-cart.png')}}"
@@ -452,7 +449,7 @@
                     </div>
                     <div
                       class="md:flex justify-center align-middle lg:inline-block py-2 px-4 text-sm text-neutral-800 rounded-xl hover:text-neutral-700 hover:bg-red-100 transition">
-                      <a href="./login-register.html"
+                      <a href="{{route('auth.login-register-form')}}"
                         ><img
                           class="inline ml-1 w-5"
                           src="{{asset('front-assets/image/user.png')}}"
@@ -462,6 +459,8 @@
                   </div>
                 </div>
               </li>
+
+              @foreach ($categories as $category)
               <li
                 class="relative flex"
                 x-data="{showChildren:false}"
@@ -470,7 +469,7 @@
                   href="./category-index.html"
                   class="flex justify-between items-center h-10 leading-10 text-sm opacity-90 px-3 cursor-pointer no-underline w-full hover:no-underline duration-100 mx-1 transition rounded-xl hover:bg-red-100"
                   @click.prevent="showChildren=!showChildren">
-                  <span>پوشاک</span>
+                  <span>{{$category->name}}</span>
                   <span>
                     <img class="w-4 mr-1" src="{{asset('front-assets/image/chevron-down-login.png')}}" alt="" />
                   </span>
@@ -486,6 +485,7 @@
                   x-transition:leave-end="opacity-0 translate-y-4"
                   style="display: none">
                   </span>
+                  @forelse ($category->children as $child)
                   <div
                     class="bg-white rounded-2xl w-full relative z-10 py-2 px-2">
                     <ul class="list-reset">
@@ -495,37 +495,19 @@
                         @mouseleave="showChildren=false"
                         @mouseenter="showChildren=true">
                         <a
-                          href="./category.html"
+                          href="{{route('front.products',$child)}}"
                           class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer">
-                          <span class="flex-1">مردانه</span>
-                        </a>
-                      </li>
-                      <li
-                        class="relative"
-                        x-data="{showChildren:false}"
-                        @mouseleave="showChildren=false"
-                        @mouseenter="showChildren=true">
-                        <a
-                          href="./category.html"
-                          class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer">
-                          <span class="flex-1">زنانه</span>
-                        </a>
-                      </li>
-                      <li
-                        class="relative"
-                        x-data="{showChildren:false}"
-                        @mouseleave="showChildren=false"
-                        @mouseenter="showChildren=true">
-                        <a
-                          href="./category.html"
-                          class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer">
-                          <span class="flex-1">بچگانه</span>
+                          <span class="flex-1">{{$child->name}}</span>
                         </a>
                       </li>
                     </ul>
                   </div>
+                  @endforeach
                 </div>
               </li>
+              @endforeach
+
+
             </ul>
           </div>
         </nav>

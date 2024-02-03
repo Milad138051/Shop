@@ -42,7 +42,7 @@
                 @forelse ($comments as $comment)
                 <tr class="bg-white hover:bg-gray-50 grid grid-cols-1 justify-items-center md:table-row border-x sm:border-x-0 sm:border-b">
                     <td class="px-2 py-4">
-                      <img src="./assets/image/productSlider/2.jpg" class="w-48 md:w-28 max-w-full max-h-full rounded-lg" alt="">
+                      <img src="{{ asset($comment->commentable->image['indexArray']['medium']) }}" class="w-48 md:w-28 max-w-full max-h-full rounded-lg" alt="">
                     </td>
                     <td class="md:pr-6 py-4 text-xs opacity-90 text-gray-900">
                       {{$comment->commentable->name ?? $comment->commentable->title}}

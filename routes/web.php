@@ -56,16 +56,10 @@ use App\Http\Controllers\Front\SalesProcess\PaymentController as FrontPaymentCon
 //auth
 Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
     Route::get('login-register', 'loginRegisterForm')->name('auth.login-register-form');
-    Route::
-        // middleware('throttle:customer-login-register-limiter')->
-        post('login-register', 'loginRegister')->name('auth.login-register');
+    Route::middleware('throttle:customer-login-register-limiter')->post('login-register', 'loginRegister')->name('auth.login-register');
     Route::get('login-register-confirm/{token}', 'loginRegisterConfirmForm')->name('auth.login-register-confirm-form');
-    Route::
-        // middleware('throttle:customer-login-register-limiter')->
-        post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
-    Route::
-        // middleware('throttle:customer-login-register-limiter')->
-        get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
+    Route::middleware('throttle:customer-login-register-limiter')->post('login-register-confirm/{token}', 'loginRegisterConfirm')->name('auth.login-register-confirm');
+    Route::middleware('throttle:customer-login-register-limiter')->get('login-register-resend-otp/{token}', 'loginRegisterResendOtp')->name('auth.login-register-resend-otp');
     Route::get('logout/', 'logout')->name('auth.logout');
 });
 

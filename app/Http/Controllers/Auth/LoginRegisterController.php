@@ -19,7 +19,11 @@ class LoginRegisterController extends Controller
 {
     public function loginRegisterForm()
     {
-        return view('auth.login-register');
+        if(auth()->check()){
+            return back();
+        }else{
+            return view('auth.login-register');
+        }
     }
 
     public function loginRegister(LoginRegisterRequest $request)
