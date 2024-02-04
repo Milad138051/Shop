@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ADmin\Market\AnswerQuestionController;
+use App\Http\Controllers\Admin\Market\AnswerQuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -81,7 +81,7 @@ Route::controller(FrontProductController::class)->prefix('market')->group(functi
     Route::get('/add-to-compare/{product:slug}', 'addToCompare')->name('front.market.add-to-compare');
     Route::post('/add-question/{product}', 'addQuestion')->name('front.market.add-question');
     Route::post('/add-question-replay/{product}/{answerQuestion}', 'addQuestionReplay')->name('front.market.add-replay-question');
-    // Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
+    Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
 });
 //cart
 Route::controller(CartController::class)->prefix('cart')->group(function () {

@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:users-show');
+
+    }
+
     public function index()
     {
         $users = User::where('user_type', 0)->orderBy('id','DESC')->get();

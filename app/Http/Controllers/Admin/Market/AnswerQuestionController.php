@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ADmin\Market;
+namespace App\Http\Controllers\Admin\Market;
 
 use App\Http\Controllers\Controller;
 use App\Models\Market\AnswerQuestion;

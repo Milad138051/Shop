@@ -23,7 +23,7 @@ class HomeController extends Controller
         $bannerAfterSliderShowImages = Banner::where('position', 2)->where('status', 1)->first();
         $cheapestProducts=Product::orderBy('price','ASC')->get();
         $products=Product::orderBy('id','desc')->get();
-        $popularCategories=Category::orderby('viewed','desc')->get();
+        $popularCategories=Category::orderby('viewed','desc')->take(4)->get();
      
         $amazingSalesId=AmazingSale::where('start_date','<',Carbon::now())->where('end_date','>',Carbon::now())->where('status',1)->pluck('product_id');
         $amazingSaleProducts=Product::whereIn('id',$amazingSalesId)->get();

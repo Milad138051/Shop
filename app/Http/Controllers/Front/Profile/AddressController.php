@@ -17,6 +17,7 @@ class AddressController extends Controller
 
 	public function addAddress(AddressRequest $request)
 	{
+		// dd('ss');
 		$inputs=$request->all();
 		$inputs['user_id']=auth()->user()->id;
 		$inputs['postal_code']=convertArabicToEnglish($request->postal_code);

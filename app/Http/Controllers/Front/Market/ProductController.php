@@ -215,7 +215,7 @@ class ProductController extends Controller
 			}
 
 		auth()->user()->rate($product,$request->rating);
-		return back()->with('success','امتیاز شما با موفقیت ذخیره شد');
+		return back()->with('alert-section-success','امتیاز شما با موفقیت ذخیره شد');
 	}
 	
 	

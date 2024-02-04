@@ -327,11 +327,14 @@
 
 
                     {{-- user section --}}
-                    @if (auth()->user()->hasRole('super-admin'))
+                    @if (auth()->user()->can('acl'))
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
+                        @if((auth()->user()->hasRole('super-admin','acl-admin')) or (auth()->user()->can('permission-show') or auth()->user()->can('role-show') or auth()->user()->can('users-show') or auth()->user()->can('admin-user-show') or auth()->user()->can('acl') ))
                         <li class="nav-header">بخش کاربران</li>
+                        @endif
                         <li class="nav-item has-treeview">
+                            @if (auth()->user()->can('permission-show') or auth()->user()->can('role-show'))
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-edit"></i>
                                 <p>
@@ -339,33 +342,44 @@
                                     <i class="fa fa-angle-left right"></i>
                                 </p>
                             </a>
+                            @endif
                             <ul class="nav nav-treeview">
+                                @if (auth()->user()->can('role-show'))
                                 <li class="nav-item">
                                     <a href="{{route('admin.user.role.index')}}" class="nav-link">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>نقش ها</p>
                                     </a>
                                 </li>
+                                @endif
+                                @if (auth()->user()->can('permission-show'))
                                 <li class="nav-item">
                                     <a href="{{route('admin.user.permission.index')}}" class="nav-link">
                                         <i class="fa fa-circle-o nav-icon"></i>
                                         <p>دسترسی ها</p>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @if (auth()->user()->can('admin-user-show'))
                         <li class="nav-item">
                             <a href="{{route('admin.user.admin-user.index')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>کاربران ادمین</p>
                             </a>
-                        </li>
+                        </li>                            
+                        @endif
+
+                        @if (auth()->user()->can('users-show'))
                         <li class="nav-item">
                             <a href="{{route('admin.user.customer.index')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>مشتریان</p>
                             </a>
-                        </li>
+                        </li>                            
+                        @endif
+
                     </ul>                        
                     @endif
 

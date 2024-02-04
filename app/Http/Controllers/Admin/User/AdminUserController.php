@@ -13,6 +13,13 @@ use App\Http\Requests\Admin\User\AdminUserRequest;
 
 class AdminUserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin-user-show');
+  
+    }
+
     public function index()
     {
 		$admins=User::where('user_type',1)->orderBy('id','DESC')->get();

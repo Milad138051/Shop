@@ -9,6 +9,12 @@ use App\Http\Requests\Admin\User\PermissionRequest;
 
 class PermissionController extends Controller
 {
+
+  public function __construct()
+  {
+      $this->middleware('can:permission-show');
+
+  }
     public function index()
     {
 		$permissions=Permission::all();

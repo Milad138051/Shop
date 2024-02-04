@@ -13,6 +13,44 @@
             cursor: pointer
         }
     </style>
+
+    <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+        /* Styling h1 and links
+    ––––––––––––––––––––––––––––––––– */
+        .starrating>input {
+            display: none;
+        }
+
+        /* Remove radio buttons */
+
+        .starrating>label:before {
+            content: "\f005";
+            /* Star */
+            margin: 2px;
+            font-size: 2em;
+            font-family: FontAwesome;
+            display: inline-block;
+        }
+
+        .starrating>label {
+            color: #222222;
+            /* Start color when not clicked */
+        }
+
+        .starrating>input:checked~label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star checked */
+
+        .starrating>input:hover~label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star hover */
+    </style>
 @endsection
 
 
@@ -32,10 +70,21 @@
         <div class="bg-white shadow-xl my-5 md:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
             <div class="p-3 w-11/12 mx-auto rounded-2xl">
                 <div class="lg:flex">
+
                     <div class="w-full lg:w-1/3">
                         @auth
                             <div>
                                 <span class="flex items-center pr-20 pb-2">
+
+                                    {{-- //rate --}}
+                                    @if (number_format($product->ratingsAvg(), 1, '.') != 0.0)
+                                    <h6>
+                                        میانگین امتیاز :
+                                        {{ number_format($product->ratingsAvg(), 1, '.') .' از 5 ' ??
+                                            'شما اولین
+                                                                            امتیاز را ثبت نمایید!!!' }}
+                                    </h6>
+                                    @endif
 
                                     {{-- addtocompare --}}
                                     @if (
@@ -204,6 +253,9 @@
                                         <div class="flex justify-between px-3 py-5">
                                             <div class="text-right opacity-80 text-sm flex flex-col gap-y-6">
 
+                                                @php
+                                                $commonDiscount = App\Models\Market\CommonDiscount::where([['status', 1], ['end_date', '>', now()], ['start_date', '<', now()]])->first();
+                                                @endphp
                                                 <div>
                                                     موجود در انبار:
                                                 </div>
@@ -214,6 +266,15 @@
                                                 <div>
                                                     قیمت (شامل هزینه گارانتی و رنگ کالا) :
                                                 </div>
+
+
+                                                @if ($commonDiscount->count() > 0)
+                                                <div>
+
+                                                    تخفیف عمومی
+                                                </div>                                                    
+                                                @endif
+
 
                                                 @if (!empty($amazingSale))
                                                     <div>
@@ -257,6 +318,14 @@
                                                         تومان
                                                     </div>
                                                 </div>
+                                                <div class="flex text-red-500">
+                                                    <div id="product_price"
+                                                        data-product-original-price="{{ $product->price }}"
+                                                        data-amazing-sale="{{ $product->activeAmazingSale()->percentage ?? '' }}">
+                                                        {{$commonDiscount->percentage}}%
+                                                    </div>
+                                                </div>
+
 
                                                 @if (!empty($amazingSale))
                                                     <div id="product-discount-price"
@@ -371,16 +440,23 @@
                             </li>
 
                             @php
-                            $questionCount = App\Models\Market\AnswerQuestion::where('status',1)
-                            ->where('approved',1)
-                            ->where('product_id',$product->id)
-                            ->count();
+                                $questionCount = App\Models\Market\AnswerQuestion::where('status', 1)
+                                    ->where('approved', 1)
+                                    ->where('product_id', $product->id)
+                                    ->count();
                             @endphp
                             <li role="presentation">
                                 <button
                                     class="inline-block text-gray-500 hover:text-gray-600 hover:border-gray-300 rounded-t-lg py-4 px-4 text-sm font-medium text-center border-transparent border-b-2"
                                     id="comments-tab" data-tabs-target="#comments" type="button" role="tab"
-                                    aria-controls="comments" aria-selected="false">پرسش ها ({{$questionCount}})</button>
+                                    aria-controls="comments" aria-selected="false">پرسش ها
+                                    ({{ $questionCount }})</button>
+                            </li>
+                            <li role="presentation">
+                                <button
+                                    class="inline-block text-gray-500 hover:text-gray-600 hover:border-gray-300 rounded-t-lg py-4 px-4 text-sm font-medium text-center border-transparent border-b-2"
+                                    id="comments-tab" data-tabs-target="#ratings" type="button" role="tab"
+                                    aria-controls="ratings" aria-selected="false">امتیاز ها</button>
                             </li>
                         </ul>
                     </div>
@@ -527,7 +603,7 @@
                                 <!-- UO COMMENTS -->
                                 <div>
                                     <div>سوالات</div>
-                                    <div class="pr-5 opacity-70 text-xs">{{$questionCount}} پرسش</div>
+                                    <div class="pr-5 opacity-70 text-xs">{{ $questionCount }} پرسش</div>
                                 </div>
                                 <!-- COMMENT -->
                                 @foreach ($product->activeQuestions() as $activeQuestion)
@@ -537,7 +613,8 @@
                                     <div class="bg-gray-50 rounded-xl px-5 py-3 my-2">
                                         <div class="flex items-center">
                                             <div>
-                                                <img class="w-10" src="{{asset(auth()->user()->profile_photo_path)}}" alt="">
+                                                <img class="w-10" src="{{ asset(auth()->user()->profile_photo_path) }}"
+                                                    alt="">
                                             </div>
                                             <div class="text-sm opacity-60 pr-1">
                                                 نوشته شده توسط {{ $author->first_name . ' ' . $author->last_name }}
@@ -615,6 +692,85 @@
                                     class="inline-block px-8 py-2 ml-auto font-semibold text-center text-white bg-red-500 rounded-lg shadow-md text-xs">ارسال
                                     پرسش</button>
                                 </form>
+                            </div>
+                            </p>
+                        </div>
+                        {{-- // ratings --}}
+                        <div class="bg-gray-50 p-4 rounded-xl hidden" id="ratings" role="tabpanel"
+                            aria-labelledby="ratings-tab">
+                            <span class="border-b-red-500 border-b">
+                                امتیاز های محصول
+                            </span>
+                            <p class="text-gray-500 text-sm">
+                            <div class="flex flex-col py-4 px-4 mx-auto my-6 max-w-7xl rounded-2xl bg-white">
+
+                                @auth
+                                    @if (auth()->user()->isUserPurchedProduct($product->id)->count() > 0)
+                                        <!-- start rating -->
+                                        <section id="rating" class="content-header mt-2 mb-4">
+                                            <section class="d-flex justify-content-between align-items-center">
+                                                <h2 class="content-header-title content-header-title-small">
+                                                    امتیازها
+                                                </h2>
+                                                <section class="content-header-link">
+                                                    <!--<a href="#">مشاهده همه</a>-->
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="product-rating mb-4">
+                                            <div class="container">
+                                                <h5 class="text-danger">
+                                                    امتیاز خود را به این محصول انتخاب نمایید
+                                                </h5>
+                                                <form
+                                                    class="starrating risingstar d-flex justify-content-end flex-row-reverse align-items-center"
+                                                    action="{{ route('front.market.add-rate', $product) }}" method="post">
+                                                    @csrf
+                                                    <div class="mx-3">
+                                                        <button class="btn btn-info btn-sm">ثبت امتیاز</button>
+                                                    </div>
+                                                    <input type="radio" id="star5" name="rating" value="5" />
+                                                    <label for="star5" title="5 star"></label>
+                                                    <input type="radio" id="star4" name="rating" value="4" />
+                                                    <label for="star4" title="4 star"></label>
+                                                    <input type="radio" id="star3" name="rating" value="3" />
+                                                    <label for="star3" title="3 star"></label>
+                                                    <input type="radio" id="star2" name="rating" value="2" />
+                                                    <label for="star2" title="2 star"></label>
+                                                    <input type="radio" id="star1" name="rating" value="1" />
+                                                    <label for="star1" title="1 star"></label>
+
+                                                </form>
+                                                <h6>
+                                                    میانگین امتیاز :
+                                                    {{ number_format($product->ratingsAvg(), 1, '.') ??
+                                                        'شما اولین
+                                                                                        امتیاز را ثبت نمایید!!!' }}
+                                                </h6>
+                                                <h6>
+                                                    تعداد افراد شرکت کننده :
+                                                    {{ $product->ratingsCount() ??
+                                                        'شما اولین امتیاز را ثبت
+                                                                                        نمایید!!!' }}
+                                                </h6>
+                                            </div>
+
+                                        </section>
+                                    @else
+                                        <h5 class="text-danger">
+                                            برای امتیاز دادن , ابتدا باید محصول را خریداری کنید
+                                        </h5>
+                                    @endif
+                                @endauth
+                                @guest
+                                    <section class="modal-body">
+                                        <p>کاربر گرامی لطفا برای ثبت نظر ابتدا وارد حساب کاربری خود شوید </p>
+                                        <p>لینک ثبت نام و یا ورود
+                                            <a href="{{ route('auth.login-register-form') }}">کلیک
+                                                کنید</a>
+                                        </p>
+                                    </section>
+                                @endguest
                             </div>
                             </p>
                         </div>

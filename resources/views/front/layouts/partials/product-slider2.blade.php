@@ -18,18 +18,45 @@
             </div>
             <div class="space-y-3 text-center">
               <span class="text-sm opacity-80 mb-2 h-8 md:h-10">
+               
+                @if (number_format($product->ratingsAvg(), 1, '.') != 0.0)
+                <h6>
+                  میانگین امتیاز :
+                  {{ number_format($product->ratingsAvg(), 1, '.') .' از 5 ' ??
+                      'شما اولین
+                      امتیاز را ثبت نمایید!!!' }}
+              </h6>
+              @endif
                 <div>
                   {{$product->name}}
                 </div>
               </span>
-              {{-- <div class="flex justify-center text-xs opacity-75">
-                <div class="line-through">1.350.000</div>
+              @php
+                $amazingSale=$product->activeAmazingSale() ?? collect();
+              @endphp
+              @if($amazingSale->count() > 0)
+              <div class="flex justify-center text-xs opacity-75">
+                <div class="line-through">{{PriceFormat($product->price)}}</div>
                 <div class="line-through">تومان</div>
-              </div> --}}
+              </div>
+              <div class="flex justify-center mt-1 mb-2 text-sm">
+                <div>{{PriceFormat($product->price-($product->price *($product->activeAmazingSale()->percentage/100)))}}</div>
+                <div>تومان</div>
+              </div>
+              @else
               <div class="flex justify-center mt-1 mb-2 text-sm">
                 <div>{{PriceFormat($product->price)}}</div>
                 <div>تومان</div>
               </div>
+              @endif
+              @php
+              $commonDiscount = App\Models\Market\CommonDiscount::where([['status', 1], ['end_date', '>', now()], ['start_date', '<', now()]])->first();
+           @endphp
+           @if($commonDiscount->count() > 0)
+           <div class="flex justify-center mt-1 mb-2 text-sm">
+             <div class="text-danger"> {{$commonDiscount->percentage}}% تخفیف خورده </div>
+           </div>
+           @endif
             </div>
           </a>
           @endforeach

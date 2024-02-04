@@ -10,6 +10,7 @@ use App\Models\Market\Product;
 use App\Models\Market\OrderItem;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\market\ProductReview;
+use Nagy\LaravelRating\Traits\CanRate;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Permissions\HasPermissionTrait;
@@ -23,6 +24,7 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use HasPermissionTrait;
+    use CanRate;
 
 
     protected $fillable = [

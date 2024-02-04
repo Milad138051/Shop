@@ -1,7 +1,6 @@
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-3 bg-white mb-10 lg:rounded-xl border divide-y-2 sm:divide-y-0">
    
       
-  
   @forelse ($popularCategories as $category)
   <div class="bg-white p-3 lg:rounded-r-xl border-l">
       <div class="flex flex-col gap-y-2 mb-5">

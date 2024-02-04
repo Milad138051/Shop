@@ -6,15 +6,17 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Market\CartItem;
 use App\Models\Market\Category;
+use Nagy\LaravelRating\Traits\CanRate;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Cviebrock\EloquentSluggable\Sluggable;
+use Nagy\LaravelRating\Traits\Rateable;
 
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable;
+    use HasFactory, SoftDeletes, Sluggable, Rateable;
 
 	public function sluggable(): array
     {

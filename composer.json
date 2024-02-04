@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "morilog/jalali": "^3.4",
+        "nagy/laravel-rating": "^1.0",
         "shetabit/payment": "^5.5"
     },
     "require-dev": {

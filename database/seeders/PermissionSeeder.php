@@ -21,7 +21,7 @@ class PermissionSeeder extends Seeder
 
 		'create-productCategory','edit-productCategory','delete-productCategory','show-productCategory',
 		'create-brand','edit-brand','delete-brand','show-brand',
-		'create-product','edit-product','delete-product','show-product','gurantee-product','color-product','gallery-product',
+		'create-product','edit-product','delete-product','show-product','guarantee-product','color-product','gallery-product',
         'create-property','edit-property','delete-property','show-property','value-option',
         'show-productComment','answer-productComment','approved-productComment',
         'show-questionAnswer','answer-questionAnswer','approved-questionAnswer',
@@ -34,6 +34,7 @@ class PermissionSeeder extends Seeder
 		'payment-show',
 		'order-show',
 		'show-faq',
+		'permission-show','role-show','users-show','admin-user-show','acl',
 		];
 		foreach($permissions as $permission){
 		     DB::table('permissions')->insert([

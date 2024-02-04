@@ -228,6 +228,18 @@
                     <!-- end add address Modal -->
 
 
+
+
+                @empty
+
+                    <div class="md:w-8/12 lg:w-9/12 flex flex-col gap-y-5">
+                        <div class="border rounded-3xl shadow-lg flex flex-col p-5 gap-y-5">
+                            ایتمی یافت نشد
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+
                     <!-- start add address Modal -->
                     <section class="modal fade" id="add-address" tabindex="-1" aria-labelledby="add-address-label"
                         aria-hidden="true">
@@ -359,18 +371,6 @@
                         </section>
                     </section>
                     <!-- end add address Modal -->
-
-                @empty
-
-                    <div class="md:w-8/12 lg:w-9/12 flex flex-col gap-y-5">
-                        <div class="border rounded-3xl shadow-lg flex flex-col p-5 gap-y-5">
-                            ایتمی یافت نشد
-                        </div>
-                    </div>
-                @endforelse
-            </div>
-
-
 
             </div>
         </div>
