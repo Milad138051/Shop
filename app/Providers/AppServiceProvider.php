@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         // Model::shouldBeStrict();
         // dd(auth()->user());
 
-        Paginator::defaultView('front.layouts.my-paginator');
+        // Paginator::defaultView('front.layouts.my-paginator');
         // Paginator::defaultView('bootstrap-5');
 
 

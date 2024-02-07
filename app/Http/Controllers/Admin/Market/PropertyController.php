@@ -21,13 +21,13 @@ class PropertyController extends Controller
 
     public function index()
     {
-		$category_attributes=CategoryAttribute::all();
+		$category_attributes=CategoryAttribute::orderBy('id','desc')->paginate(10);
         return view('admin.market.property.index',compact('category_attributes'));
     }
 
     public function create()
     {
-		
+
 		$productCategories=Category::all();
         return view('admin.market.property.create',compact('productCategories'));
     }

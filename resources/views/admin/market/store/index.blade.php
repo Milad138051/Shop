@@ -59,6 +59,13 @@
 
                 </div>
                 <!-- /.card-body -->
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $products->links('pagination::bootstrap-5') }}
+                        </nav>
+                    </section>
+                </section>
             </div>
             <!-- /.card -->
         </div>

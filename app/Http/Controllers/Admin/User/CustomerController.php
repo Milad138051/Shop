@@ -20,7 +20,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $users = User::where('user_type', 0)->orderBy('id','DESC')->get();
+        $users = User::where('user_type', 0)->orderBy('id','DESC')->paginate(10);
         return view('admin.user.customer.index', compact('users'));
     }
 
@@ -132,5 +132,20 @@ class CustomerController extends Controller
         } else {
             return response()->json(['status' => false]);
         }
+    }
+
+
+    public function search(Request $request)
+    {
+		if($request->search){
+            $users=User::where('user_type',0)->where(function ($query) use ($request) {
+                $query->where('name','LIKE',"%".$request->search."%")->orWhere('first_name','LIKE',"%".$request->search."%")->orWhere('last_name','LIKE',"%".$request->search."%")->orWhere('mobile','LIKE',"%".$request->search."%")->orWhere('email','LIKE',"%".$request->search."%");
+            })->paginate(10);
+		}else{
+            $users = User::where('user_type', 0)->orderBy('id','DESC')->paginate(10);
+		}    
+        
+        return view('admin.user.customer.index', compact('users'));
+
     }
 }

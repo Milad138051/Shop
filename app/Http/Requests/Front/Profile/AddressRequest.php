@@ -22,7 +22,6 @@ class AddressRequest extends FormRequest
                 'recipient_name' => 'required|string',
                 'city' => 'required',
                 'province' => 'required',
-                // 'postal_code' => ['required'],
                 'postal_code' => ['required', new PostalCode()],
                 'no' => 'required',
                 'unit' => 'required',
@@ -30,7 +29,6 @@ class AddressRequest extends FormRequest
           }else{
             return [
                 'address' => 'required|min:1|max:300',
-                // 'postal_code' => ['required'],
                 'postal_code' => ['required', new PostalCode()],
                 'no' => 'required',
                 'unit' => 'required',

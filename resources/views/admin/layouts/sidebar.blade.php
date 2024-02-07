@@ -77,7 +77,6 @@
 
 
                 {{-- market section --}}
-                {{-- @if(auth()->user()->hasRole('super-admin','market-admin')) --}}
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
 
@@ -233,9 +232,8 @@
                             </ul>
                     </ul>
 
-
                     {{-- //payments --}}
-                    @if (auth()->user()->can('show-payment'))
+                    @if (auth()->user()->can('payment-show'))
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item has-treeview">
@@ -323,8 +321,60 @@
                             </ul>
                     </ul>
                     @endif
-                    {{-- @endif --}}
 
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item has-treeview">
+                      
+                        @if ((auth()->user()->hasRole('super-admin','market-admin')) or auth()->user()->can('ticket-show') or auth()->user()->can('ticket-answer') or auth()->user()->can('ticket-change') or auth()->user()->can('ticket-admin-show') or auth()->user()->can('ticket-admin-set'))
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-circle-o text-black"></i>
+                            <p>
+                            تیکت ها
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        @endif
+
+                        <ul class="nav nav-treeview">
+                            @if (auth()->user()->can('ticket-admin-show'))
+                            <li class="nav-item">
+                                <a href="{{route('admin.ticket.admin.index')}}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>ادمین تیکت ها</p>
+                                </a>
+                            </li>
+                            @endif
+                            @if (auth()->user()->can('ticket-show') or auth()->user()->can('ticket-answer') or auth()->user()->can('ticket-change'))
+                            <li class="nav-item">
+                                <a href="{{route('admin.ticket.index')}}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>همه تیکت ها</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.ticket.newTickets')}}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>تیکت های جدید</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.ticket.openTickets')}}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>تیکت های باز</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.ticket.closeTickets')}}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>تیکت های بسته</p>
+                                </a>
+                            </li>
+                            @endif
+
+
+                        </ul>
+                </ul>
 
                     {{-- user section --}}
                     @if (auth()->user()->can('acl'))

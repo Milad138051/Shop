@@ -17,12 +17,11 @@ class AdminUserController extends Controller
     public function __construct()
     {
         $this->middleware('can:admin-user-show');
-  
     }
 
     public function index()
     {
-		$admins=User::where('user_type',1)->orderBy('id','DESC')->get();
+		$admins=User::where('user_type',1)->orderBy('id','DESC')->paginate(10);
         return view('admin.user.admin-user.index',compact('admins'));
     }
 
@@ -198,5 +197,20 @@ class AdminUserController extends Controller
 		$admin->permissions()->sync($request->permissions);
 		return redirect()->route('admin.user.admin-user.index')->with('swal-success', 'دسترسی ها با موفقیت ثبت شدند');
 	}
+
+
+    public function search(Request $request)
+    {
+		if($request->search){
+            $admins=User::where('user_type',1)->where(function ($query) use ($request) {
+                $query->where('name','LIKE',"%".$request->search."%")->orWhere('first_name','LIKE',"%".$request->search."%")->orWhere('last_name','LIKE',"%".$request->search."%")->orWhere('mobile','LIKE',"%".$request->search."%")->orWhere('email','LIKE',"%".$request->search."%");
+            })->paginate(10);
+		}else{
+            $admins=User::where('user_type',1)->orderBy('id','DESC')->paginate(10);
+		}    
+        
+        return view('admin.user.admin-user.index', compact('admins'));
+
+    }
 	
 }

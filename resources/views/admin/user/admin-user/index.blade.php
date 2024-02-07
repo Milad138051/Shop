@@ -16,14 +16,18 @@
 
 
                     <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                            </div>
+                        <form action="{{route('admin.user.admin-user.search')}}" method="POST">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                    @csrf
+                                    <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{request()->search}}">
+                            
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                    
+                             </div>
+                            </form>
                         </div>
-                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -125,6 +129,13 @@
 
                 </div>
                 <!-- /.card-body -->
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $admins->links('pagination::bootstrap-5') }}
+                        </nav>
+                    </section>
+                </section>
             </div>
             <!-- /.card -->
         </div>

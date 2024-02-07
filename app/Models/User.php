@@ -4,11 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Market\Order;
+use App\Models\Ticket\Ticket;
 use App\Models\Market\Compare;
 use App\Models\Market\Payment;
 use App\Models\Market\Product;
 use App\Models\Market\OrderItem;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Ticket\TicketAdmin;
 use App\Models\market\ProductReview;
 use Nagy\LaravelRating\Traits\CanRate;
 use Illuminate\Notifications\Notifiable;
@@ -78,15 +80,15 @@ class User extends Authenticatable
 		return $this->first_name.' '.$this->last_name;
 	}
 	
-	// public function ticketAdmin()
-	// // {
-	// // 	return $this->hasOne(TicketAdmin::class);
-	// // }
+	public function ticketAdmin()
+	{
+		return $this->hasOne(TicketAdmin::class);
+	}
 
-	// // public function tickets()
-	// // {
-	// // 	return $this->hasMany(Ticket::class);
-	// // }
+	public function tickets()
+	{
+		return $this->hasMany(Ticket::class);
+	}
 
 	public function payments()
     {

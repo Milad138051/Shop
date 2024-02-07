@@ -10,13 +10,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">مقدار فرم کالا ({{$categoryAttribute->name}})</h3>
+                    <h3 class="card-title"> مقدار فرم کالا ({{$categoryAttribute->name}}) برای {{ $categoryAttribute->category->name }}</h3>
                     <a href="{{ route('admin.market.property.value.create', $categoryAttribute->id) }}" class="btn btn-success
                         text-white">ایجاد</a>
                         <a href="{{ route('admin.market.property.index') }}" class="btn btn-info">بازگشت</a>
 
 
-                    <div class="card-tools">
+                    {{-- <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
 
@@ -24,7 +24,7 @@
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">

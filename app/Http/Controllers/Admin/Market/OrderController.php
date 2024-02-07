@@ -21,36 +21,37 @@ class OrderController extends Controller
 			$order->order_status=1;
 			$order->save();
 		}
+        $orders->paginate(10);
         return view('admin.market.order.index',compact('orders'));
     }
 	
     public function sending()
     {
-		$orders=Order::where('delivery_status',1)->get();
+		$orders=Order::where('delivery_status',1)->paginate(10);
         return view('admin.market.order.index',compact('orders'));
     }
 	
     public function unpaid()
     {
-		$orders=Order::where('payment_status',0)->get();
+		$orders=Order::where('payment_status',0)->paginate();
         return view('admin.market.order.index',compact('orders'));
     }
 	
     public function canceled()
     {
-		$orders=Order::where('order_status',3)->get();
+		$orders=Order::where('order_status',3)->paginate(10);
         return view('admin.market.order.index',compact('orders'));
     }
 	
     public function returned()
     {
-		$orders=Order::where('order_status',4)->get();
+		$orders=Order::where('order_status',4)->paginate(10);
         return view('admin.market.order.index',compact('orders'));
     }
 	
     public function all()
     {
-		$orders=Order::orderBy('created_at','desc')->get();
+		$orders=Order::orderBy('created_at','desc')->paginate(10);
         return view('admin.market.order.index',compact('orders'));
     }
 	

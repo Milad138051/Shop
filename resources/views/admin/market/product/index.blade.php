@@ -13,15 +13,18 @@
                     <h3 class="card-title">محصولات</h3>
                     <a href="{{ route('admin.market.product.create') }}" class="btn btn-success text-white">ایجاد</a>
 
-
                     <div class="card-tools">
+                        <form action="{{route('admin.market.product.search')}}" method="POST">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
+                                @csrf
+                                <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{request()->search}}">
+                        
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                                
+                         </div>
+                        </form>
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -87,6 +90,13 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $products->links('pagination::bootstrap-5') }}
+                        </nav>
+                    </section>
+                </section>
             </div>
             <!-- /.card -->
         </div>

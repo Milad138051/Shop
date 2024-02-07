@@ -12,7 +12,7 @@ class GuaranteeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:gurantee-product');
+        $this->middleware('can:guarantee-product');
     }
 
     public function index(Product $product)

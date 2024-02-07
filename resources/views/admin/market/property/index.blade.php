@@ -14,7 +14,7 @@
                     <a href="{{ route('admin.market.property.create') }}" class="btn btn-success text-white">ایجاد</a>
 
 
-                    <div class="card-tools">
+                    {{-- <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
 
@@ -22,7 +22,7 @@
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -64,6 +64,13 @@
                     </table>
                 </div>
                 <!-- /.card-body -->
+                <section class="col-12">
+                    <section class="my-4 d-flex justify-content-center">
+                        <nav>
+                            {{ $category_attributes->links('pagination::bootstrap-5') }}
+                        </nav>
+                    </section>
+                </section>
             </div>
             <!-- /.card -->
         </div>

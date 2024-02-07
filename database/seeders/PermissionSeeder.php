@@ -35,6 +35,8 @@ class PermissionSeeder extends Seeder
 		'order-show',
 		'show-faq',
 		'permission-show','role-show','users-show','admin-user-show','acl',
+		'ticket-show','ticket-answer','ticket-change',
+		'ticket-admin-show','ticket-admin-set',
 		];
 		foreach($permissions as $permission){
 		     DB::table('permissions')->insert([

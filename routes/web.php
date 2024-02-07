@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\Market\AnswerQuestionController;
+use App\Http\Controllers\Admin\Ticket\TicketAdminController;
+use App\Http\Controllers\Admin\Ticket\TicketController;
+use App\Http\Controllers\Front\Profile\TicketController as FrontTicketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -118,6 +121,22 @@ Route::prefix('profile')->group(function () {
         Route::put('/update-address/{address}', 'updateAdresses')->name('front.profile.addresses.update');
         Route::get('/addresses/delete/{address}', 'deleteAddress')->name('front.profile.addresses.delete');
     });
+    Route::controller(AddressController::class)->group(function () {
+        Route::get('/addresses', 'index')->name('front.profile.addresses');
+        Route::post('/add-address', 'addAddress')->name('front.profile.add-address');
+        Route::put('/update-address/{address}', 'updateAdresses')->name('front.profile.addresses.update');
+        Route::get('/addresses/delete/{address}', 'deleteAddress')->name('front.profile.addresses.delete');
+    });
+    Route::controller(FrontTicketController::class)->group(function () {
+        Route::get('/my-tickets','index')->name('front.profile.my-tickets');
+        Route::get('my-tickets/show/{ticket}','show')->name('front.profile.my-tickets.show');
+        Route::post('my-tickets/answer/{ticket}', 'answer')->name('front.profile.my-tickets.answer');
+        // Route::get('my-tickets/change/{ticket}','change')->name('front.profile.my-tickets.change');
+        Route::get('my-tickets/create','create')->name('front.profile.my-tickets.create');
+        Route::post('my-tickets/store','store')->name('front.profile.my-tickets.store');
+    });
+
+
     Route::controller(FrontCommentController::class)->group(function () {
         Route::get('/comments', 'index')->name('front.profile.comments');
         Route::delete('/comments/{comment}', 'delete')->name('front.profile.comments.delete');
@@ -219,6 +238,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
+            Route::post('/search', [ProductController::class, 'search'])->name('admin.market.product.search');
+
             //gallery
             Route::get('{product}/gallery', [GalleryController::class, 'index'])->name('admin.market.product.gallery.index');
             Route::get('/{product}/gallery/create', [GalleryController::class, 'create'])->name('admin.market.product.gallery.create');
@@ -234,6 +255,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::get('/guarantee/create/{product}', [GuaranteeController::class, 'create'])->name('admin.market.guarantee.create');
             Route::post('/guarantee/store/{product}', [GuaranteeController::class, 'store'])->name('admin.market.guarantee.store');
             Route::delete('/guarantee/destroy/{product}/{guarantee}', [GuaranteeController::class, 'destroy'])->name('admin.market.guarantee.destroy');
+
         });
         //store
         Route::controller(StoreController::class)->prefix('store')->group(function () {
@@ -353,6 +375,26 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         });
     });
 
+    Route::prefix('ticket')->group(function () {
+        //tickets
+        Route::controller(TicketController::class)->group(function () {
+            Route::get('/all','index')->name('admin.ticket.index');
+            Route::get('/new-tickets', 'newTickets')->name('admin.ticket.newTickets');
+            Route::get('/open-tickets','openTickets')->name('admin.ticket.openTickets');
+            Route::get('/close-tickets', 'closeTickets')->name('admin.ticket.closeTickets');
+            Route::get('/show/{ticket}', 'show')->name('admin.ticket.show');
+            Route::post('/answer/{ticket}',  'answer')->name('admin.ticket.answer');
+            Route::get('/change/{ticket}', 'change')->name('admin.ticket.change');
+        });
+        //admin-ticket
+        Route::controller(TicketAdminController::class)->prefix('ticket-admin')->group(function () {
+            Route::get('/', 'index')->name('admin.ticket.admin.index');
+            Route::get('/set/{admin}','set')->name('admin.ticket.admin.set');
+            Route::post('/search', 'search')->name('admin.ticket.admin.search');
+
+        });
+    });
+
     Route::prefix('user')->namespace('User')->group(function () {
         //admin-user
         Route::prefix('admin-user')->group(function () {
@@ -370,6 +412,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::post('/roles/{admin}/store', [AdminUserController::class, 'rolesStore'])->name('admin.user.admin-user.roles.store');
             Route::get('/permissions/{admin}', [AdminUserController::class, 'permissions'])->name('admin.user.admin-user.permissions');
             Route::post('/permissions/{admin}/store', [AdminUserController::class, 'permissionsStore'])->name('admin.user.admin-user.permissions.store');
+            Route::post('/search', [AdminUserController::class, 'search'])->name('admin.user.admin-user.search');
+
         });
         //customer
         Route::prefix('customer')->group(function () {
@@ -381,6 +425,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::delete('/destroy/{user}', [CustomerController::class, 'destroy'])->name('admin.user.customer.destroy');
             Route::get('/status/{user}', [CustomerController::class, 'status'])->name('admin.user.customer.status');
             Route::get('/activation/{user}', [CustomerController::class, 'activation'])->name('admin.user.customer.activation');
+            Route::post('/search', [CustomerController::class, 'search'])->name('admin.user.customer.search');
+
         });
         //role
         Route::prefix('role')->group(function () {
@@ -404,6 +450,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         });
 
     });
+
+
 
 
 

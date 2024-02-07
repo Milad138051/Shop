@@ -17,7 +17,7 @@ class StoreController extends Controller
     
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->simplePaginate(15);
+        $products = Product::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.market.store.index', compact('products'));
     }
 
@@ -37,10 +37,11 @@ class StoreController extends Controller
     public function search(Request $request)
     {
 		if($request->search){
-			$products=Product::where('name','LIKE',"%".$request->search."%")->orderBy('id','DESC')->get();
+			$products=Product::where('name','LIKE',"%".$request->search."%")->orderBy('id','DESC')->paginate(10);
 		}else{
             $products=Product::all();
-		}    
+            $products=$products->paginate(10); 
+		}   
         return view('admin.market.store.index', compact('products'));
 
     }

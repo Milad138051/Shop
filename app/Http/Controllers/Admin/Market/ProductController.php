@@ -23,7 +23,7 @@ class ProductController extends Controller
     }
     public function index()
     {
-		$products=Product::orderBy('created_at','desc')->get();
+		$products=Product::orderBy('created_at','desc')->paginate(10);
         return view('admin.market.product.index',compact('products'));
     }
 
@@ -134,6 +134,19 @@ class ProductController extends Controller
     {
         $result = $product->delete();
         return redirect()->route('admin.market.product.index')->with('swal-success', 'محصول  شما با موفقیت حذف شد');
+    }
+
+
+    public function search(Request $request)
+    {
+		if($request->search){
+			$products=Product::where('name','LIKE',"%".$request->search."%")->orderBy('id','DESC')->paginate(10);
+		}else{
+            $products=Product::paginate(10);
+		}    
+        
+        return view('admin.market.product.index', compact('products'));
+
     }
 
 }

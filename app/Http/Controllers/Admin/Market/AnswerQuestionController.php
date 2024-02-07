@@ -17,7 +17,7 @@ class AnswerQuestionController extends Controller
 
     public function index()
     {
-	    $items=AnswerQuestion::orderBy('id','DESC')->simplePaginate(15);		
+	    $items=AnswerQuestion::orderBy('id','DESC')->paginate(10);		
         return view('admin.market.answer-question.index',compact('items'));
     }
 

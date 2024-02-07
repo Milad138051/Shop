@@ -16,17 +16,19 @@ class PaymentController extends Controller
     }
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::orderBy('id','desc')->paginate(10);
         return view('admin.market.payment.index', compact('payments'));
     }
     public function online()
     {
         $payments = Payment::where('paymentable_type', 'App\Models\Market\OnlinePayment')->get();
+        $payments->paginate(10);
         return view('admin.market.payment.index', compact('payments'));
     }
     public function cash()
     {
         $payments = Payment::where('paymentable_type', 'App\Models\Market\CashPayment')->get();
+        $payments->paginate(10);
         return view('admin.market.payment.index', compact('payments'));
     }
     // public function confirm()

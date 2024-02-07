@@ -106,7 +106,7 @@
                                         <section class="col-12 mb-2">
                                             <label for="address" class="form-label mb-1">نشانی</label>
                                             <textarea name="address" class="form-control form-control-sm" id="address" placeholder="نشانی">
-                                                {{ old('address',$address->address)}}
+                                                {{$address->address}}
                                             </textarea>
                                             @error('address')
                                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -119,7 +119,7 @@
                                         <section class="col-12 mb-2">
                                             <label for="mobile" class="form-label mb-1">شماره
                                                 موبایل</label>
-                                            <input value="{{ old('mobile',$address->mobile)}}" type="text"
+                                            <input value="{{$address->mobile}}" type="text"
                                                 name="mobile" class="form-control form-control-sm" id="mobile"
                                                 placeholder="شماره موبایل">
                                                 @error('mobile')
@@ -133,7 +133,7 @@
                                         <section class="col-12 mb-2">
                                             <label for="recipient_name" class="form-label mb-1">
                                                 نام تحویل گیرنده</label>
-                                            <input value="{{ old('recipient_name',$address->recipient_name)}}" type="text"
+                                            <input value="{{$address->recipient_name}}" type="text"
                                                 name="recipient_name" class="form-control form-control-sm" id="recipient_name"
                                                 placeholder="نام تحویل گیرنده">
                                                 @error('recipient_name')
@@ -147,7 +147,7 @@
                                         <section class="col-12 mb-2">
                                             <label for="city" class="form-label mb-1">
                                                 شهر</label>
-                                            <input value="{{ old('city',$address->city)}}" type="text"
+                                            <input value="{{ $address->city}}" type="text"
                                                 name="city" class="form-control form-control-sm" id="city"
                                                 placeholder="شهر">
                                                 @error('city')
@@ -161,7 +161,7 @@
                                         <section class="col-12 mb-2">
                                             <label for="province" class="form-label mb-1">
                                                 استان</label>
-                                            <input value="{{ old('province',$address->province)}}" type="text"
+                                            <input value="{{$address->province}}" type="text"
                                                 name="province" class="form-control form-control-sm" id="province"
                                                 placeholder="استان">
                                                 @error('province')
@@ -176,7 +176,7 @@
                                         <section class="col-6 mb-2">
                                             <label for="postal_code" class="form-label mb-1">کد
                                                 پستی</label>
-                                            <input value="{{ old('postal_code',$address->postal_code)}}" type="text" name="postal_code"
+                                            <input value="{{ $address->postal_code}}" type="text" name="postal_code"
                                                 class="form-control form-control-sm" id="postal_code" placeholder="کد پستی">
                                                 @error('postal_code')
                                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -189,7 +189,7 @@
 
                                         <section class="col-3 mb-2">
                                             <label for="no" class="form-label mb-1">پلاک</label>
-                                            <input type="text" value="{{ old('no',$address->no)}}" name="no"
+                                            <input type="text" value="{{$address->no}}" name="no"
                                                 class="form-control form-control-sm" id="no" placeholder="پلاک">
                                                 @error('no')
                                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -202,7 +202,7 @@
 
                                         <section class="col-3 mb-2">
                                             <label for="unit" class="form-label mb-1">واحد</label>
-                                            <input type="text" value="{{ old('unit',$address->unit)}}" name="unit"
+                                            <input type="text" value="{{ $address->unit}}" name="unit"
                                                 class="form-control form-control-sm" id="unit" placeholder="واحد">
                                                 @error('unit')
                                                 <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
@@ -298,7 +298,7 @@
                                         <section class="col-12 mb-2">
                                             <label for="city" class="form-label mb-1">
                                                 شهر</label>
-                                            <input value="{{ old('recipient_name') }}" type="text"
+                                            <input value="{{ old('city') }}" type="text"
                                                 name="city" class="form-control form-control-sm" id="city"
                                                 placeholder="شهر">
                                                 @error('city')
@@ -343,6 +343,13 @@
                                             <label for="no" class="form-label mb-1">پلاک</label>
                                             <input type="text" value="{{ old('no') }}" name="no"
                                                 class="form-control form-control-sm" id="no" placeholder="پلاک">
+                                                @error('no')
+                                                <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                                    <strong>
+                                                        {{ $message }}
+                                                    </strong>
+                                                </span>
+                                            @enderror
                                         </section>
 
                                         <section class="col-3 mb-2">

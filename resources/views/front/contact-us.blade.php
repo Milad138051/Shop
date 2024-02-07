@@ -27,18 +27,14 @@
               <input type="text" name="name" class="text-sm block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-700 outline-none transition-all focus:border-red-300" />
             </div>
           </div>
-          <div class="w-full max-w-full shrink-0 md:w-8/12 md:flex-0">
-            <div class="mb-4">
-              <label for="title" class="inline-block mb-2 ml-1 opacity-80 text-xs">موضوع:</label>
-              <input type="text" name="title" class="text-sm block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-700 outline-none transition-all focus:border-red-300" />
-            </div>
-          </div>
+
           <div class="w-full max-w-full shrink-0 md:w-8/12 md:flex-0">
             <div class="mb-4">
               <label for="mobile" class="inline-block mb-2 ml-1 text-xs opacity-80">شماره تماس:</label>
               <input type="text" name="mobile" class="text-sm block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-700 outline-none transition-all focus:border-red-300" />
             </div>
           </div>
+          
           <div class="w-full max-w-full shrink-0 md:w-10/12 md:flex-0">
             <div class="mb-4">
               <label for="description" class="inline-block mb-2 ml-1 text-xs opacity-80">توضیحات:</label>
