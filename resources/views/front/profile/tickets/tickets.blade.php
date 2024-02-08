@@ -8,6 +8,7 @@
 @section('content')
     <div class="max-w-[1440px] mx-auto px-3">
         <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+            <a href="{{route('front.profile.my-tickets.create')}}" class="d-flex justify-content-end btn btn-link btn-sm text-info text-decoration-none mx-1"><i class="fa fa-edit px-1"></i>تیکت جدید</a>
             <div class="flex flex-col md:flex-row gap-5">
 
                 @include('front.layouts.partials.profile-sidebar')

@@ -56,7 +56,7 @@ class TicketController extends Controller
 	{
 		$ticket->status = $ticket->status == 0 ? 1 : 0;
 		$ticket->save();
-		return redirect()->back()->with('swal-success', 'تغییر شما با موفقیت انجام شد');
+		return redirect()->back()->with('alert-section-success', 'تغییر شما با موفقیت انجام شد');
 	}
 
 
@@ -80,7 +80,7 @@ class TicketController extends Controller
 
 		} else {
 
-			return redirect()->back()->with('swal-error', 'خطایی رخ داد');
+			return redirect()->back()->with('alert-section-error', 'خطایی رخ داد');
 		}
 	}
 

@@ -81,6 +81,7 @@
 
 
 
+                        @if (!$ticket->status==1)
                         <section>
                             <form action="{{ route('front.profile.my-tickets.answer', $ticket->id) }}" method="post"
                                 enctype="multipart/form-data">
@@ -124,6 +125,8 @@
                                 </section>
                             </form>
                         </section>
+                        @endif
+
 
                     </div>
                 </div>

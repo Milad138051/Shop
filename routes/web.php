@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Market\AnswerQuestionController;
 use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Ticket\TicketController;
+use App\Http\Controllers\Front\ContactUsController as FrontContactUsController;
 use App\Http\Controllers\Front\Profile\TicketController as FrontTicketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
@@ -43,6 +44,8 @@ use App\Http\Controllers\Front\Market\ProductController as FrontProductControlle
 use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
 use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
 use App\Http\Controllers\Front\SalesProcess\PaymentController as FrontPaymentController;
+use App\Http\Controllers\Admin\Content\ContactUsController;
+
 
 
 /*
@@ -71,6 +74,7 @@ Route::get('/', [HomeController::class, 'index'])->name('front.home');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('front.about-us');
 Route::get('/welcome', [HomeController::class, 'welcome'])->name('front.welcome');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('front.contact-us');
+Route::post('/contact-us/store', [FrontContactUsController::class, 'store'])->name('front.contact-us.store');
 Route::get('/faqs', [FrontFAQController::class, 'index'])->name('front.faqs');
 //product
 Route::controller(FrontProductController::class)->prefix('market')->group(function () {
@@ -84,7 +88,7 @@ Route::controller(FrontProductController::class)->prefix('market')->group(functi
     Route::get('/add-to-compare/{product:slug}', 'addToCompare')->name('front.market.add-to-compare');
     Route::post('/add-question/{product}', 'addQuestion')->name('front.market.add-question');
     Route::post('/add-question-replay/{product}/{answerQuestion}', 'addQuestionReplay')->name('front.market.add-replay-question');
-    Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate'); 
+    Route::post('/add-rate/{product}', 'addRate')->name('front.market.add-rate');
 });
 //cart
 Route::controller(CartController::class)->prefix('cart')->group(function () {
@@ -128,12 +132,12 @@ Route::prefix('profile')->group(function () {
         Route::get('/addresses/delete/{address}', 'deleteAddress')->name('front.profile.addresses.delete');
     });
     Route::controller(FrontTicketController::class)->group(function () {
-        Route::get('/my-tickets','index')->name('front.profile.my-tickets');
-        Route::get('my-tickets/show/{ticket}','show')->name('front.profile.my-tickets.show');
+        Route::get('/my-tickets', 'index')->name('front.profile.my-tickets');
+        Route::get('my-tickets/show/{ticket}', 'show')->name('front.profile.my-tickets.show');
         Route::post('my-tickets/answer/{ticket}', 'answer')->name('front.profile.my-tickets.answer');
         // Route::get('my-tickets/change/{ticket}','change')->name('front.profile.my-tickets.change');
-        Route::get('my-tickets/create','create')->name('front.profile.my-tickets.create');
-        Route::post('my-tickets/store','store')->name('front.profile.my-tickets.store');
+        Route::get('my-tickets/create', 'create')->name('front.profile.my-tickets.create');
+        Route::post('my-tickets/store', 'store')->name('front.profile.my-tickets.store');
     });
 
 
@@ -171,9 +175,9 @@ Route::controller(BlogController::class)->prefix('blogs')->group(function () {
 
 
 //admin-panel
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function () {
     Route::get('', [AdminDashboardController::class, 'index'])->name('admin.home');
-   
+
     Route::prefix('content')->group(function () {
         //post category
         Route::controller(PostCategoryController::class)->prefix('postCategory')->group(function () {
@@ -208,6 +212,12 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::get('/create', 'create')->name('admin.content.faq.create');
             Route::post('/store', 'store')->name('admin.content.faq.store');
             Route::delete('/destroy/{comment}', 'delete')->name('admin.content.faq.delete');
+        });
+        //contact-us
+        Route::controller(ContactUsController::class)->prefix('contact-us')->group(function () {
+            Route::get('/', 'index')->name('admin.content.contact-us.index');
+            Route::get('/unseen', 'unseen')->name('admin.content.contact-us.unseen');
+            Route::get('/show/{contactUs}', 'show')->name('admin.content.contact-us.show');
         });
     });
 
@@ -378,18 +388,18 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('ticket')->group(function () {
         //tickets
         Route::controller(TicketController::class)->group(function () {
-            Route::get('/all','index')->name('admin.ticket.index');
+            Route::get('/all', 'index')->name('admin.ticket.index');
             Route::get('/new-tickets', 'newTickets')->name('admin.ticket.newTickets');
-            Route::get('/open-tickets','openTickets')->name('admin.ticket.openTickets');
+            Route::get('/open-tickets', 'openTickets')->name('admin.ticket.openTickets');
             Route::get('/close-tickets', 'closeTickets')->name('admin.ticket.closeTickets');
             Route::get('/show/{ticket}', 'show')->name('admin.ticket.show');
-            Route::post('/answer/{ticket}',  'answer')->name('admin.ticket.answer');
+            Route::post('/answer/{ticket}', 'answer')->name('admin.ticket.answer');
             Route::get('/change/{ticket}', 'change')->name('admin.ticket.change');
         });
         //admin-ticket
         Route::controller(TicketAdminController::class)->prefix('ticket-admin')->group(function () {
             Route::get('/', 'index')->name('admin.ticket.admin.index');
-            Route::get('/set/{admin}','set')->name('admin.ticket.admin.set');
+            Route::get('/set/{admin}', 'set')->name('admin.ticket.admin.set');
             Route::post('/search', 'search')->name('admin.ticket.admin.search');
 
         });

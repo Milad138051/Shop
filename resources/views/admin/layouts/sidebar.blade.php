@@ -28,6 +28,38 @@
                     </li>                        
                     @endif
 
+
+                    <li class="nav-item has-treeview">
+
+                        @if (auth()->user()->can('show-contact-us'))
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-envelope-o"></i>
+                            <p>
+                                ارتباط با ما
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        @endif
+
+                        <ul class="nav nav-treeview">
+
+                            @if (auth()->user()->can('show-contact-us'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.content.contact-us.index') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>همه  پیام ها</p>
+                                </a>
+                            </li>                                
+                            <li class="nav-item">
+                                <a href="{{ route('admin.content.contact-us.unseen') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>پیام های دیده نشده</p>
+                                </a>
+                            </li>                                
+                            @endif
+                        </ul>
+                    </li>
+
             
                     <li class="nav-item has-treeview">
 

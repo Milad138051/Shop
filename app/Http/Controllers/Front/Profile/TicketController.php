@@ -104,7 +104,7 @@ class TicketController extends Controller
             $inputs['file_size'] = $fileSize;
             $inputs['file_type'] = $fileFormat;
             $inputs['user_id'] = $user->id;
-            $file = TicketFile::creaxste($inputs);
+            $file = TicketFile::create($inputs);
 		 }
 		
 		});
