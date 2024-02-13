@@ -1,5 +1,5 @@
 <div class="md:w-4/12 lg:w-3/12">
-    <form action="{{ route('front.products', request()->category ? request()->category->id : null) }}" method="get">
+    <form action="{{ route('front.products', ['category'=>request()->category ? request()->category->id : null,'search' => request()->search, 'sort' => '3', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands ]) }}" method="get">
         @csrf
         <input type="hidden" name="sort" value="{{ request()->sort }}">
 

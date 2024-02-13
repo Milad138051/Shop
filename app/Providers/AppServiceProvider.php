@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        Auth::loginUsingId(1);
+        // Auth::loginUsingId(1);
         // Auth::loginUsingId(10);
         //  Auth::logout();
         // session()->flush();

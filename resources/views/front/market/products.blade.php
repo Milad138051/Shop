@@ -228,27 +228,27 @@
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer text-red-600">
                                         محبوب ترین
                                 </a> --}}
-                                    <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '5', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
+                                    {{-- <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '5', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
                                         class="btn btn {{ request()->sort == 5 ? 'btn-info' : '' }}  btn-sm px-1 py-0"
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
                                         پرفروش ترین
-                                    </a>
-                                    <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '3', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
+                                    </a> --}}
+                                    <a href="{{ route('front.products', ['search' => request()->search, 'sort' => '3', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
                                         class="btn btn {{ request()->sort == 3 ? 'btn-info' : '' }}  btn-sm px-1 py-0"
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
                                         ارزان ترین
                                     </a>
-                                    <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '2', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
+                                    <a href="{{ route('front.products', ['search' => request()->search, 'sort' => '2', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
                                         class="btn btn {{ request()->sort == 2 ? 'btn-info' : '' }}  btn-sm px-1 py-0"
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
                                         گران ترین
                                     </a>
-                                    <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '1', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
+                                    <a href="{{ route('front.products', ['search' => request()->search, 'sort' => '1', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
                                         class="btn btn {{ request()->sort == 1 ? 'btn-info' : '' }} btn-sm px-1 py-0"
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
                                         جدیدترین
                                     </a>
-                                    <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '4', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
+                                    <a href="{{ route('front.products', ['search' => request()->search, 'sort' => '4', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
                                         class="btn btn {{ request()->sort == 4 ? 'btn-info' : '' }}  btn-sm px-1 py-0"
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
                                         پربازدیدترین

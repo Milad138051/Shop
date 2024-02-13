@@ -14,7 +14,7 @@
             <h3 class="text-lg font-medium text-gray-800">سوالات پرتکرار</h3>
             <p class="text-sm font-light text-gray-600 my-3">
               اگه سوال مورد نظرتون رو پیدا نکردید به 
-              <a class="hover:text-red-600 text-red-500 transition" href="">پشتیبانی</a>
+              <a class="hover:text-red-600 text-red-500 transition" href="{{route('front.contact-us')}}">پشتیبانی</a>
               پیام بدید
             </p>
             @foreach ($faqs as $faq)

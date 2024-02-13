@@ -26,6 +26,7 @@ class ProductReview extends Model
        return $this->belongsTo(User::class);
    }
 
+
    public function categoryAttribute()
    {
        return $this->belongsTo(CategoryAttribute::class);

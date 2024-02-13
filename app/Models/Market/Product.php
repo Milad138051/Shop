@@ -103,6 +103,7 @@ class Product extends Model
 		return $this->hasMany(ProductReview::class);
 	}
 
+
 	public function questions()
 	{
 		return $this->hasMany(AnswerQuestion::class);

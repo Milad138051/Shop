@@ -31,6 +31,7 @@
                                     {{ $product->name }}
                                 </div>
                                 @if($product->CategoryValues()->count() >0 )
+
                                 <form action="{{ route('front.market.add-review', $product) }}" method="post">
                                 <div class="lg:flex flex-wrap gap-y-5 justify-center">
                                             @csrf
@@ -56,10 +57,41 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                            <button class="inline-block px-8 py-2 my-1 font-semibold leading-normal text-center text-white bg-red-500 align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer text-xs active:opacity-85" type="submit">ثبت</button>
-                                        </form>
-                                        @endif
+                                            <div>
+                                                <button class="inline-block px-8 py-2 my-1 font-semibold leading-normal text-center text-white bg-red-500 align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer text-xs active:opacity-85" type="submit">ثبت</button>
+                                            </div>
+                                            </form>
+                                    </div>
+                                    
+                                    
+                                    @if ($averageScore->count() > 0)
+                                        
+                                    <div style="width: 100%;height:1px;background:dodgerblue"></div>
+                                    <div class="md:px-10 mb-3 mt-5">
+                                        <div class="opacity-80 mb-2">
+                                       میانگین نمرات
+                                    </div>
+                                    @foreach ($averageScore as $i)
+                                    @php
+                                        $category_attribute=App\Models\Market\CategoryAttribute::where('id',$i->category_attribute_id)->first('name');
+                                        $countsOfReviews=App\Models\Market\ProductReview::where('product_id',$product->id)->where('category_attribute_id',$i->category_attribute_id)->count();
+
+                                    @endphp
+                                    <div class="opacity-75 text-sm mt-4" style="width:145px;float:right">
+                                        <p>
+                                            {{$category_attribute->name}} : 
+                                        </p>
+                                        <p>
+                                            {{number_format($i->average_score, 1 , '.', '،')}} از {{$countsOfReviews}} بررسی
+                                        </p>
+                                        </div>
+  
+                                    @endforeach
                                 </div>
+                                  @endif
+                                
+                                @endif
+
                             </div>
                         </div>
 

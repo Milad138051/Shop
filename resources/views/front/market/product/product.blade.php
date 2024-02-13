@@ -134,7 +134,6 @@
                                 }
                             @endphp
                             <div class="max-w-[300px] mx-auto">
-                                {{-- <img class="mySlides rounded-xl md:rounded-3xl" src="{{ asset($images->first()['indexArray']['medium']) }}" style="width:100%"> --}}
                                 @foreach ($images as $key => $image)
                                     <img class="mySlides rounded-xl md:rounded-3xl"
                                         src="{{ asset($image['indexArray']['medium']) }}"
@@ -209,9 +208,9 @@
 
                                             @foreach ($product->metas()->get() as $meta)
                                                 <div class=" flex items-center">
-                                                    <h3 class="opacity-60 ml-1">
+                                                    <h6 class="opacity-60 ml-1">
                                                         {{ $meta->meta_key }} :
-                                                    </h3>
+                                                    </h6>
                                                     <div class="opacity-80">
                                                         <div class="text-right">
                                                             {{ $meta->meta_value }}
@@ -268,7 +267,7 @@
                                                 </div>
 
 
-                                                @if ($commonDiscount->count() > 0)
+                                                @if(!$commonDiscount==null)
                                                 <div>
 
                                                     تخفیف عمومی
@@ -318,6 +317,8 @@
                                                         تومان
                                                     </div>
                                                 </div>
+
+                                                @if(!$commonDiscount==null)
                                                 <div class="flex text-red-500">
                                                     <div id="product_price"
                                                         data-product-original-price="{{ $product->price }}"
@@ -325,6 +326,7 @@
                                                         {{$commonDiscount->percentage}}%
                                                     </div>
                                                 </div>
+                                                @endif
 
 
                                                 @if (!empty($amazingSale))

@@ -52,7 +52,7 @@
               @php
               $commonDiscount = App\Models\Market\CommonDiscount::where([['status', 1], ['end_date', '>', now()], ['start_date', '<', now()]])->first();
            @endphp
-           @if($commonDiscount->count() > 0)
+            @if(!$commonDiscount==null)
            <div class="flex justify-center mt-1 mb-2 text-sm">
              <div class="text-danger"> {{$commonDiscount->percentage}}% تخفیف خورده </div>
            </div>
