@@ -117,12 +117,12 @@ class ProductController extends Controller
 
 	public function addCommentView(Product $product)
 	{
+
 		$averageScore = ProductReview::where('product_id', $product->id)
 			->groupBy('category_attribute_id')
 			->selectRaw('category_attribute_id')
 			->selectRaw('AVG(category_attribute_score) as average_score')
-			->get();
-
+			->get();		
 		return view('front.market.product.add-comment', compact('product', 'averageScore'));
 	}
 
