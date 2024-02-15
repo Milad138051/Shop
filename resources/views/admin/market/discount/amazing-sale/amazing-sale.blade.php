@@ -12,17 +12,19 @@
                 <div class="card-header">
                     <h3 class="card-title">فروش شگفت انگیز</h3>
                     <a href="{{ route('admin.market.discount.amazingSale.create') }}" class="btn btn-info btn-sm">افزودن کالا به لیست فروش شگفت انگیز  </a>
-
-
-                    {{-- <div class="card-tools">
+                    <div class="card-tools">
+                        <form action="{{route('admin.market.discount.amazingSale.search')}}" method="POST">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </div> --}}
+                                @csrf
+                                <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{request()->search}}">
+                        
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                                
+                         </div>
+                        </form>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">

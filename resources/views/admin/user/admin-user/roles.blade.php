@@ -14,7 +14,7 @@
                 <div class="card-header">
                     <h3 class="card-title">نقش های کاربر ادمین ({{$admin->name}})</h3>
 
-                    <div class="card-tools">
+                    {{-- <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
 
@@ -22,7 +22,7 @@
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="card-body">

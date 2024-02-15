@@ -16,7 +16,7 @@
                     <a href="{{ route('admin.market.product.index') }}" class="btn btn-info">بازگشت</a>
 
 
-                    <div class="card-tools">
+                    {{-- <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
 
@@ -24,7 +24,7 @@
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">

@@ -144,13 +144,25 @@ class DiscountController extends Controller
     public function amazingSaleStore(AmazingSaleRequest $request)
     {
         $inputs = $request->all();
+        // dd($inputs);
+
         //date fixed
         $realTimestampStart = substr($request->start_date, 0, 10);
-        $inputs['start_date'] = date("Y-m-d H:i:s", (int) $realTimestampStart);
+        $start_date = date("Y-m-d H:i:s", (int) $realTimestampStart);
         $realTimestampEnd = substr($request->end_date, 0, 10);
-        $inputs['end_date'] = date("Y-m-d H:i:s", (int) $realTimestampEnd);
+        $end_date = date("Y-m-d H:i:s", (int) $realTimestampEnd);
+        //
 
-        $amazingSale = AmazingSale::create($inputs);
+        foreach($request->product_id as $id)
+        {
+            $amazingSale = AmazingSale::create([
+                'percentage'=>$request->percentage,
+                'start_date'=>$start_date,
+                'end_date'=>$end_date,
+                'status'=>$request->status,
+                'product_id'=>$id,
+            ]);
+        }
         return redirect()->route('admin.market.discount.amazingSale')->with('swal-success', 'ایتم جدید شما با موفقیت ثبت شد');
     }
     public function amazingSaleEdit(AmazingSale $amazingSale)
@@ -174,6 +186,18 @@ class DiscountController extends Controller
     {
         $result = $amazingSale->delete();
         return redirect()->route('admin.market.discount.amazingSale')->with('swal-success', 'ایتم با موفقیت حذف شد');
+    }
+
+    public function search(Request $request)
+    {
+		if($request->search){
+			$resultIds=Product::where('name','LIKE',"%".$request->search."%")->pluck('id')->toArray();
+            $amazingSales=AmazingSale::whereIn('product_id',$resultIds)->orderBy('id','DESC')->paginate(10);
+		}else{
+            $amazingSales = AmazingSale::orderBy('created_at', 'desc')->paginate(10);
+		}   
+        return view('admin.market.discount.amazing-sale.amazing-sale', compact('amazingSales'));
+
     }
 
 

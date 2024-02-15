@@ -352,7 +352,7 @@
                 x-data="{showChildren:false}"
                 >
                 <a
-                  href="{{route('front.products',$category)}}"
+                  href="#"
                   class="flex items-center h-10 leading-10 px-3 text-sm mx-1 transition text-gray-700 hover:text-red-500"
                   @click.prevent="showChildren=!showChildren"
                   @mouseenter="showChildren=true"

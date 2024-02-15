@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h3 class="card-title">ویرایش فروش شگفت انگیز</h3>
 
-                        <div class="card-tools">
+                        {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right"
                                     placeholder="جستجو">
@@ -24,7 +24,7 @@
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                 </div>
 
                 <div class="card-body">
@@ -39,10 +39,11 @@
 
                         <div class="form-group">
                             <label for="">انتخاب کالا</label>
-                            <select name="product_id" id="" class="form-control form-control-sm">
-                                <option value="">کالا را انتخاب کنید</option>
+                            <select id="selected_product" name="product_id" class="form-control form-control-sm">
                                 @foreach ($products as $product)
-                                <option value="{{ $product->id }}" @if(old('product_id',$amazingSale->product_id) == $product->id) selected @endif>{{ $product->name }}</option>
+                                <option value="{{ $product->id }}" @if(old('product_id',$amazingSale->product_id) == $product->id) selected @endif>
+                                    {{ $product->name }}
+                                </option>
                                 @endforeach
 
                             </select>
@@ -143,5 +144,13 @@
                 })
             });
     </script>
+
+    
+<script>
+    var selected_product = $('#selected_product');
+    selected_product.select2({
+    })
+</script>
+
 @endsection
 
