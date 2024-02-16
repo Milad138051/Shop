@@ -67,9 +67,9 @@ class TicketController extends Controller
 			$inputs = $request->all();
 			$inputs['subject'] = $ticket->subject;
 			$inputs['seen'] = 1;
-			$inputs['reference_id'] = $user->ticketAdmin->id;
+			$inputs['reference_id'] = $user->id;
 			// $inputs['category_id']=$ticket->category_id;
-			$inputs['user_id'] = $ticket->user_id;
+			// $inputs['user_id'] = $ticket->user_id;
 			// $inputs['priority_id']=$ticket->priority_id;
 			$inputs['ticket_id'] = $ticket->id;
 			$inputs['description'] = $request->description;

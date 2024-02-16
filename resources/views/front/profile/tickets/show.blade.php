@@ -22,7 +22,7 @@
 
                         <section class="card mb-3">
                             <section class="card-header text-white bg-danger">
-                                {{ $ticket->user->fullname }}
+                                {{ $ticket->user->fullname ?? $child->user->name}}
                             </section>
                             <section class="card-body">
                                 <h5 class="card-title">
@@ -50,13 +50,14 @@
                             @foreach ($ticket->children->sortBy('id') as $child)
                                 <section class="card m-4">
                                     <section
-                                        class="card-header bg-{{ $child->reference_id == null ? 'danger ' : 'light ' }}d-flex justify-content-between">
+                                        class="card-header bg-{{ $child->reference_id == null ? 'danger ' : 'light ' }}d-flex justify-content-between {{ $child->reference_id == null ? 'text-white ' : ' ' }}">
 
                                         <div>
                                             @if ($child->reference_id == null)
-                                                {{ $child->user->fullName }}
+                                                {{ $child->user->fullName ?? $child->user->name}}
                                             @else
-                                                {{ $child->ticketAdmin->user->fullName }}
+                                                {{-- {{ $child->ticketAdmin->first_name.' '.$child->ticketAdmin->last_name }} --}}
+                                                ادمین
                                             @endif
                                         </div>
 

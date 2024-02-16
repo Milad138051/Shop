@@ -17,9 +17,9 @@
 
             <section class="card mb-3">
                 <section class="card-header text-white bg-danger">
-                      اسم نویسنده :{{$ticket->user->fullname}} 
+                      اسم کاربر :{{$ticket->user->fullname ?? $ticket->user->name}} 
 					  <br>
-					  کد نویسنده  :{{$ticket->user->id}} 
+					  کد کاربر  :{{$ticket->user->id}} 
                 </section>
                 <section class="card-body">
                     <h5 class="card-title">
@@ -33,13 +33,13 @@
 
 
                      <div class="border my-2">
-                            @foreach ($ticket->children->sortBy('id') as $child)
+                            @forelse ($ticket->children->sortBy('id') as $child)
 
                             <section class="card m-4">
                                 <section class="card-header bg-{{ $child->reference_id==null ? 'info ' : 'light ' }}d-flex justify-content-between">
 								
                                    <div> 
-								   @if($child->reference_id == null) {{$child->user->fullName}} @else {{$child->ticketAdmin->user->fullName}} @endif
+								   @if($child->reference_id == null) {{$child->user->fullName ?? child->user->name }} @else {{$child->ticketAdmin->fullName ?? $child->ticketAdmin->name}} @endif
 								   </div>
 								   
                                     <small>{{ jdate($child->created_at) }}</small>
@@ -56,8 +56,12 @@
                                     ضمیمه</a>
                             </section>
                                  @endif
+
                             </section>
-                            @endforeach
+
+                            @empty
+
+                            @endforelse
                         </div>
 
             

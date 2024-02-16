@@ -401,7 +401,7 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
         //admin-ticket
         Route::controller(TicketAdminController::class)->prefix('ticket-admin')->group(function () {
             Route::get('/', 'index')->name('admin.ticket.admin.index');
-            Route::get('/set/{admin}', 'set')->name('admin.ticket.admin.set');
+            // Route::get('/set/{admin}', 'set')->name('admin.ticket.admin.set');
             Route::post('/search', 'search')->name('admin.ticket.admin.search');
 
         });

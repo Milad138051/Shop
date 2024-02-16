@@ -358,7 +358,7 @@
                     data-accordion="false">
                     <li class="nav-item has-treeview">
                       
-                        @if ((auth()->user()->hasRole('super-admin','market-admin')) or auth()->user()->can('ticket-show') or auth()->user()->can('ticket-answer') or auth()->user()->can('ticket-change') or auth()->user()->can('ticket-admin-show') or auth()->user()->can('ticket-admin-set'))
+                        @if ((auth()->user()->hasRole('super-admin','market-admin','ticket-admin')) or auth()->user()->can('ticket-show') or auth()->user()->can('ticket-answer') or auth()->user()->can('ticket-change'))
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-circle-o text-black"></i>
                             <p>
@@ -369,14 +369,14 @@
                         @endif
 
                         <ul class="nav nav-treeview">
-                            @if (auth()->user()->can('ticket-admin-show'))
+                            {{-- @if (auth()->user()->can('ticket-admin-show'))
                             <li class="nav-item">
                                 <a href="{{route('admin.ticket.admin.index')}}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>ادمین تیکت ها</p>
                                 </a>
                             </li>
-                            @endif
+                            @endif --}}
                             @if (auth()->user()->can('ticket-show') or auth()->user()->can('ticket-answer') or auth()->user()->can('ticket-change'))
                             <li class="nav-item">
                                 <a href="{{route('admin.ticket.index')}}" class="nav-link">
@@ -403,8 +403,6 @@
                                 </a>
                             </li>
                             @endif
-
-
                         </ul>
                 </ul>
 

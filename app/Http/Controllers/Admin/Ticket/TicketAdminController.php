@@ -17,33 +17,37 @@ class TicketAdminController extends Controller
 	}
 
 
-    public function index()
-    {
-        $admins = User::where('user_type', 1)->paginate(10);
-        return view('admin.ticket.admin.index', compact('admins'));
-    }
+    // public function index()
+    // {
+    //     $admins = User::where('user_type', 1)->paginate(10);
+    //     return view('admin.ticket.admin.index', compact('admins'));
+    // }
 
 
-    public function set(User $admin)
-    {
-        TicketAdmin::where('user_id', $admin->id)->first() ? TicketAdmin::where(['user_id' => $admin->id])->forceDelete() : TicketAdmin::create(['user_id' => $admin->id]);
-        return redirect()->route('admin.ticket.admin.index')->with('swal-success', 'تغییر شما با موفقیت انجام شد');
-    }
+    // public function set(User $admin)
+    // {
+    //     TicketAdmin::where('user_id', $admin->id)->first() ? TicketAdmin::where(['user_id' => $admin->id])->forceDelete() : TicketAdmin::create(['user_id' => $admin->id]);
+
+    //     $admin->roles()->sync($request->roles);
 
 
-    public function search(Request $request)
-    {
-		if($request->search){
-            $admins=User::where('user_type',1)->where(function ($query) use ($request) {
-                $query->where('name','LIKE',"%".$request->search."%")->orWhere('first_name','LIKE',"%".$request->search."%")->orWhere('last_name','LIKE',"%".$request->search."%")->orWhere('mobile','LIKE',"%".$request->search."%")->orWhere('email','LIKE',"%".$request->search."%");
-            })->paginate(10);
-		}else{
-            $admins=User::where('user_type',1)->orderBy('id','DESC')->paginate(10);
-		}    
+    //     return redirect()->route('admin.ticket.admin.index')->with('swal-success', 'تغییر شما با موفقیت انجام شد');
+    // }
+
+
+    // public function search(Request $request)
+    // {
+	// 	if($request->search){
+    //         $admins=User::where('user_type',1)->where(function ($query) use ($request) {
+    //             $query->where('name','LIKE',"%".$request->search."%")->orWhere('first_name','LIKE',"%".$request->search."%")->orWhere('last_name','LIKE',"%".$request->search."%")->orWhere('mobile','LIKE',"%".$request->search."%")->orWhere('email','LIKE',"%".$request->search."%");
+    //         })->paginate(10);
+	// 	}else{
+    //         $admins=User::where('user_type',1)->orderBy('id','DESC')->paginate(10);
+	// 	}    
         
-        return view('admin.ticket.admin.index', compact('admins'));
+    //     return view('admin.ticket.admin.index', compact('admins'));
 
-    }
+    // }
 
 
 }

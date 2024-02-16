@@ -18,7 +18,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('seen')->default(0)->comment('0 => unseen, 1 => seen');
             $table->foreignId('reference_id')->nullable()->constrained('ticket_admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('ticket_id')->nullable()->constrained('tickets')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

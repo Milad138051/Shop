@@ -14,7 +14,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         DB::statement('truncate roles');
-		$roles=['content-admin','market-admin','super-admin','acl-admin'];
+		$roles=['content-admin','market-admin','super-admin','acl-admin','ticket-admin'];
 		foreach($roles as $role){
 		     DB::table('roles')->insert([
             'name' =>$role,
