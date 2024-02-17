@@ -36,6 +36,16 @@
       <a href="{{route('front.profile.my-tickets')}}" class="text-sm opacity-80 w-full flex justify-end pr-5 flex-row-reverse items-center hover:text-red-600 transition hover:bg-gray-100 py-3 rounded-2xl @if ((request()->route()->getName()=='front.profile..my-tickets') or (request()->route()->getName()=='front.profile.my-tickets.show') or (request()->route()->getName()=='front.profile.my-tickets.create'))
         bg-gray-200 text-red-600
         @endif">
+        @php
+		         $user=auth()->user();
+		         $userTicketIds=$user->tickets->pluck('id');
+		         $unseenTicketsCount=App\Models\Ticket\Ticket::whereIn('ticket_id',$userTicketIds)->where('seen',0)->count();
+        @endphp
+        @if ($unseenTicketsCount > 0)
+        <span style="top: 80%;" class="badge rounded-pill bg-danger mr-4">
+          {{$unseenTicketsCount}}
+        </span>           
+        @endif
         تیکت ها
         {{-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#474747" viewBox="0 0 256 256"><path d="M134,120v56a6,6,0,0,1-12,0V120a6,6,0,0,1,12,0ZM237.88,97.85,224,201.85A14,14,0,0,1,210.13,214H45.87A14,14,0,0,1,32,201.85l-13.87-104A14,14,0,0,1,32,82H69.28l54.2-61.95a6,6,0,0,1,9,0l54.2,62H224a14,14,0,0,1,13.87,15.85ZM85.22,82h85.56L128,33.11ZM225.5,94.68A2,2,0,0,0,224,94H32a2,2,0,0,0-1.51.68A2,2,0,0,0,30,96.26l13.86,104a2,2,0,0,0,2,1.73H210.13a2,2,0,0,0,2-1.73L226,96.26A1.93,1.93,0,0,0,225.5,94.68ZM181.4,114a6,6,0,0,0-6.57,5.37l-5.6,56A6,6,0,0,0,174.6,182l.61,0a6,6,0,0,0,6-5.4l5.6-56A6,6,0,0,0,181.4,114ZM81.17,119.4a6,6,0,0,0-11.94,1.2l5.6,56a6,6,0,0,0,6,5.4l.61,0a6,6,0,0,0,5.37-6.57Z"></path></svg>             --}}
       </a>

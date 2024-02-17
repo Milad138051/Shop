@@ -34,8 +34,11 @@
                                             وضعیت 
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            تیکت مرجع
+                                            پیام جدید 
                                         </th>
+                                        {{-- <th scope="col" class="px-6 py-3">
+                                            تیکت مرجع
+                                        </th> --}}
                                         <th scope="col" class="px-6 py-3">
                                             تنظیمات
                                         </th>
@@ -59,8 +62,24 @@
                                                 {{$ticket->status==0 ?'باز' :'بسته'}}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{$ticket->parent ? $ticket->parent->subject : 'ندارد'}}
+
+                                                @php
+                                                $user=auth()->user();
+                                                $userTicketIds=$user->tickets->pluck('id');
+                                                $unseenTicketsCount=App\Models\Ticket\Ticket::whereIn('ticket_id',$userTicketIds)->where('seen',0)->count();
+                                                @endphp
+
+                                                @if ($unseenTicketsCount > 0)
+                                                <span style="top: 80%;" class="badge rounded-pill bg-danger mr-4">
+                                                {{$unseenTicketsCount}} پیام جدید
+                                                </span>
+                                                @else
+                                                پیام جدید وجود ندارد
+                                                @endif
                                             </td>
+                                            {{-- <td class="px-6 py-4">
+                                                {{$ticket->parent ? $ticket->parent->subject : 'ندارد'}}
+                                            </td> --}}
                                             <td class="px-6 py-4">
                                                 <a href="{{ route('front.profile.my-tickets.show',$ticket->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
 

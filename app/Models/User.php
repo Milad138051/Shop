@@ -80,10 +80,10 @@ class User extends Authenticatable
 		return $this->first_name.' '.$this->last_name;
 	}
 	
-	public function ticketAdmin()
-	{
-		return $this->hasOne(TicketAdmin::class);
-	}
+	// public function ticketAdmin()
+	// {
+	// 	return $this->hasOne(TicketAdmin::class);
+	// }
 
 	public function tickets()
 	{

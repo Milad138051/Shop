@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Ticket;
 
+use App\Models\Ticket\TicketAdmin;
 use Illuminate\Http\Request;
 use App\Models\Ticket\Ticket;
 use App\Http\Controllers\Controller;
@@ -48,7 +49,8 @@ class TicketController extends Controller
 
 	public function show(Ticket $ticket)
 	{
-		//dd(auth()->user()->ticketAdmin);
+		$childrenIds=$ticket->children->pluck('id');
+		Ticket::whereIn('id',$childrenIds)->whereNull('reference_id')->update(['seen'=>1]);
 		return view('admin.ticket.show', compact('ticket'));
 	}
 
@@ -66,7 +68,7 @@ class TicketController extends Controller
 			$user = auth()->user();
 			$inputs = $request->all();
 			$inputs['subject'] = $ticket->subject;
-			$inputs['seen'] = 1;
+			// $inputs['seen'] = 1;
 			$inputs['reference_id'] = $user->id;
 			// $inputs['category_id']=$ticket->category_id;
 			// $inputs['user_id'] = $ticket->user_id;

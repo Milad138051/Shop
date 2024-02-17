@@ -22,6 +22,8 @@ class TicketController extends Controller
 	
     public function show(Ticket $ticket)
     {
+		$childrenIds=$ticket->children->pluck('id');
+		Ticket::whereIn('id',$childrenIds)->whereNull('user_id')->update(['seen'=>1]);
         return view('front.profile.tickets.show',compact('ticket'));
     }
 	
@@ -34,22 +36,24 @@ class TicketController extends Controller
 	
 	public function answer(StoreTicketAnswerRequest $request, Ticket  $ticket,FileService $fileService)
 	{
-	  DB::transaction(function () use ($request, $fileService,$ticket) {
 
-         // ticketAnswer body
-		if($ticket->parent == null){
-		$user=auth()->user();
-		$inputs=$request->all();
-		$inputs['subject']=$ticket->subject;
-		$inputs['seen']=1;
-		//$inputs['reference_id']=$user->ticketAdmin->id;
-		// $inputs['category_id']=$ticket->category_id;
-		$inputs['user_id']=$ticket->user_id;
-		// $inputs['priority_id']=$ticket->priority_id;
-		$inputs['ticket_id']=$ticket->id;
-		$inputs['description']=$request->description;
-
-		$ticket=Ticket::create($inputs);
+		DB::transaction(function () use ($request, $fileService,$ticket) {
+			
+			// ticketAnswer body
+			if($ticket->parent == null){
+				$user=auth()->user();
+				$inputs=$request->all();
+				$inputs['subject']=$ticket->subject;
+				// $inputs['seen']=1;
+				//$inputs['reference_id']=$user->ticketAdmin->id;
+				// $inputs['category_id']=$ticket->category_id;
+				$inputs['user_id']=$ticket->user_id;
+				// $inputs['priority_id']=$ticket->priority_id;
+				$inputs['ticket_id']=$ticket->id;
+				$inputs['description']=$request->description;
+				
+				// dd($inputs);
+		        $ticket=Ticket::create($inputs);
 		}
 		
 		 // ticket file
