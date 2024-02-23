@@ -19,7 +19,7 @@ class TicketController extends Controller
 
 	public function newTickets()
 	{
-		$tickets = Ticket::where('seen', 0)->paginate(10);
+		$tickets = Ticket::where('seen', 0)->paginate(10)->withQueryString();
 
 		foreach ($tickets as $ticket) {
 			$ticket->seen = 1;
@@ -30,19 +30,19 @@ class TicketController extends Controller
 
 	public function openTickets()
 	{
-		$tickets = Ticket::where('status', 0)->paginate(10);
+		$tickets = Ticket::where('status', 0)->paginate(10)->withQueryString();
 		return view('admin.ticket.index', compact('tickets'));
 	}
 
 	public function closeTickets()
 	{
-		$tickets = Ticket::where('status', 1)->paginate(10);
+		$tickets = Ticket::where('status', 1)->paginate(10)->withQueryString();
 		return view('admin.ticket.index', compact('tickets'));
 	}
 
 	public function index()
 	{
-		$tickets = Ticket::whereNull('ticket_id')->paginate(10);
+		$tickets = Ticket::whereNull('ticket_id')->paginate(10)->withQueryString();
 		return view('admin.ticket.index', compact('tickets'));
 	}
 

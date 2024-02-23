@@ -13,7 +13,7 @@
                     <h3 class="card-title">فروش شگفت انگیز</h3>
                     <a href="{{ route('admin.market.discount.amazingSale.create') }}" class="btn btn-info btn-sm">افزودن کالا به لیست فروش شگفت انگیز  </a>
                     <div class="card-tools">
-                        <form action="{{route('admin.market.discount.amazingSale.search')}}" method="POST">
+                        <form action="{{route('admin.market.discount.amazingSale')}}" method="get">
                         <div class="input-group input-group-sm" style="width: 150px;">
                                 @csrf
                                 <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{request()->search}}">

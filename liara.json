@@ -1,0 +1,7 @@
+{
+  "platform": "laravel",
+  "app": "shop",
+  "laravel": {
+    "phpVersion": "8.2"
+  }
+}

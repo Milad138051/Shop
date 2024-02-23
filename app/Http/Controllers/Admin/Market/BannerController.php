@@ -29,7 +29,7 @@ class BannerController extends Controller
 
     public function index()
     {
-		$banners=Banner::orderby('created_at','desc')->paginate(10);
+		$banners=Banner::orderby('created_at','desc')->paginate(10)->withQueryString();
 		$positions=Banner::$positions;
         return view('admin.market.banner.index',compact('banners','positions'));
     }

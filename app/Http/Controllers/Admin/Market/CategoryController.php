@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $productCategories =Category::orderBy('created_at', 'desc')->paginate(10);
+        $productCategories =Category::orderBy('created_at', 'desc')->paginate(10)->withQueryString();
         return view('admin.market.category.index', compact('productCategories'));
     }
 

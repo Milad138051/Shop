@@ -34,7 +34,7 @@ class DiscountController extends Controller
     }
     public function copan()
     {
-        $copans = Copan::orderBy('id', 'desc')->paginate(10);
+        $copans = Copan::orderBy('id', 'desc')->paginate(10)->withQueryString();
         return view('admin.market.discount.copan.copan', compact('copans'));
     }
     public function copanCreate()
@@ -89,7 +89,7 @@ class DiscountController extends Controller
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function commonDiscount()
     {
-        $commonDiscounts = CommonDiscount::orderBy('created_at', 'desc')->paginate(10);
+        $commonDiscounts = CommonDiscount::orderBy('created_at', 'desc')->paginate(10)->withQueryString();
         return view('admin.market.discount.common.common-discount', compact('commonDiscounts'));
     }
     public function commonDiscountCreate()
@@ -131,9 +131,15 @@ class DiscountController extends Controller
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function amazingSale()
+    public function amazingSale(Request $request)
     {
-        $amazingSales = AmazingSale::orderBy('created_at', 'desc')->paginate(10);
+        if($request->search){
+			$resultIds=Product::where('name','LIKE',"%".$request->search."%")->pluck('id')->toArray();
+            $amazingSales=AmazingSale::whereIn('product_id',$resultIds)->orderBy('id','DESC')->paginate(10)->withQueryString();
+		}else{
+            $amazingSales = AmazingSale::orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+		}  
+
         return view('admin.market.discount.amazing-sale.amazing-sale', compact('amazingSales'));
     }
     public function amazingSaleCreate()
@@ -187,19 +193,4 @@ class DiscountController extends Controller
         $result = $amazingSale->delete();
         return redirect()->route('admin.market.discount.amazingSale')->with('swal-success', 'ایتم با موفقیت حذف شد');
     }
-
-    public function search(Request $request)
-    {
-		if($request->search){
-			$resultIds=Product::where('name','LIKE',"%".$request->search."%")->pluck('id')->toArray();
-            $amazingSales=AmazingSale::whereIn('product_id',$resultIds)->orderBy('id','DESC')->paginate(10);
-		}else{
-            $amazingSales = AmazingSale::orderBy('created_at', 'desc')->paginate(10);
-		}   
-        return view('admin.market.discount.amazing-sale.amazing-sale', compact('amazingSales'));
-
-    }
-
-
-
 }

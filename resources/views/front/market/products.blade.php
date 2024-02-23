@@ -162,11 +162,6 @@
 @section('content')
     <div class="max-w-[1440px] mx-auto px-3">
         <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
-            {{-- <div class="bg-white mx-5 rounded-2xl mb-4">
-                <div class="py-3">
-                    <h3 class="text-xl font-semibold text-gray-800">لپ تاپ و کامپیوتر</h3>
-                </div>
-            </div> --}}
             <div class="md:flex">
 
                 @include('front.layouts.partials.products-sidebar')
@@ -224,15 +219,6 @@
                                     مرتب سازی:
                                 </div>
                                 <div class="flex flex-wrap gap-5 justify-start items-center">
-                                    {{-- <a
-                                        class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer text-red-600">
-                                        محبوب ترین
-                                </a> --}}
-                                    {{-- <a href="{{ route('front.products', ['search' => request()->serach, 'sort' => '5', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
-                                        class="btn btn {{ request()->sort == 5 ? 'btn-info' : '' }}  btn-sm px-1 py-0"
-                                        class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
-                                        پرفروش ترین
-                                    </a> --}}
                                     <a href="{{ route('front.products', ['search' => request()->search, 'sort' => '3', 'min_price' => request()->min_price, 'max_price' => request()->max_price, 'brands' => request()->brands, 'category' => request()->category]) }}"
                                         class="btn btn {{ request()->sort == 3 ? 'btn-info' : '' }}  btn-sm px-1 py-0"
                                         class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">

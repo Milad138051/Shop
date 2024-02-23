@@ -110,7 +110,7 @@ class ProductController extends Controller
 		//
 
 		// dd($products->get());
-		$products = $products->paginate(4);
+		$products = $products->paginate(4)->withQueryString();
 
 		return view('front.market.products', compact('products', 'brands', 'selectedBrandsArray', 'categories'));
 	}

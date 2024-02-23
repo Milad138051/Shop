@@ -14,7 +14,7 @@
                     <a href="{{ route('admin.market.product.create') }}" class="btn btn-success text-white">ایجاد</a>
 
                     <div class="card-tools">
-                        <form action="{{route('admin.market.product.search')}}" method="POST">
+                        <form action="{{route('admin.market.product.index')}}" method="get">
                         <div class="input-group input-group-sm" style="width: 150px;">
                                 @csrf
                                 <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{request()->search}}">

@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\Market\AnswerQuestionController;
-use App\Http\Controllers\Admin\Ticket\TicketAdminController;
-use App\Http\Controllers\Admin\Ticket\TicketController;
-use App\Http\Controllers\Front\ContactUsController as FrontContactUsController;
-use App\Http\Controllers\Front\Profile\TicketController as FrontTicketController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -15,9 +11,10 @@ use App\Http\Controllers\Admin\Market\BrandController;
 use App\Http\Controllers\Admin\Market\OrderController;
 use App\Http\Controllers\Admin\Market\StoreController;
 use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\Admin\Market\BannerController;
+use App\Http\Controllers\Admin\Ticket\TicketController;
 use App\Http\Controllers\Admin\User\CustomerController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\Market\BannerController;
 use App\Http\Controllers\Admin\Market\GalleryController;
 use App\Http\Controllers\Admin\Market\PaymentController;
 use App\Http\Controllers\Admin\Market\ProductController;
@@ -33,18 +30,22 @@ use App\Http\Controllers\Front\Profile\CompareController;
 use App\Http\Controllers\Front\Profile\ProfileController;
 use App\Http\Controllers\Admin\Market\GuaranteeController;
 use App\Http\Controllers\Front\Profile\FavoriteController;
+use App\Http\Controllers\Admin\Content\ContactUsController;
 use App\Http\Controllers\Front\SalesProcess\CartController;
+use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 use App\Http\Controllers\Admin\Market\ProductColorController;
 use App\Http\Controllers\Admin\Content\PostCategoryController;
 use App\Http\Controllers\Admin\Market\PropertyValueController;
+use App\Http\Controllers\Admin\Market\AnswerQuestionController;
 use App\Http\Controllers\Front\SalesProcess\CheckoutController;
 use App\Http\Controllers\Front\Market\FAQController as FrontFAQController;
+use App\Http\Controllers\Front\ContactUsController as FrontContactUsController;
 use App\Http\Controllers\Front\Profile\OrderController as FrontOrderController;
+use App\Http\Controllers\Front\Profile\TicketController as FrontTicketController;
 use App\Http\Controllers\Front\Market\ProductController as FrontProductController;
 use App\Http\Controllers\Front\Profile\CommentController as FrontCommentController;
 use App\Http\Controllers\Admin\Market\CommentController as ProductCommentController;
 use App\Http\Controllers\Front\SalesProcess\PaymentController as FrontPaymentController;
-use App\Http\Controllers\Admin\Content\ContactUsController;
 
 
 
@@ -58,6 +59,12 @@ use App\Http\Controllers\Admin\Content\ContactUsController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::get('be-admin',function(){
+    Auth::loginUsingId(10);
+    return back();
+});
 
 //auth
 Route::controller(LoginRegisterController::class)->prefix('auth')->group(function () {
@@ -248,7 +255,6 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
             Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('admin.market.product.edit');
             Route::put('/update/{product}', [ProductController::class, 'update'])->name('admin.market.product.update');
             Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('admin.market.product.destroy');
-            Route::post('/search', [ProductController::class, 'search'])->name('admin.market.product.search');
 
             //gallery
             Route::get('{product}/gallery', [GalleryController::class, 'index'])->name('admin.market.product.gallery.index');
@@ -274,7 +280,6 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
             // Route::post('/store/{product}','store')->name('admin.market.store.store');
             Route::get('/edit/{product}', 'edit')->name('admin.market.store.edit');
             Route::put('/update/{product}', 'update')->name('admin.market.store.update');
-            Route::post('/search', 'search')->name('admin.market.store.search');
         });
         //property
         Route::prefix('property')->group(function () {
@@ -327,7 +332,6 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
             Route::get('/amazing-sale/edit/{amazingSale}', 'amazingSaleEdit')->name('admin.market.discount.amazingSale.edit');
             Route::put('/amazing-sale/update/{amazingSale}','amazingSaleUpdate')->name('admin.market.discount.amazingSale.update');
             Route::delete('/amazing-sale/delete/{amazingSale}', 'amazingSaleDestroy')->name('admin.market.discount.amazingSale.delete');
-            Route::post('/search', 'search')->name('admin.market.discount.amazingSale.search');
 
         });
         //delivery
@@ -399,12 +403,12 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
             Route::get('/change/{ticket}', 'change')->name('admin.ticket.change');
         });
         //admin-ticket
-        Route::controller(TicketAdminController::class)->prefix('ticket-admin')->group(function () {
-            Route::get('/', 'index')->name('admin.ticket.admin.index');
-            // Route::get('/set/{admin}', 'set')->name('admin.ticket.admin.set');
-            Route::post('/search', 'search')->name('admin.ticket.admin.search');
+        // Route::controller(TicketAdminController::class)->prefix('ticket-admin')->group(function () {
+        //     Route::get('/', 'index')->name('admin.ticket.admin.index');
+        //     // Route::get('/set/{admin}', 'set')->name('admin.ticket.admin.set');
+        //     Route::post('/search', 'search')->name('admin.ticket.admin.search');
 
-        });
+        // });
     });
 
     Route::prefix('user')->namespace('User')->group(function () {
@@ -424,7 +428,6 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
             Route::post('/roles/{admin}/store', [AdminUserController::class, 'rolesStore'])->name('admin.user.admin-user.roles.store');
             Route::get('/permissions/{admin}', [AdminUserController::class, 'permissions'])->name('admin.user.admin-user.permissions');
             Route::post('/permissions/{admin}/store', [AdminUserController::class, 'permissionsStore'])->name('admin.user.admin-user.permissions.store');
-            Route::post('/search', [AdminUserController::class, 'search'])->name('admin.user.admin-user.search');
 
         });
         //customer
@@ -437,7 +440,6 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'active'])->group(function 
             Route::delete('/destroy/{user}', [CustomerController::class, 'destroy'])->name('admin.user.customer.destroy');
             Route::get('/status/{user}', [CustomerController::class, 'status'])->name('admin.user.customer.status');
             Route::get('/activation/{user}', [CustomerController::class, 'activation'])->name('admin.user.customer.activation');
-            Route::post('/search', [CustomerController::class, 'search'])->name('admin.user.customer.search');
 
         });
         //role

@@ -21,7 +21,7 @@ class BrandController extends Controller
     }
     public function index()
     {
-	    $brands = Brand::orderBy('id','desc')->paginate(10);
+	    $brands = Brand::orderBy('id','desc')->paginate(10)->withQueryString();
         return view('admin.market.brand.index',compact('brands'));
 
     }

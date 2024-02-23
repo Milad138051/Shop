@@ -24,7 +24,7 @@ class CommentController extends Controller
 	// 		$item->seen=1;
 	// 		$res=$item->save();
 	// 	}
-	    $comments=Comment::orderBy('id','DESC')->where('commentable_type','App\Models\Market\Product')->paginate(10);
+	    $comments=Comment::orderBy('id','DESC')->where('commentable_type','App\Models\Market\Product')->paginate(10)->withQueryString();
 		
         return view('admin.market.comment.index',compact('comments'));
 

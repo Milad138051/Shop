@@ -14,7 +14,7 @@
                     <a href="{{ route('admin.user.customer.create') }}" class="btn btn-info btn-sm"> ایجاد کاربر مشتری </a>
 
                     <div class="card-tools">
-                    <form action="{{route('admin.user.customer.search')}}" method="POST">
+                    <form action="{{route('admin.user.customer.index')}}" method="get">
                         <div class="input-group input-group-sm" style="width: 150px;">
                                 @csrf
                                 <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{request()->search}}">

@@ -18,13 +18,13 @@ class ContactUsController extends Controller
 
     public function index()
     {
-        $messages = ContactUs::orderBy('id', 'desc')->paginate(10);
+        $messages = ContactUs::orderBy('id', 'desc')->paginate(10)->withQueryString();
         return view('admin.content.contact-us.index', compact('messages'));
     }
 
     public function unseen()
     {
-        $messages = ContactUs::orderBy('id', 'desc')->where('seen',0)->paginate(10);
+        $messages = ContactUs::orderBy('id', 'desc')->where('seen',0)->paginate(10)->withQueryString();
         return view('admin.content.contact-us.index', compact('messages'));
     }
 

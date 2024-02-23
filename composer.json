@@ -25,10 +25,10 @@
         "phpunit/phpunit": "^10.1",
         "spatie/laravel-ignition": "^2.0"
     },
-    "autoload": {
-        "files":[
-            "App/Helpers/helpers.php"
-            ],
+    "autoload": {    
+        "files": [
+            "app/Helpers/Helper.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

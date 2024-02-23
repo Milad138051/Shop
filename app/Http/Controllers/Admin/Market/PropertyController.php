@@ -21,7 +21,7 @@ class PropertyController extends Controller
 
     public function index()
     {
-		$category_attributes=CategoryAttribute::orderBy('id','desc')->paginate(10);
+		$category_attributes=CategoryAttribute::orderBy('id','desc')->paginate(10)->withQueryString();
         return view('admin.market.property.index',compact('category_attributes'));
     }
 

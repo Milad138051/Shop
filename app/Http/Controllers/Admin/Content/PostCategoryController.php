@@ -21,7 +21,7 @@ class PostCategoryController extends Controller
 
     public function index()
     {
-        $postCategories=PostCategory::orderBy('id','Desc')->paginate(10);
+        $postCategories=PostCategory::orderBy('id','Desc')->paginate(10)->withQueryString();
         return view('admin.content.postCategory.index',compact('postCategories'));
     }
 

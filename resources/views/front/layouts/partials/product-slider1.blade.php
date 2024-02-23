@@ -34,16 +34,16 @@
           @endphp
             @if($amazingSale->count() > 0)
             <div class="flex justify-center text-xs opacity-75">
-              <div class="line-through">{{PriceFormat($product->price)}}</div>
+              <div class="line-through">{{priceFormat($product->price)}}</div>
               <div class="line-through">تومان</div>
             </div>
             <div class="flex justify-center mt-1 mb-2 text-sm">
-              <div>{{PriceFormat($product->price-($product->price *($product->activeAmazingSale()->percentage/100)))}}</div>
+              <div>{{priceFormat($product->price-($product->price *($product->activeAmazingSale()->percentage/100)))}}</div>
               <div>تومان</div>
             </div>
             @else
             <div class="flex justify-center mt-1 mb-2 text-sm">
-              <div>{{PriceFormat($product->price)}}</div>
+              <div>{{priceFormat($product->price)}}</div>
               <div>تومان</div>
             </div>
             @endif
